@@ -1,9 +1,13 @@
+import json
+from pprint import pprint
+
 import requests
 import arrow
 from ics import Calendar, Event
 
 
 # https://icspy.readthedocs.io/en/stable/index.html
+# https://arrow.readthedocs.io/en/latest/
 class ICS:
     calendar = None
 
@@ -20,27 +24,38 @@ class ICS:
             return;
 
         self.calendar = Calendar(content)
+
         print("calendar connectToICS event lengths " + str(len(self.calendar.events)))
         # c.events # lijst met evenementen in de dingus, kan ik met een map/foreach op filteren? indexen?
         # eventondate = self.isEventOnDate('2025-03-23')
+        tz = "Europe/Amsterdam"
 
-    def createNewEvent(self,dyflexysEvent):
-        #ik map nu hier alle info... ergens heb ik het hele dag object nog nodig om te bepalen welke data ik in de url plaats....
-        name = ''
-        description = ''
-        if "Kleine Zaal" in dyflexysEvent.text:
-            name = "KZ"
-        elif "Grote Zaal" in dyflexysEvent.text:
-            name = "AH"
-            #TODO HIER MOET DE SHOW NAAM NOG ACHTER
-        else:
-            name = dyflexysEvent.text[33:]
+        test = self.calendar.timeline.on(arrow.get("2025-03-20", tzinfo=tz))
+        pprint(test)
+        for bla in test:
+            pprint(bla)
 
-        #todo dyflexis tekst willen we eigenlijk ook in de omschrijving hebben
-        ##todo wat als je meer items per dag hebt, dat ook verwerken? hoe?
+            # self.calendar.events.add(bla)
+        # with open('my.ics', 'w') as fp:
+        #     fp.writelines( self.calendar.serialize_iter())
+        #     fp.close()
+
+    def createNewEvent(self, dyflexysEvent):
+        print('creating new Calendar event from ' + dyflexysEvent['date'])
         event = Event()
-        event.name = "ZT: "+name
-        event.description = description +"\n\n\n "+event.id
+        event.name = dyflexysEvent['title']
+        event.description = dyflexysEvent['description'] + "\n\n\n " + dyflexysEvent['id']
+        event.begin = dyflexysEvent['start_date']
+        event.end = dyflexysEvent['end_date']
+        return event
+
+    def updateEvent(self,event, dyflexysEvent):
+        print('creating new Calendar event from ' + dyflexysEvent['date'])
+        event.name = dyflexysEvent['title']
+        event.description = dyflexysEvent['description'] + "\n\n\n " + dyflexysEvent['id']
+        event.begin = dyflexysEvent['start_date']
+        event.end = dyflexysEvent['end_date']
+        return event
 
     def isEventOnDate(self, date):
         eventOnDate = self.calendar.timeline.on(arrow.get(date))
@@ -49,9 +64,30 @@ class ICS:
             # print(event)
             print(event.name)
             if "id" in event.description:
-                print( 'id is in description ')
-        print(eventondate.__sizeof__())
+                print('id is in description ')
 
-    def generateToICS(self):
+    def generateToICS(self, events):
+        if self.calendar is None:
+            self.calendar = Calendar()
+
+        print('calendar created')
+        tz = "Europe/Amsterdam"
+
+        for event in events:
+            updated = False
+            if arrow.get(event['date']).is_between(arrow.now(tz).shift(years=-1), arrow.now(tz)):
+                continue
+            print('\tcreating event ' + event['start_date'])
+            test = self.calendar.timeline.on(arrow.get(event['start_date'], tzinfo=tz))
+            pprint(test)
+            for bla in test:
+                pprint(bla)
+                if event['id'] in bla.description:
+                    self.updateEvent(bla,event)
+                    updated = True
+            if not updated:
+                self.calendar.events.add(self.createNewEvent(event))
+
         with open('my.ics', 'w') as fp:
             fp.writelines(self.calendar.serialize_iter())
+            fp.close()

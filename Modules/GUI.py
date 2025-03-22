@@ -7,6 +7,7 @@ from Modules.ConfigLand import ConfigLand
 from Modules.Dyflexis import Dyflexis
 from Modules.Logger import Logger
 from Modules.ICS import ICS
+from selenium.webdriver.chrome.options import Options
 
 
 class Gui(tk.Frame):
@@ -24,7 +25,17 @@ class Gui(tk.Frame):
         self.master.title('Dyflexis -> Google calendar')
         self.master.configure(background=self.zaantheaterColor)
         self.master.lift()
-        self.master.geometry("430x600")
+
+        w = 430  # width for the Tk root
+        h = 600  # height for the Tk root
+
+        ws = self.master.winfo_screenwidth()
+        hs = self.master.winfo_screenheight()
+        x = (ws / 2) - (w / 2)
+        x = ws/3
+        y = (hs / 2) - (h / 2)
+
+        self.master.geometry('%dx%d+%d+%d' % (w, h, x, y))
         self.master.columnconfigure(0, minsize=40)
         ##new line na boven en onder dyflexys
 
@@ -114,7 +125,13 @@ class Gui(tk.Frame):
 
     def openChrome(self):
         if self.driver == None:
-            self.driver = webdriver.Chrome()
+            ws = self.master.winfo_screenwidth()/3
+            hs = self.master.winfo_screenheight()
+            print('window-size=%d,%d' %(ws,hs))
+            options = Options()
+            # options.add_argument("--headless")
+            options.add_argument('window-size=%d,%d' %(ws,hs))
+            self.driver = webdriver.Chrome(options=options)
 
     def loadConfig(self):
         self.config.loadConfig()
@@ -134,40 +151,44 @@ class Gui(tk.Frame):
         self.config.saveConfig()
 
     def dyflexisRead(self):
-        with open('test.json', 'r') as fp:
+        # open json file
+        ## todo ,wat als er nog geen inlog gegevens zijn ingevuld, validatie dus
+        # self.openChrome()
+        # dyflexis = Dyflexis(self.driver, self.config)
+        # dyflexis.login()
+        # calendar = dyflexis.getRooster()
+        # calendarData = dyflexis.tableElementToArray(calendar)
+        # logger = Logger()
+        # logger.toFile(location='calendarData.json', variable=calendarData)
+        # self.eventData = dyflexis.elementArrayToIcs(calendarData)
+        # self.driver.quit()
+        # logger.toFile(location='icsData.json', variable=self.eventData)
+
+
+        with open('icsData.json', 'r') as fp:
             superValue = fp.read()
             self.eventData = json.loads(superValue)
             fp.close()
+
+        # create the information message for the GUI
         assignments = str(self.eventData['assignments'])
         agenda = str(self.eventData['agenda'])
         events = str(self.eventData['events'])
         start_date = self.eventData['list'][0]['date']
-        end_date = self.eventData['list'][len(self.eventData)]['date']
+        end_date = self.eventData['list'][len(self.eventData['list'])-1]['date']
         Message = f"Assignments: {assignments} \nAgenda: \t{agenda} \nEvents: \t{events} \nperiode: \n{start_date} tot {end_date}"
-        self.dyflexisMessage.config(text=Message ,bg='green')
-
-        return True
-        ## todo ,wat als er nog geen inlog gegevens zijn ingevuld, validatie dus
-        self.openChrome()
-        dyflexis = Dyflexis(self.driver, self.config)
-        dyflexis.login()
-        calendar = dyflexis.getRooster()
-        self.eventData = dyflexis.tableElementToArray(calendar)
-        logger = Logger()
-        logger.toFile(location='test.json', variable=self.eventData)
-        # als driver nog niet aangemaakt is, doe dat
-        # open browser als nog niet open
-        # lees data uit en zet om naar json
-        # selecteer het type data en laat zien hoeveel er van zijn?
+        self.dyflexisMessage.config(text=Message, bg='green')
 
     def uploadICS(self):
         print('uploadIcs')
 
 
+
+
     def loadICS(self):
-        calendar = ICS()
+        self.calendar = ICS()
         if(self.icsUrl.get() != None):
-            calendar.connectToICS(url=self.icsUrl.get())
+            self.calendar.connectToICS(url=self.icsUrl.get())
         print('loadIcs')
         # upload een bestaand of pak het uit een folder
         # merge met lijst van dyflexis aan de hand
@@ -175,3 +196,6 @@ class Gui(tk.Frame):
 
     def generateICS(self):
         print('generateICS')
+        self.calendar.generateToICS(self.eventData['shift'])
+        print('ics generated')
+        # todo, alleen evenementen van vandaag en vooruit oppakken. in het verleden niet

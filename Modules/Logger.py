@@ -16,5 +16,5 @@ class Logger:
             fp.write(msg)
             fp.close()
     def toFile(self,location,variable):
-        with open(location,'a') as fp:
+        with open(location,'w') as fp:
             fp.write(json.dumps(variable))

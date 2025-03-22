@@ -1,7 +1,10 @@
+from wsgiref.util import shift_path_info
+
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import time
+import arrow
 
 
 class Dyflexis:
@@ -71,7 +74,7 @@ class Dyflexis:
             print('regel word uitgelezen')
             columns = row.find_elements(by=By.TAG_NAME, value='td')
             for column in columns:
-                print('\tkolom word uitgelezen')
+                print('\tkolom word uitgelezen\t'+column.text[0:2])
 
                 ## find events aka shows
                 events = column.find_elements(by=By.CLASS_NAME, value='evt')
@@ -120,3 +123,49 @@ class Dyflexis:
             "events": eventsCounter,
             "list": returnArray
         }
+    def elementArrayToIcs(self,elementArray):
+        print('elementArrayToIcs')
+        shift = []
+        tz =  "Europe/Amsterdam"
+        for dates in elementArray['list']:
+            startDate = arrow.get(dates['date'],tzinfo=tz)
+            stopDate= arrow.get(dates['date'],tzinfo=tz)
+            print(dates['date'])
+            if(dates['text'] ==""):
+                continue
+            for assignments in dates['assignments']:
+
+            ## start date and time
+                start_time =assignments['tijd'][0:5]
+                print('\twith date '+start_time+" and times "+start_time[0:2]+" and sec "+start_time[3:5])
+
+                startDate = startDate.replace(hour=int(start_time[0:2]),minute=int(start_time[3:5]))
+                print("\t"+startDate.format('YYYY-MM-DDTHH:mm:ss'))
+            #stop date and time
+                stop_time =assignments['tijd'][8:13]
+                stopDate = stopDate.replace(hour=int(stop_time[0:2]),minute=int(stop_time[3:5]))
+            #create name depending on what is in text
+                print(" \t"+assignments['text'])
+
+                if "Kleine Zaal".upper() in assignments['text'].upper():
+                    name = "KZ: "
+                    for event in dates['events']:
+                        if  "kz".upper() in event['text'].upper():
+                            name = name+ event['text']
+                elif "Grote Zaal".upper() in assignments['text'].upper():
+                    name = "Ah: "
+                    for event in dates['events']:
+                        if "ah".upper() in event['text'].upper():
+                            name = name + event['text']
+                else:
+                    name = assignments['text'][33:]
+                shift.append({
+                    'date':startDate.format('YYYY-MM-DD'),
+                    "start_date": startDate.format('YYYY-MM-DDTHH:mm:ssZZ'), #20250321T090000Z
+                    "end_date": stopDate.format('YYYY-MM-DDTHH:mm:ssZZ'), # 20250321T170000Z
+                    'title': name,
+                    'description': 'todo',
+                    'id':assignments['id']
+                })
+        elementArray["shift"] =shift
+        return elementArray
