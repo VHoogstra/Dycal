@@ -15,6 +15,7 @@ class Gui(tk.Frame):
     driver = None
     eventDate = {}
     dyflexisMessage = "test "
+    minChromeWidth = 1027
 
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
@@ -31,8 +32,10 @@ class Gui(tk.Frame):
 
         ws = self.master.winfo_screenwidth()
         hs = self.master.winfo_screenheight()
-        x = (ws / 2) - (w / 2)
-        x = ws/3
+
+        x = ws / 3
+        if x < self.minChromeWidth:
+            x = self.minChromeWidth
         y = (hs / 2) - (h / 2)
 
         self.master.geometry('%dx%d+%d+%d' % (w, h, x, y))
@@ -92,10 +95,12 @@ class Gui(tk.Frame):
         self.createLabel(text="of bestand", anchor=googleResultaatFrame).grid(row=3, column=0)
         self.iscFile = self.createEntry(anchor=googleResultaatFrame)
         self.iscFile.grid(row=3, column=1)
-        tk.Message(googleResultaatFrame, text='nog geen informatie', fg='white', bg='red',justify=tk.LEFT).grid(row=4, column=0,columnspan=2,
-                                                                                         sticky=tk.N + tk.S + tk.W + tk.E)
+        tk.Message(googleResultaatFrame, text='nog geen informatie', fg='white', bg='red', justify=tk.LEFT).grid(row=4,
+                                                                                                                 column=0,
+                                                                                                                 columnspan=2,
+                                                                                                                 sticky=tk.N + tk.S + tk.W + tk.E)
         tk.Button(self, text='Laad ICS', fg='white', bg='black', command=self.loadICS).grid(row=9, column=0)
-        tk.Button(self, text='Genereer ICS', fg='white', bg='black',command=self.generateICS).grid(row=9, column=3)
+        tk.Button(self, text='Genereer ICS', fg='white', bg='black', command=self.generateICS).grid(row=9, column=3)
 
     def createLabel(self, text, anchor=None):
         if anchor == None:
@@ -125,12 +130,14 @@ class Gui(tk.Frame):
 
     def openChrome(self):
         if self.driver == None:
-            ws = self.master.winfo_screenwidth()/3
+            ws = self.master.winfo_screenwidth() / 3
+            if ws < self.minChromeWidth:
+                ws = self.minChromeWidth
             hs = self.master.winfo_screenheight()
-            print('window-size=%d,%d' %(ws,hs))
+            print('window-size=%d,%d' % (ws, hs))
             options = Options()
             # options.add_argument("--headless")
-            options.add_argument('window-size=%d,%d' %(ws,hs))
+            options.add_argument('window-size=%d,%d' % (ws, hs))
             self.driver = webdriver.Chrome(options=options)
 
     def loadConfig(self):
@@ -153,41 +160,39 @@ class Gui(tk.Frame):
     def dyflexisRead(self):
         # open json file
         ## todo ,wat als er nog geen inlog gegevens zijn ingevuld, validatie dus
-        # self.openChrome()
-        # dyflexis = Dyflexis(self.driver, self.config)
-        # dyflexis.login()
-        # calendar = dyflexis.getRooster()
-        # calendarData = dyflexis.tableElementToArray(calendar)
-        # logger = Logger()
-        # logger.toFile(location='calendarData.json', variable=calendarData)
-        # self.eventData = dyflexis.elementArrayToIcs(calendarData)
-        # self.driver.quit()
-        # logger.toFile(location='icsData.json', variable=self.eventData)
 
+        self.openChrome()
+        dyflexis = Dyflexis(self.driver, self.config)
+        dyflexis.login()
+        calendar = dyflexis.getRooster()
+        calendarData = dyflexis.tableElementToArray(calendar)
+        logger = Logger()
+        logger.toFile(location='calendarData.json', variable=calendarData)
+        self.eventData = dyflexis.elementArrayToIcs(calendarData)
+        self.driver.quit()
+        self.driver = None
+        logger.toFile(location='icsData.json', variable=self.eventData)
 
-        with open('icsData.json', 'r') as fp:
-            superValue = fp.read()
-            self.eventData = json.loads(superValue)
-            fp.close()
+        # with open('icsData.json', 'r') as fp:
+        #     superValue = fp.read()
+        #     self.eventData = json.loads(superValue)
+        #     fp.close()
 
         # create the information message for the GUI
         assignments = str(self.eventData['assignments'])
         agenda = str(self.eventData['agenda'])
         events = str(self.eventData['events'])
         start_date = self.eventData['list'][0]['date']
-        end_date = self.eventData['list'][len(self.eventData['list'])-1]['date']
+        end_date = self.eventData['list'][len(self.eventData['list']) - 1]['date']
         Message = f"Assignments: {assignments} \nAgenda: \t{agenda} \nEvents: \t{events} \nperiode: \n{start_date} tot {end_date}"
         self.dyflexisMessage.config(text=Message, bg='green')
 
     def uploadICS(self):
         print('uploadIcs')
 
-
-
-
     def loadICS(self):
         self.calendar = ICS()
-        if(self.icsUrl.get() != None):
+        if (self.icsUrl.get() != None):
             self.calendar.connectToICS(url=self.icsUrl.get())
         print('loadIcs')
         # upload een bestaand of pak het uit een folder

@@ -1,3 +1,4 @@
+from pprint import pprint
 from wsgiref.util import shift_path_info
 
 from selenium.webdriver.support.wait import WebDriverWait
@@ -8,6 +9,8 @@ import arrow
 
 
 class Dyflexis:
+    tz = "Europe/Amsterdam"
+    DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="
 
     def __init__(self, driver, config):
         self.driver = driver
@@ -25,7 +28,6 @@ class Dyflexis:
             self.config["dyflexis"]["username"] = input("Enter username:")
         # gebruikersnaam invullen
         self.driver.find_element(by=By.ID, value="username").send_keys(self.config["dyflexis"]["username"])
-        time.sleep(1)
 
         if (self.config["dyflexis"]["password"] == ""):
             self.config["dyflexis"]["password"] = input("enter password:")
@@ -71,17 +73,34 @@ class Dyflexis:
         rows = body.find_elements(by=By.TAG_NAME, value='tr')
 
         for row in rows:
+
             print('regel word uitgelezen')
             columns = row.find_elements(by=By.TAG_NAME, value='td')
             for column in columns:
-                print('\tkolom word uitgelezen\t'+column.text[0:2])
+                print('\tkolom word uitgelezen\t' + column.text[0:2])
 
+                # als de datum in het verleden ligt lezen we hem niet uit
+                if not (arrow.get(column.get_attribute('title'), tzinfo=self.tz) >
+                        arrow.now().replace(hour=0, minute=0).shift(days=-1)):
+                    continue
                 ## find events aka shows
                 events = column.find_elements(by=By.CLASS_NAME, value='evt')
                 eventList = []
                 if len(events) != 0:
                     for event in events:
-                        eventList.append({"id": event.get_attribute('uo'), "text": event.text})
+                        # click event to open info
+                        event.click()
+                        WebDriverWait(self.driver, 20).until(
+                            EC.visibility_of_element_located((By.CSS_SELECTOR, "div.c-rooster2.a-info")))
+
+                        popup = self.driver.find_element(by=By.CSS_SELECTOR, value="div.c-rooster2.a-info")
+                        divWithInfo = popup.find_elements(by=By.TAG_NAME, value='div')[2]
+
+                        eventList.append(
+                            {"id": event.get_attribute('uo'), "text": event.text, 'description': divWithInfo.text})
+                        self.driver.find_element(by=By.CLASS_NAME, value='close-flux').click()
+                        WebDriverWait(self.driver, 20).until(
+                            EC.invisibility_of_element_located((By.CSS_SELECTOR, "div.c-rooster2.a-info")))
 
                 ## find assignments, aka diensten
                 assignments = column.find_elements(by=By.CLASS_NAME, value='ass')
@@ -123,49 +142,64 @@ class Dyflexis:
             "events": eventsCounter,
             "list": returnArray
         }
-    def elementArrayToIcs(self,elementArray):
+
+    def elementArrayToIcs(self, elementArray):
         print('elementArrayToIcs')
         shift = []
-        tz =  "Europe/Amsterdam"
+        tz = "Europe/Amsterdam"
         for dates in elementArray['list']:
-            startDate = arrow.get(dates['date'],tzinfo=tz)
-            stopDate= arrow.get(dates['date'],tzinfo=tz)
+            startDate = arrow.get(dates['date'], tzinfo=tz)
+            stopDate = arrow.get(dates['date'], tzinfo=tz)
             print(dates['date'])
-            if(dates['text'] ==""):
+            if (dates['text'] == ""):
                 continue
             for assignments in dates['assignments']:
+                description = self.DESCRIPTION_PREFIX + "\n"
 
-            ## start date and time
-                start_time =assignments['tijd'][0:5]
-                print('\twith date '+start_time+" and times "+start_time[0:2]+" and sec "+start_time[3:5])
+                ## start date and time
+                start_time = assignments['tijd'][0:5]
+                print('\twith date ' + start_time + " and times " + start_time[0:2] + " and sec " + start_time[3:5])
 
-                startDate = startDate.replace(hour=int(start_time[0:2]),minute=int(start_time[3:5]))
-                print("\t"+startDate.format('YYYY-MM-DDTHH:mm:ss'))
-            #stop date and time
-                stop_time =assignments['tijd'][8:13]
-                stopDate = stopDate.replace(hour=int(stop_time[0:2]),minute=int(stop_time[3:5]))
-            #create name depending on what is in text
-                print(" \t"+assignments['text'])
-
+                startDate = startDate.replace(hour=int(start_time[0:2]), minute=int(start_time[3:5]))
+                print("\t" + startDate.format('YYYY-MM-DDTHH:mm:ss'))
+                # stop date and time
+                stop_time = assignments['tijd'][8:13]
+                stopDate = stopDate.replace(hour=int(stop_time[0:2]), minute=int(stop_time[3:5]))
+                # create name depending on what is in text
+                print(" \t" + assignments['text'])
                 if "Kleine Zaal".upper() in assignments['text'].upper():
-                    name = "KZ: "
+                    name = ""
                     for event in dates['events']:
-                        if  "kz".upper() in event['text'].upper():
-                            name = name+ event['text']
+                        if "kz".upper() in event['text'].upper():
+                            name = name + event['text']
+                            description = description + event['description']
                 elif "Grote Zaal".upper() in assignments['text'].upper():
-                    name = "Ah: "
+                    name = ""
                     for event in dates['events']:
                         if "ah".upper() in event['text'].upper():
                             name = name + event['text']
+                            description = description + event['description']
+
                 else:
                     name = assignments['text'][33:]
                 shift.append({
-                    'date':startDate.format('YYYY-MM-DD'),
-                    "start_date": startDate.format('YYYY-MM-DDTHH:mm:ssZZ'), #20250321T090000Z
-                    "end_date": stopDate.format('YYYY-MM-DDTHH:mm:ssZZ'), # 20250321T170000Z
+                    'date': startDate.format('YYYY-MM-DD'),
+                    "start_date": startDate.format('YYYY-MM-DDTHH:mm:ssZZ'),  # 20250321T090000Z
+                    "end_date": stopDate.format('YYYY-MM-DDTHH:mm:ssZZ'),  # 20250321T170000Z
                     'title': name,
-                    'description': 'todo',
-                    'id':assignments['id']
+                    'description': description,
+                    'id': assignments['id']
                 })
-        elementArray["shift"] =shift
+        elementArray["shift"] = shift
         return elementArray
+
+    def test(self):
+        self.driver.get(self.config["routes"]["roosterUrl"])
+        WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "main-bar-inner")))
+        event = self.driver.find_element(by=By.CSS_SELECTOR, value="div[uo='event://1698']")
+        event.click()
+        time.sleep(1)
+        popup = self.driver.find_element(by=By.CSS_SELECTOR, value="div.c-rooster2.a-info")
+        divWithInfo = popup.find_elements(by=By.TAG_NAME, value='div')[2]
+        pprint(divWithInfo.text)
+        # todo, click op event en dan daar de tekst uit slepen

@@ -10,3 +10,6 @@ flx-middle->flx-canvas padded
 vpaned
 
 
+
+
+lijkt er op alsof de ics niet alle data na loopt.. mis de 23e bv maar staat wel in de json
