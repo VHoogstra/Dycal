@@ -12,7 +12,6 @@ from Modules.Dyflexis import Dyflexis
 # https://arrow.readthedocs.io/en/latest/
 class ICS:
     calendar = None
-
     def connectToICS(self, url=None, file=None):
         content = None
         if (url is not None):
@@ -21,10 +20,11 @@ class ICS:
         if (file is not None):
             with open(file, 'r') as fp:
                 content = fp.read()
+                fp.close()
 
         if content == None:
             return
-
+        print('calender loaded')
         self.calendar = Calendar(content)
 
 

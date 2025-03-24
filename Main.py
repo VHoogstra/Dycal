@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+import sys
 
 from Modules.ConfigLand import ConfigLand
 from Modules.GUI import Gui
@@ -10,8 +11,6 @@ from Modules.Dyflexis import Dyflexis
 
 app = Gui()
 app.mainloop()
+print('mainloop ended')
+sys.exit(0)
 
-# todo, mogelijkheid om ook via firefox of safari te draaien?
-# driver = webdriver.Chrome()
-
-#todo hier moet het ww dus al ingevuld zijn in config?

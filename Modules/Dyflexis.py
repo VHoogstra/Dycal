@@ -7,53 +7,100 @@ from selenium.webdriver.common.by import By
 import time
 import arrow
 
+from selenium.webdriver.chrome.options import Options
+from selenium import webdriver
+
+from Modules.Logger import Logger
+
 
 class Dyflexis:
     tz = "Europe/Amsterdam"
     DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="
+    driver = None
 
-    def __init__(self, driver, config):
-        self.driver = driver
-        self.config = config.Config
+    def __init__(self, config, width, height,minChromeWidth):
+        self.config = config
+        self.width = width
+        self.height = height
+        self.minChromeWidth = minChromeWidth
 
     def __str__(self):
         return 'Dyflexis'
 
-    def login(self):
-        self.driver.get(self.config["routes"]["loginUrl"])
+    def openChrome(self):
+        if self.driver == None:
+            ws = self.width / 3
+            if ws < self.minChromeWidth:
+                ws = self.minChromeWidth
+            hs = self.height
+            print('window-size=%d,%d' % (ws, hs))
+            options = Options()
+            # options.add_argument("--headless")
+            options.add_argument('window-size=%d,%d' % (ws, hs))
+            self.driver = webdriver.Chrome(options=options)
+
+    def login(self, _progressbarCallback=None):
+        startProgress = 0
+        endProgress = 5
+        # progressbar 0 through 10
+        config = self.config.Config
+        self.driver.get(config["routes"]["loginUrl"])
         WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.ID, "username")))
 
+        if _progressbarCallback:
+            _progressbarCallback(startProgress)
         # wait for page load
-        if (self.config["dyflexis"]["username"] == ""):
-            self.config["dyflexis"]["username"] = input("Enter username:")
+        if (config["dyflexis"]["username"] == ""):
+            raise Exception('no username')
         # gebruikersnaam invullen
-        self.driver.find_element(by=By.ID, value="username").send_keys(self.config["dyflexis"]["username"])
+        self.driver.find_element(by=By.ID, value="username").send_keys(config["dyflexis"]["username"])
 
-        if (self.config["dyflexis"]["password"] == ""):
-            self.config["dyflexis"]["password"] = input("enter password:")
+        if (config["dyflexis"]["password"] == ""):
+            raise Exception('no password')
         # wachtwoord invullen
-        self.driver.find_element(by=By.ID, value="password").send_keys(self.config["dyflexis"]["password"])
-
+        self.driver.find_element(by=By.ID, value="password").send_keys(config["dyflexis"]["password"])
+        if _progressbarCallback:
+            _progressbarCallback(endProgress / 2)
         # knop indrukken en inloggen
         time.sleep(1)
         self.driver.find_element(by=By.ID, value="do-login").click()
 
         time.sleep(3)
 
-        if (self.driver.current_url == self.config["routes"]["loginUrl"]):
+        # todo er moet hier een wait for precense of element in
+        if _progressbarCallback:
+            _progressbarCallback(endProgress)
+        if (self.driver.current_url == config["routes"]["loginUrl"]):
             # inlog mis gegaan, fout geven
             print('er is iets mis gegaan bij het inloggen, zie het scherm')
             password = input("waiting, press enter to cclose")
             return False
-        if (self.driver.current_url == self.config["routes"]["homepageAfterLogin"]):
+        if (self.driver.current_url == config["routes"]["homepageAfterLogin"]):
             print('login succesvol')
             return True
 
-    def getRooster(self):
-        self.driver.get(self.config["routes"]["roosterUrl"])
-        WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "main-bar-inner")))
-        calendar = self.driver.find_element(by=By.CLASS_NAME, value='calender')
-        return calendar
+    def run(self, _progressbarCallback=None):
+        try:
+            self.openChrome()
+            logger = Logger()
+            # progressbar 0 through 5
+            self.login(_progressbarCallback)
+            # progressbar 5 through 50
+            data = self.getRooster(_progressbarCallback)
+            # progressbar 75 through 100
+            eventData = self.elementArrayToIcs(data, _progressbarCallback)
+        except Exception as e:
+            self.driver.quit()
+            self.driver = None
+            raise e
+
+        logger.toFile(location='icsData.json', variable=eventData)
+        self.driver.quit()
+        self.driver = None
+        return eventData
+
+    def getRooster(self, _progressbarCallback=None):
+
         # calendarNextMonthButton = self.calendar.find_element(by=By.TAG_NAME, value='thead').find_elements(by=By.TAG_NAME,
         #                                                                                                  value='a')
         ## bovenstaand gebruiken om de 2 urls te vinden in de eerste th
@@ -61,9 +108,19 @@ class Dyflexis:
         # todo get rooster today en next month
         # print(calendarNextMonthButton[1].get_attribute('href'))
         # self.driver.get(calendarNextMonthButton[1].get_attribute('href'))
+        config = self.config.Config
+        startProgress = 5
+        endProgress = 75
 
-    def tableElementToArray(self, calendar):
+        if _progressbarCallback:
+            _progressbarCallback(startProgress)
+        self.driver.get(config["routes"]["roosterUrl"])
+        WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "main-bar-inner")))
+        calendar = self.driver.find_element(by=By.CLASS_NAME, value='calender')
+
         print('de maand word uitgelezen')
+        if _progressbarCallback:
+            _progressbarCallback(6)
         returnArray = []
         assignmentsCounter = 0
         eventsCounter = 0
@@ -72,8 +129,9 @@ class Dyflexis:
         body = calendar.find_element(by=By.TAG_NAME, value='tbody')
         rows = body.find_elements(by=By.TAG_NAME, value='tr')
 
-        for row in rows:
+        progressRowCount = (endProgress - startProgress) / len(rows)
 
+        for row in rows:
             print('regel word uitgelezen')
             columns = row.find_elements(by=By.TAG_NAME, value='td')
             for column in columns:
@@ -134,8 +192,19 @@ class Dyflexis:
                 eventsCounter = eventsCounter + len(eventList)
                 assignmentsCounter = assignmentsCounter + len(assList)
                 agendaCounter = agendaCounter + len(aggList)
+                ##progress for column
+                if _progressbarCallback:
+                    # gedeeld door 7 omdat er 7 dagen in de week zijn
+                    startProgress = startProgress + (progressRowCount / 7)
+                    _progressbarCallback(startProgress)
+            # progress for row
+            if _progressbarCallback:
+                startProgress = startProgress + progressRowCount
+                _progressbarCallback(startProgress)
 
         print('done')
+        if _progressbarCallback:
+            _progressbarCallback(50)
         return {
             "assignments": assignmentsCounter,
             "agenda": agendaCounter,
@@ -143,11 +212,20 @@ class Dyflexis:
             "list": returnArray
         }
 
-    def elementArrayToIcs(self, elementArray):
+    def elementArrayToIcs(self, elementArray, _progressbarCallback=None):
+        # 75 ->100
+        startProgress = 75
+        endProgress = 100
+
+        if _progressbarCallback:
+            _progressbarCallback(startProgress)
         print('elementArrayToIcs')
         shift = []
         tz = "Europe/Amsterdam"
+        progressRowCount = (endProgress - startProgress) / len(elementArray['list'])
+
         for dates in elementArray['list']:
+
             startDate = arrow.get(dates['date'], tzinfo=tz)
             stopDate = arrow.get(dates['date'], tzinfo=tz)
             print(dates['date'])
@@ -190,11 +268,16 @@ class Dyflexis:
                     'description': description,
                     'id': assignments['id']
                 })
+
+            if _progressbarCallback:
+                startProgress = startProgress + progressRowCount
+                _progressbarCallback(startProgress)
         elementArray["shift"] = shift
         return elementArray
 
     def test(self):
-        self.driver.get(self.config["routes"]["roosterUrl"])
+        config = self.config.Config
+        self.driver.get(config["routes"]["roosterUrl"])
         WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "main-bar-inner")))
         event = self.driver.find_element(by=By.CSS_SELECTOR, value="div[uo='event://1698']")
         event.click()
