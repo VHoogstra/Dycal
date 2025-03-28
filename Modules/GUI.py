@@ -6,7 +6,10 @@ import time
 import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.filedialog as filedialog
+from configparser import ConfigParser
 from pprint import pprint
+
+import customtkinter as ctk
 
 from Modules.ConfigLand import ConfigLand
 from Modules.Dyflexis import Dyflexis
@@ -24,33 +27,38 @@ class Gui(tk.Frame):
 
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
-        self.grid(sticky=tk.N + tk.S + tk.E + tk.W, padx=10, pady=10)
-        self.config = ConfigLand()
+        self.grid(column=0,row=0,sticky=tk.NSEW, padx=10, pady=10)
 
         self.master.title('Dyflexis -> Google calendar')
         self.master.configure(background=self.zaantheaterColor)
 
-        w = 470  # width for the Tk root
+        w = 410# width for the Tk root
         h = 600  # height for the Tk root
 
         ws = self.master.winfo_screenwidth()
+
         hs = self.master.winfo_screenheight()
 
         x = ws / 3
         if x < self.minChromeWidth:
             x = self.minChromeWidth
         y = (hs / 2) - (h / 2)
+        x=10
+
         self.master.geometry('%dx%d+%d+%d' % (w, h, x, y))
-        self.master.grid_propagate(0)
 
         # nee resize is niet toegestaan
         self.master.resizable(False, False)
         self.createWidgets()
+        self.config = ConfigLand()
 
         self.master.lift()
 
     def createWidgets(self):
         self.configure(background=self.zaantheaterColor)
+        self.columnconfigure(0,weight=1)
+        self.columnconfigure(1,weight=1)
+        self.columnconfigure(2,weight=1)
         self.rowconfigure(1, minsize=20)
         #4, tussen dyflexis config en resultaat
         self.rowconfigure(4, minsize=15)
@@ -58,32 +66,38 @@ class Gui(tk.Frame):
         self.rowconfigure(6, minsize=40)
         self.master.rowconfigure(7, minsize=20)
 
-        self.configLoad = tk.Button(self, text='Laad uit config', command=self.loadConfig, fg='white', bg='black')
-        self.configLoad.grid(row=0, column=0, sticky=tk.N + tk.S + tk.W + tk.E)
-        self.save = tk.Button(self, text='save naar config', command=self.saveConfig, fg='white', bg='black')
-        self.save.grid(row=0, column=3, sticky=tk.N + tk.S + tk.W + tk.E)
+        self.configLoad = ctk.CTkButton(self, text='Laad uit config', command=self.loadConfig)
+        self.configLoad.grid(row=0, column=0, sticky=tk.N + tk.W )
+        self.save = ctk.CTkButton(self, text='save naar config', command=self.saveConfig)
+        self.save.grid(row=0, column=2, sticky=tk.N + tk.E)
+
 
 #row 3
         label = tk.Label(text='Dyflexis', fg="white", bg=self.zaantheaterColor, width=10, height=1, )
         dyflexisFrame = tk.LabelFrame(self, labelwidget=label, bg=self.zaantheaterColor, padx=10, pady=10)
-        dyflexisFrame.grid(row=3, column=0, columnspan=4, sticky=tk.NSEW)
+        dyflexisFrame.grid(row=3, column=0, columnspan=3, sticky=tk.NSEW)
         dyflexisFrame.rowconfigure(3,minsize=10)
+        dyflexisFrame.columnconfigure(0,weight=1)
+        dyflexisFrame.columnconfigure([1,2],weight=4)
+
         self.createLabel(text="username", anchor=dyflexisFrame).grid(row=1, column=0)
         self.dyflexisUsername = self.createEntry(anchor=dyflexisFrame)
-        self.dyflexisUsername.grid(row=1, column=1)
+        self.dyflexisUsername.grid(row=1, column=1,columnspan=2,sticky=tk.NSEW)
 
         self.createLabel(text="Password", anchor=dyflexisFrame).grid(row=2, column=0)
         self.dyflexisPassword = self.createEntry(anchor=dyflexisFrame)
-        self.dyflexisPassword.grid(row=2, column=1)
+        self.dyflexisPassword.grid(row=2, column=1,columnspan=2,sticky=tk.NSEW)
 
         tk.Button(dyflexisFrame, text='Dyflexis uitlezen', fg='white', bg='black',
                   command=self.dyflexisRead).grid(row=4, column=0,columnspan=2)
+
+
 
         dyflexisLabel = tk.Label(text='Dyflexis resultaat', fg="white", bg=self.zaantheaterColor, width=15, height=1, )
         dyflexisResultaatFrame = tk.LabelFrame(self, labelwidget=dyflexisLabel, bg=self.zaantheaterColor, padx=10,
                                                pady=10)
         dyflexisResultaatFrame.columnconfigure(0, weight=1)
-        dyflexisResultaatFrame.grid(row=5, column=0, columnspan=4, sticky=tk.W + tk.N + tk.E + tk.S)
+        dyflexisResultaatFrame.grid(row=5, column=0, columnspan=3, sticky=tk.W + tk.N + tk.E + tk.S)
 
         self.dyflexisProgressBarValue = tk.IntVar()
         self.dyflexisProgressBar = ttk.Progressbar(dyflexisResultaatFrame, mode='determinate', maximum=101,
@@ -95,10 +109,11 @@ class Gui(tk.Frame):
                                           width=300)
         self.dyflexisMessage.grid(row=1, column=0, sticky=tk.N + tk.S + tk.W + tk.E)
 
+
         GoogleLabel = tk.Label(text='ICS configuratie', fg="white", bg=self.zaantheaterColor, width=15, height=1, )
         googleResultaatFrame = tk.LabelFrame(self, labelwidget=GoogleLabel, bg=self.zaantheaterColor, padx=10,
                                              pady=10)
-        googleResultaatFrame.grid(row=8, column=0, columnspan=4, sticky=tk.W + tk.N + tk.E + tk.S)
+        googleResultaatFrame.grid(row=8, column=0, columnspan=3, sticky=tk.W + tk.N + tk.E + tk.S)
         googleResultaatFrame.columnconfigure(0, weight=1)
         self.createLabel(text="ics url", anchor=googleResultaatFrame).grid(row=1, column=0)
         self.icsUrl = self.createEntry(anchor=googleResultaatFrame)
@@ -115,16 +130,14 @@ class Gui(tk.Frame):
                                                                                                                  column=0,
                                                                                                                  columnspan=2,
                                                                                                                  sticky=tk.N + tk.S + tk.W + tk.E)
-        tk.Button(self, text='Genereer ICS', fg='white', bg='black', command=self.generateICS).grid(row=9, column=3)
+        tk.Button(self, text='Genereer ICS', fg='white', bg='black', command=self.generateICS).grid(row=9, column=2)
 
     def createLabel(self, text, anchor=None):
         if anchor == None:
             anchor = self
-        return tk.Label(
+        return ctk.CTkLabel(
             anchor,
             text=text,
-            fg="white",
-            bg="black",
             width=10,
             height=1,
         )
@@ -132,18 +145,14 @@ class Gui(tk.Frame):
     def createEntry(self, anchor=None, variable=None):
         if anchor == None:
             anchor = self
-        return tk.Entry(
+        return ctk.CTkEntry(
             anchor,
-            fg="white",
-            bg="black",
-            highlightbackground=self.zaantheaterColor,
             width=50,
-            insertbackground='red',
-            highlightcolor='red',
-            variable=variable
+            textvariable=variable
         )
 
     def loadConfig(self):
+        print(' load goncig')
         self.config.loadConfig()
         self.dyflexisPassword.delete(0, 500)
         self.dyflexisPassword.insert(0, self.config.Config['dyflexis']['password'])
