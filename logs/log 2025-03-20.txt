@@ -1,6 +1,0 @@
-
-2025-03-20 17:09	geen config.json gevonden, we maken dit aan
-2025-03-20 17:17	
-2025-03-20 17:18	{"dyflexis": {"username": "", "password": ""}, "routes": {"loginUrl": "https://app.planning.nu/zaantheater/login", "roosterUrl": "https://app.planning.nu/zaantheater/zaandam/rooster2/index2", "homepageAfterLogin": "https://app.planning.nu/zaantheater/zaandam/"}}
-2025-03-20 17:19	{"dyflexis": {"username": "", "password": ""}, "routes": {"loginUrl": "https://app.planning.nu/zaantheater/login", "roosterUrl": "https://app.planning.nu/zaantheater/zaandam/rooster2/index2", "homepageAfterLogin": "https://app.planning.nu/zaantheater/zaandam/"}}
-2025-03-20 17:24	geen config.json gevonden, we maken dit aan
