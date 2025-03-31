@@ -17,13 +17,22 @@ lijkt er op alsof de ics niet alle data na loopt.. mis de 23e bv maar staat wel 
 https://pyinstaller.org/en/stable/
 das een goeie, custom tkinter ook
 
-todo, buttons en textbars vervangen. dyflexis uitlezen krijgt een eigen laadbalk per maand, ics configuration over het totaal 1
 
-todo lijst updaten zoat input output is
-zo schrijven dat hij alleen maart checkt en dus niet vorige of volgende maand, mag ie skippen 
 als er 2 agenda items zijn, check of deze in dezeflde shift vallen en zo ja, voeg ze in de juiste volgorde toe aan ge agenda
 
-nog even kijken naar scrollen van het venster als dyflex results inkomen
-de opslana van ics geeft een leeg bestand
-ook even kijken of ik niet alle events kan openen, alleen degene die ik werk
-ics file default name == datum van vandaag
+# regels
+1. deze software zal evenementen vanaf 24 uur voor nu pakken en niet eerder
+2. de software leest de huidige maand en volgende maand uit
+2. de software zoekt de naam op van de locatie (grote zaal of kleine zaal), mocht deze niet bestaan pakt hij de naam van je shift na de laatste >
+    eg: zaandam > technische dienst > kleine zaal word kleine zaal
+3. de browser opent fullscreen, als data niet op het scherm staat kan hij het niet lezen namelijk. 
+    deze manier zorgt er ook voor dat het zichtbaar is wat de app doet
+
+shifts: 
+    diensten die je moet werken
+agenda
+    gewerkte uren (word nu niet geteld)
+events:
+    evenementen/verhuringen vanuit dyflexis
+
+pyinstaller.exe --onefile --windowed --icon= YOUR_ICON.ico YOUR_APP_NAME.py
