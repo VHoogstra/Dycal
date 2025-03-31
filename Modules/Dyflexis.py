@@ -1,6 +1,6 @@
 from pprint import pprint
-from wsgiref.util import shift_path_info
 
+from selenium.common import TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -10,6 +10,7 @@ import arrow
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 
+from Exceptions.BadLoginException import BadLoginException
 from Modules.Logger import Logger
 
 
@@ -18,7 +19,7 @@ class Dyflexis:
     DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="
     driver = None
 
-    def __init__(self, config, width, height,minChromeWidth):
+    def __init__(self, config, width, height, minChromeWidth):
         self.config = config
         self.width = width
         self.height = height
@@ -33,7 +34,6 @@ class Dyflexis:
             if ws < self.minChromeWidth:
                 ws = self.minChromeWidth
             hs = self.height
-            print('window-size=%d,%d' % (ws, hs))
             options = Options()
             # options.add_argument("--headless")
             options.add_argument('window-size=%d,%d' % (ws, hs))
@@ -51,29 +51,30 @@ class Dyflexis:
             _progressbarCallback(startProgress)
         # wait for page load
         if (config["dyflexis"]["username"] == ""):
-            raise Exception('no username')
+            raise BadLoginException('no username')
         # gebruikersnaam invullen
         self.driver.find_element(by=By.ID, value="username").send_keys(config["dyflexis"]["username"])
 
         if (config["dyflexis"]["password"] == ""):
-            raise Exception('no password')
+            raise BadLoginException('no password')
         # wachtwoord invullen
         self.driver.find_element(by=By.ID, value="password").send_keys(config["dyflexis"]["password"])
         if _progressbarCallback:
             _progressbarCallback(endProgress / 2)
         # knop indrukken en inloggen
-        time.sleep(1)
         self.driver.find_element(by=By.ID, value="do-login").click()
 
-        time.sleep(3)
+        try:
+            WebDriverWait(self.driver, 6).until(EC.invisibility_of_element_located((By.ID, "username")))
+        except TimeoutException as e:
+            # de inlog ging niet goed bij dyflexis
+            raise BadLoginException("De login bij dyflexis was niet succesvol")
 
-        # todo er moet hier een wait for precense of element in
         if _progressbarCallback:
             _progressbarCallback(endProgress)
         if (self.driver.current_url == config["routes"]["loginUrl"]):
             # inlog mis gegaan, fout geven
             print('er is iets mis gegaan bij het inloggen, zie het scherm')
-            password = input("waiting, press enter to cclose")
             return False
         if (self.driver.current_url == config["routes"]["homepageAfterLogin"]):
             print('login succesvol')
@@ -86,7 +87,10 @@ class Dyflexis:
             # progressbar 0 through 5
             self.login(_progressbarCallback)
             # progressbar 5 through 50
-            data = self.getRooster(_progressbarCallback)
+            thisMonth = arrow.now().format('YYYY-MM')
+            nextMonth = arrow.now().shift(months=1).format('YYYY-MM')
+            data = self.getRooster(_progressbarCallback, period=thisMonth)
+            data = self.getRooster(_progressbarCallback, period=nextMonth, baseData=data)
             # progressbar 75 through 100
             eventData = self.elementArrayToIcs(data, _progressbarCallback)
         except Exception as e:
@@ -99,12 +103,8 @@ class Dyflexis:
         self.driver = None
         return eventData
 
-    def getRooster(self, _progressbarCallback=None):
+    def getRooster(self, _progressbarCallback=None, period=None, baseData=None):
 
-        # calendarNextMonthButton = self.calendar.find_element(by=By.TAG_NAME, value='thead').find_elements(by=By.TAG_NAME,
-        #                                                                                                  value='a')
-        ## bovenstaand gebruiken om de 2 urls te vinden in de eerste th
-        # print(calendarNextMonthButton[0].get_attribute('href'))
         # todo get rooster today en next month
         # print(calendarNextMonthButton[1].get_attribute('href'))
         # self.driver.get(calendarNextMonthButton[1].get_attribute('href'))
@@ -114,17 +114,27 @@ class Dyflexis:
 
         if _progressbarCallback:
             _progressbarCallback(startProgress)
-        self.driver.get(config["routes"]["roosterUrl"])
+        route = config['routes']['roosterUrl']
+        if period != None:
+            route = route + '?periode=' + period
+        else:
+            period = arrow.get(tzinfo=self.tz).format('YYYY-MM')
+        self.driver.get(route)
         WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "main-bar-inner")))
         calendar = self.driver.find_element(by=By.CLASS_NAME, value='calender')
 
         print('de maand word uitgelezen')
         if _progressbarCallback:
             _progressbarCallback(6)
-        returnArray = []
-        assignmentsCounter = 0
-        eventsCounter = 0
-        agendaCounter = 0
+        if (baseData != None):
+            returnArray = baseData
+        else:
+            returnArray = {
+                "assignments": 0,
+                "agenda": 0,
+                "events": 0,
+                "list": []
+            }
 
         body = calendar.find_element(by=By.TAG_NAME, value='tbody')
         rows = body.find_elements(by=By.TAG_NAME, value='tr')
@@ -138,8 +148,18 @@ class Dyflexis:
                 print('\tkolom word uitgelezen\t' + column.text[0:2])
 
                 # als de datum in het verleden ligt lezen we hem niet uit
+                startOfMonth = arrow.get(period, tzinfo=self.tz).replace(day=1, hour=0, minute=0, second=0)
+                endOfMonth = arrow.get(period, tzinfo=self.tz).shift(months=1, minutes=-1)
+                eventDate = arrow.get(column.get_attribute('title'), tzinfo=self.tz)
+                pprint((" start vs event" ,startOfMonth > eventDate ,"end vs date ",endOfMonth < eventDate))
+                pprint((startOfMonth , eventDate, endOfMonth))
+                if startOfMonth > eventDate or endOfMonth < eventDate:
+                    print('\t\t skipped: wrong month')
+                    continue
+
                 if not (arrow.get(column.get_attribute('title'), tzinfo=self.tz) >
                         arrow.now().replace(hour=0, minute=0).shift(days=-1)):
+                    print('\t\t skipped: before today')
                     continue
                 ## find events aka shows
                 events = column.find_elements(by=By.CLASS_NAME, value='evt')
@@ -181,7 +201,7 @@ class Dyflexis:
                     for agenda in agendas:
                         aggList.append({"id": agenda.get_attribute('uo'), "text": agenda.text})
 
-                returnArray.append(
+                returnArray['list'].append(
                     {
                         "date": column.get_attribute('title'),
                         "text": column.text,
@@ -189,9 +209,9 @@ class Dyflexis:
                         'assignments': assList,
                         'agenda': aggList,
                     })
-                eventsCounter = eventsCounter + len(eventList)
-                assignmentsCounter = assignmentsCounter + len(assList)
-                agendaCounter = agendaCounter + len(aggList)
+                returnArray['events'] =returnArray['events'] + len(eventList)
+                returnArray['assignments'] = returnArray['assignments']+ len(assList)
+                returnArray['agenda'] = returnArray['agenda']+ len(aggList)
                 ##progress for column
                 if _progressbarCallback:
                     # gedeeld door 7 omdat er 7 dagen in de week zijn
@@ -205,12 +225,8 @@ class Dyflexis:
         print('done')
         if _progressbarCallback:
             _progressbarCallback(50)
-        return {
-            "assignments": assignmentsCounter,
-            "agenda": agendaCounter,
-            "events": eventsCounter,
-            "list": returnArray
-        }
+
+        return returnArray
 
     def elementArrayToIcs(self, elementArray, _progressbarCallback=None):
         # 75 ->100
