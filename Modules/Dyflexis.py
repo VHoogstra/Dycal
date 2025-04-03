@@ -12,6 +12,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 
 from Exceptions.BadLoginException import BadLoginException
+from Modules.Constants import Constants
 from Modules.Logger import Logger
 
 
@@ -93,7 +94,7 @@ class Dyflexis:
       self.driver = None
       raise e
 
-    logger.toFile(location='logs/latestCalendarData.json', variable=eventData)
+    logger.toFile(location=Constants.logPrefix+ Constants.dyflexisJsonFilename, variable=eventData)
     self.driver.quit()
     self.driver = None
     return eventData

@@ -1,5 +1,7 @@
 import io
 import json
+
+from Modules.Constants import Constants
 from Modules.Logger import Logger
 import os.path
 
@@ -7,7 +9,7 @@ class ConfigLand:
 
     def __init__(self, useConfigFile = 1):
         self.useConfigFile = useConfigFile
-        self.fileName = "./config.json"
+        self.fileName = Constants.resource_path("config.json")
         self.Config = {
             "dyflexis": {"username": "", "password": ""},
             "ics": {"url": ""},

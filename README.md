@@ -2,7 +2,6 @@
 een python script met interface die dyflexis uitleest en omzet naar een ICS voor agenda's
 
 # todo's
-- save as opend achter scherm
 - info enters komt op apple raar uit...
 - als er 2 agenda items zijn, check of deze in dezeflde shift vallen en zo ja, voeg ze in de juiste volgorde toe aan ge agenda
 - github uitlezen op versions? als ik version tracking wil gaan doen natuurlijk
@@ -29,4 +28,5 @@ agenda
 events:
     evenementen/verhuringen vanuit dyflexis
 
-pyinstaller.exe --onefile --windowed --icon= YOUR_ICON.ico YOUR_APP_NAME.py
+pyinstaller --onefile --windowed --specpath=build --name=Dyflexis-calendar-ics --icon=favicon.icns Main.py
+pyinstaller --onedir --windowed --specpath=build --name=Dyflexis-calendar-ics --noconfirm --icon=favicon.icns Main.py

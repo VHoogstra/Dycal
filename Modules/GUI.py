@@ -13,6 +13,7 @@ from Modules.ConfigLand import ConfigLand
 from Modules.Constants import Constants
 from Modules.Dyflexis import Dyflexis
 from Modules.DyflexisDetails import DyflexisDetails
+from Modules.InfoScreen import InfoScreen
 from Modules.Logger import Logger
 from Modules.ICS import ICS
 
@@ -22,6 +23,7 @@ class Gui(tk.Frame):
   calendar = None
   eventDate = {}
   dyflexisMessage = "test "
+  infoScreen = None
 
   def __init__(self, master=None):
     tk.Frame.__init__(self, master)
@@ -32,10 +34,8 @@ class Gui(tk.Frame):
     self.grid(column=0, row=0, sticky=tk.NSEW)
 
     self.master.title('Dyflexis -> ICS calendar')
-    img = tk.PhotoImage(file='favicon-96x96.png')
-    self.master.tk.call('wm', 'iconphoto', self.master._w, img)
 
-    self.master.attributes("-topmost", True)
+    # self.master.attributes("-topmost", True)
 
     w = 430  # width for the Tk root
     h = 630  # height for the Tk root
@@ -54,7 +54,6 @@ class Gui(tk.Frame):
     self.createPeriods()
     self.createWidgets()
     self.config = ConfigLand()
-
     self.master.lift()
     index = 6
     for period in self.periods:
@@ -62,6 +61,16 @@ class Gui(tk.Frame):
       self.createLoader(self.dyflexisFrame, 1, self.periods[period], grid)
       index += 1
 
+  def closingInfoScreen(self):
+    self.infoScreen.destroy()
+    self.infoScreen = None
+
+  def openInfoScreen(self):
+    if self.infoScreen == None:
+      self.infoScreen = InfoScreen()
+      self.infoScreen.protocol("WM_DELETE_WINDOW", self.closingInfoScreen)
+    else:
+      self.infoScreen.up()
   def createWidgets(self):
     self.mainFrame = ctk.CTkScrollableFrame(self, width=410, height=620)
     self.mainFrame.grid(column=0, row=0, sticky=tk.NSEW)
@@ -70,11 +79,14 @@ class Gui(tk.Frame):
     self.mainFrame.columnconfigure([0, 1, 2], weight=1)
     self.mainFrame.rowconfigure(1, minsize=10)
 
-    self.configLoad = ctk.CTkButton(self.mainFrame, text='Laad uit config', command=self.loadConfig)
-    self.configLoad.grid(row=0, column=0, sticky=tk.N + tk.W, padx=5, pady=5)
-    self.save = ctk.CTkButton(self.mainFrame, text='save naar config', command=self.saveConfig)
-    self.save.grid(row=0, column=2, sticky=tk.N + tk.E, padx=5, pady=5)
+    self.configLoad = ctk.CTkButton(self.mainFrame, text='info', command=self.openInfoScreen)
+    self.configLoad.grid(row=0, column=2, sticky=tk.N + tk.E, padx=5, pady=5)
 
+
+
+    self.segmentedButtonSave = ctk.CTkSegmentedButton(self.mainFrame, values=["laad uit config", "save naar config"],
+                                                         command=self.segmented_button_callback)
+    self.segmentedButtonSave.grid(row=0, column=0,columnspan=2, sticky=tk.N + tk.W, padx=5, pady=5)
     # row 3
     label = tk.Label(text='Dyflexis', fg="white", bg=Constants.zaantheaterColor, width=10, height=1, )
     self.dyflexisFrame = tk.LabelFrame(self.mainFrame, labelwidget=label, bg=Constants.zaantheaterColor, padx=10,
@@ -179,6 +191,15 @@ class Gui(tk.Frame):
                          columnspan=4,
                          sticky=tk.NSEW)
 
+  def segmented_button_callback(self,selection):
+    #reset buttons so you can press one again
+    self.segmentedButtonSave.set(value=4)
+    if selection == "laad uit config":
+      self.loadConfig()
+    if selection=="save naar config":
+      self.saveConfig()
+
+
   def createLabel(self, text, parent=None, **kwargs):
     if parent == None:
       parent = self
@@ -259,7 +280,7 @@ class Gui(tk.Frame):
         periodsToRun.append(period)
         self.updateDyflexisProgressBar(0,period)
     pprint(periodsToRun)
-
+    self.lift()
     try:
       self.eventData = self.dyflexis.run(
         _progressbarCallback=self.updateDyflexisProgressBar,
