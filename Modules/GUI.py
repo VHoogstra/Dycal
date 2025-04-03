@@ -257,6 +257,7 @@ class Gui(tk.Frame):
     for period in self.periods:
       if (self.periods[period]['on'].get()):
         periodsToRun.append(period)
+        self.updateDyflexisProgressBar(0,period)
     pprint(periodsToRun)
 
     try:
