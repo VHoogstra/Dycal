@@ -2,3 +2,4 @@ selenium
 requests
 ics
 customtkinter
+python-dotenv

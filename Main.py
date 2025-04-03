@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import sys
 import traceback
 
@@ -6,6 +7,8 @@ from Modules.ConfigLand import ConfigLand
 from Modules.GUI import Gui
 from Modules.Logger import Logger
 from Modules.Dyflexis import Dyflexis
+from dotenv import load_dotenv
+
 
 #https://tkdocs.com/shipman/index-2.html
 ######## Main #########
@@ -36,6 +39,10 @@ from Modules.Dyflexis import Dyflexis
 # for event in events:
 #     print(dyflexis.eventNameParser(event,assignments))
 # test = input(' test')
+
+load_dotenv()
+# print(os.getenv('LOGIN_URL'))
+
 try:
     app = Gui()
     app.mainloop()
