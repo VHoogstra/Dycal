@@ -60,7 +60,6 @@ class Gui(tk.Frame):
     for period in self.periods:
       grid = dict(column=0, row=index)
       self.createLoader(self.dyflexisFrame, 1, self.periods[period], grid)
-      print(index, period)
       index += 1
 
   def createWidgets(self):
@@ -170,7 +169,7 @@ class Gui(tk.Frame):
                   text='Genereer ICS',
                   command=self.generateICS).grid(row=3, column=0, columnspan=3, pady=10,sticky=tk.NSEW)
 
-    tk.Message(IcsConfigurationFrame,
+    self.ICSMessage= tk.Message(IcsConfigurationFrame,
                text='nog geen informatie',
                fg='white', bg=Constants.zaantheaterColor,
                anchor=tk.W,
@@ -328,7 +327,21 @@ class Gui(tk.Frame):
     if icsdata is None:  # asksaveasfile return `None` if dialog closed with "cancel".
       return
       # todo throw error?
-    data = self.calendar.generateToICS(self.eventData['shift'])
+    try:
+        data = self.calendar.generateToICS(self.eventData['shift'])
+    except Exception as e:
+        Message = ('Er ging iets mis bij het genereren van ICS: ')
+        Logger().log(str(type(e)))
+        if hasattr(e, 'message'):
+            Message = Message + e.message
+            Logger().log((e.message))
+        else:
+            Message = Message + str(e)
+        Logger().log((traceback.format_exc()))
+
+        self.ICSMessage.config(text=Message, bg='red', fg='white')
+        raise e
+
     icsdata.writelines(data)
     icsdata.close()
 

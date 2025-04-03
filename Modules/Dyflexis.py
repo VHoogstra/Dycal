@@ -256,7 +256,6 @@ class Dyflexis:
       if (dates['text'] == ""):
         continue
       for assignments in dates['assignments']:
-        description = self.DESCRIPTION_PREFIX + "\n"
         if assignments['text'] == "" or assignments['tijd'] == '':
           continue
         ## start date and time
@@ -272,25 +271,19 @@ class Dyflexis:
         print(" \t" + assignments['text'])
 
         for event in dates['events']:
+          tempName,tempDescription = self.eventNameParser(event,assignments)
+          if tempName is not tempDescription is not None:
+            name = tempName
+            description = tempDescription
 
-          # look in location names for the shift name
-          tuplet = [item for item in self.LOCATION_NAMES if
-                    item[0].upper() in event['text'].upper()]
-          ### look in the event for the event search
-          if (len(tuplet) != 0):
-            name = ""
-            # pak de 2e waarde van de tuplet uit location names
-            if tuplet[0][1].upper() in event['text'].upper():
-              name = name + event['text']
-              description = description + event['description']
-          else:
-            ##bij td is de preset Zaandam > 60 Technische Dienst > Grote zaal
-            search = [match.start() for match in re.finditer('>', assignments['text'])]
-            # get the index from the > and add 1 to it so its not showing
-            indexIs = search[len(search) - 1] + 1
-            name = assignments['text'][indexIs:].lstrip()
-          if (len(name) > self.MAX_NAME_LENGTH):
-            name = name[0:self.MAX_NAME_LENGTH] + "..."
+        if name is None or description is None:
+          ##bij td is de preset Zaandam > 60 Technische Dienst > Grote zaal
+          search = [match.start() for match in re.finditer('>', assignments['text'])]
+          # get the index from the > and add 1 to it so its not showing
+          indexIs = search[len(search) - 1] + 1
+          name = assignments['text'][indexIs:].lstrip()
+          description = self.DESCRIPTION_PREFIX
+
         shift.append({
           'date': startDate.format('YYYY-MM-DD'),
           "start_date": startDate.format('YYYY-MM-DDTHH:mm:ssZZ'),  # 20250321T090000Z
@@ -304,14 +297,19 @@ class Dyflexis:
     elementArray["shift"] = shift
     return elementArray
 
-  def test(self):
-    config = self.config.Config
-    self.driver.get(config["routes"]["roosterUrl"])
-    WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "main-bar-inner")))
-    event = self.driver.find_element(by=By.CSS_SELECTOR, value="div[uo='event://1698']")
-    event.click()
-    time.sleep(1)
-    popup = self.driver.find_element(by=By.CSS_SELECTOR, value="div.c-rooster2.a-info")
-    divWithInfo = popup.find_elements(by=By.TAG_NAME, value='div')[2]
-    pprint(divWithInfo.text)
-    # todo, click op event en dan daar de tekst uit slepen
+  def eventNameParser(self,event,assignment):
+    # ik moet aan de hand van ass beslissen of ik een naam maak of niet
+    description = None
+    name =None
+    # look in location names for the shift name
+    tuplet = [item for item in self.LOCATION_NAMES if
+              item[1].upper() in event['text'].upper()]
+    ### look in the event for the event search
+    if len(tuplet) != 0 and tuplet[0][0].upper() in assignment['text'].upper():
+      # pak de 2e waarde van de tuplet uit location names
+      name = event['text']
+      description = self.DESCRIPTION_PREFIX + "\n" + event['description']
+      if (name !=None and len(name) > self.MAX_NAME_LENGTH):
+        name = name[0:self.MAX_NAME_LENGTH] + "..."
+
+    return name,description

@@ -1,24 +1,17 @@
 # dyflexis-calendar-ics
-a python script to read planning from dyflexis and export as ICS
+een python script met interface die dyflexis uitleest en omzet naar een ICS voor agenda's
 
-this script shall first read the webpage from Dyflexis.com and read the data
+# todo's
+- save as opend achter scherm
+- info enters komt op apple raar uit...
+- als er 2 agenda items zijn, check of deze in dezeflde shift vallen en zo ja, voeg ze in de juiste volgorde toe aan ge agenda
+- github uitlezen op versions? als ik version tracking wil gaan doen natuurlijk
+- reset progressbars bij start uitlezen
+- terugkoppeling bij ICS file kiezen en uploaden
 
-todo, click op event en dan daar de tekst uit slepen
-flux-panel flux-ubuntu
-    parrent
-flx-middle->flx-canvas padded
-vpaned
-
-
-
-
-lijkt er op alsof de ics niet alle data na loopt.. mis de 23e bv maar staat wel in de json
-
+# ter dev info
 https://pyinstaller.org/en/stable/
-das een goeie, custom tkinter ook
 
-
-als er 2 agenda items zijn, check of deze in dezeflde shift vallen en zo ja, voeg ze in de juiste volgorde toe aan ge agenda
 
 # regels
 1. deze software zal evenementen vanaf 24 uur voor nu pakken en niet eerder
