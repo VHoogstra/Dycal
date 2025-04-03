@@ -101,7 +101,6 @@ class Gui(tk.Frame):
       columnspan=1,
       pady=15
     )
-    # todo nog iets met de progressbar doen
     self.dyflexisMessage = tk.Message(self.dyflexisFrame,
                                       text="Nog geen informatie",
                                       fg='white', bg=Constants.zaantheaterColor,
@@ -111,9 +110,8 @@ class Gui(tk.Frame):
                                       width=400,
                                       relief=tk.SUNKEN,
 
-
                                       )
-    self.dyflexisMessage.grid(row=14, column=0, columnspan=2, sticky=tk.NSEW,pady=5)
+    self.dyflexisMessage.grid(row=14, column=0, columnspan=2, sticky=tk.NSEW, pady=5)
     ctk.CTkButton(self.dyflexisFrame,
                   text='details',
                   command=self.openDyflexisDetails,
@@ -139,7 +137,7 @@ class Gui(tk.Frame):
                                columnspan=3,
                                sticky=tk.NSEW,
                                padx=5, pady=5)
-    IcsConfigurationFrame.columnconfigure([0,2], weight=1)
+    IcsConfigurationFrame.columnconfigure([0, 2], weight=1)
     IcsConfigurationFrame.columnconfigure([1], weight=5)
 
     iscInfoText = "Een ICS bestand kan gegenereerd worden zonder een bestaand bestand te openen, echter als je twee keer dezelfde maand draait zal je dubbele afspraken krijgen.\nOmdat dit onpraktisch is kan je een link naar een openbare ics file toevoegen OF een geëxporteerd bestand uploaden. \nWij zullen in de afspraken zoeken naar dyflexis evenementen (door het ID in de omschrijving) en deze updaten"
@@ -147,9 +145,9 @@ class Gui(tk.Frame):
                          text=iscInfoText,
                          fg='white',
                          bg=Constants.zaantheaterColor,
-                         relief=tk.SUNKEN,anchor=tk.W,
+                         relief=tk.SUNKEN, anchor=tk.W,
                          width=360)
-    icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW,pady=5)
+    icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW, pady=5)
 
     self.createLabel(text="ics url",
                      parent=IcsConfigurationFrame).grid(row=1, column=0, sticky=tk.NSEW)
@@ -167,19 +165,19 @@ class Gui(tk.Frame):
                                                sticky=tk.NSEW)
     ctk.CTkButton(IcsConfigurationFrame,
                   text='Genereer ICS',
-                  command=self.generateICS).grid(row=3, column=0, columnspan=3, pady=10,sticky=tk.NSEW)
+                  command=self.generateICS).grid(row=3, column=0, columnspan=3, pady=10, sticky=tk.NSEW)
 
-    self.ICSMessage= tk.Message(IcsConfigurationFrame,
-               text='nog geen informatie',
-               fg='white', bg=Constants.zaantheaterColor,
-               anchor=tk.W,
-               justify=tk.LEFT,
-               relief=tk.SUNKEN,
-                                     width=360).grid(row=5,
-                                     column=0,
-                                     columnspan=4,
-                                     sticky=tk.NSEW)
-
+    self.ICSMessage = tk.Message(IcsConfigurationFrame,
+                                 text='nog geen informatie',
+                                 fg='white', bg=Constants.zaantheaterColor,
+                                 anchor=tk.W,
+                                 justify=tk.LEFT,
+                                 relief=tk.SUNKEN,
+                                 width=360)
+    self.ICSMessage.grid(row=5,
+                         column=0,
+                         columnspan=4,
+                         sticky=tk.NSEW)
 
   def createLabel(self, text, parent=None, **kwargs):
     if parent == None:
@@ -290,7 +288,9 @@ class Gui(tk.Frame):
     events = str(self.eventData['events'])
     start_date = self.eventData['list'][0]['date']
     end_date = self.eventData['list'][len(self.eventData['list']) - 1]['date']
-    Message = f"Shifts: \t\t{assignments} \nAgenda: \t\t{agenda} \nEvents: \t\t{events} \nperiode: \t\t{start_date} tot {end_date}"
+    #todo check het verschil tussen windows en apple hier.. op windows gaat het goed maar op apple hebben we een extra whitespace?
+    Message = f"Shifts: \t{assignments} \nAgenda: \t{agenda} \nEvents: \t{events} \nperiode: \t{start_date} tot {end_date}"
+    pprint(Message)
     self.dyflexisMessage.config(text=Message, bg='green')
 
   def uploadICS(self):
@@ -328,19 +328,19 @@ class Gui(tk.Frame):
       return
       # todo throw error?
     try:
-        data = self.calendar.generateToICS(self.eventData['shift'])
+      data = self.calendar.generateToICS(self.eventData['shift'])
     except Exception as e:
-        Message = ('Er ging iets mis bij het genereren van ICS: ')
-        Logger().log(str(type(e)))
-        if hasattr(e, 'message'):
-            Message = Message + e.message
-            Logger().log((e.message))
-        else:
-            Message = Message + str(e)
-        Logger().log((traceback.format_exc()))
+      Message = ('Er ging iets mis bij het genereren van ICS: ')
+      Logger().log(str(type(e)))
+      if hasattr(e, 'message'):
+        Message = Message + e.message
+        Logger().log((e.message))
+      else:
+        Message = Message + str(e)
+      Logger().log((traceback.format_exc()))
 
-        self.ICSMessage.config(text=Message, bg='red', fg='white')
-        raise e
+      self.ICSMessage.config(text=Message, bg='red', fg='white')
+      raise e
 
     icsdata.writelines(data)
     icsdata.close()

@@ -10,7 +10,7 @@ een python script met interface die dyflexis uitleest en omzet naar een ICS voor
 - reset progressbars bij start uitlezen
 - terugkoppeling bij ICS file kiezen en uploaden
 - 10 mei, geannuleerd. iets toeveoegen dat ik die niet mee neem
-- progressbar loopt niet goed
+
     
 # ter dev info
 https://pyinstaller.org/en/stable/

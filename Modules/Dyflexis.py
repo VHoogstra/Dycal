@@ -118,8 +118,6 @@ class Dyflexis:
     calendar = self.driver.find_element(by=By.CLASS_NAME, value='calender')
 
     print('de maand word uitgelezen')
-    if _progressbarCallback:
-      _progressbarCallback(6,period)
 
     if (len(baseData) != 0):
       returnArray = baseData
@@ -134,7 +132,8 @@ class Dyflexis:
     body = calendar.find_element(by=By.TAG_NAME, value='tbody')
     rows = body.find_elements(by=By.TAG_NAME, value='tr')
 
-    progressRowCount = (endProgress - startProgress) / len(rows)
+    # het aantal weken gedeelt door het aantal dagen wat we scannen
+    progressRowCount = ((endProgress - startProgress) / len(rows))/7
 
     for row in rows:
       print('regel word uitgelezen')
@@ -184,7 +183,6 @@ class Dyflexis:
                         item[0].upper() in assignement['text'].upper()]
               if (len(tuplet) != 0):
                 if (tuplet[0][1].upper() in event.text.upper()):
-                  print('ja')
                   # click event to open info
                   event.click()
                   WebDriverWait(self.driver, 20).until(
@@ -220,15 +218,16 @@ class Dyflexis:
         returnArray['events'] = returnArray['events'] + len(eventList)
         returnArray['assignments'] = returnArray['assignments'] + len(assList)
         returnArray['agenda'] = returnArray['agenda'] + len(aggList)
+
         ##progress for column
         if _progressbarCallback:
           # gedeeld door 7 omdat er 7 dagen in de week zijn
-          startProgress = startProgress + (progressRowCount / 7)
+          startProgress = startProgress + (progressRowCount)
           _progressbarCallback(startProgress,period)
       # progress for row
-      if _progressbarCallback:
-        startProgress = startProgress + progressRowCount
-        _progressbarCallback(startProgress,period)
+      # if _progressbarCallback:
+      #   startProgress = startProgress + progressRowCount
+      #   _progressbarCallback(startProgress,period)
 
     print('done')
     if _progressbarCallback:
