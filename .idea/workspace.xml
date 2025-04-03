@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ca29025-7851-45c1-a393-1f2ec9465a24" name="Changes" comment="nog wat te doen maar goeie stappen gemaakt">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="0ca29025-7851-45c1-a393-1f2ec9465a24" name="Changes" comment="Added .env vars voor de toekomst">
+      <change afterPath="$PROJECT_DIR$/Tests/DyflexisTest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dyflexis-calendar-ics.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Modules/Dyflexis.py" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/Dyflexis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Modules/GUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/Modules/GUI.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,6 +22,7 @@
       <list>
         <option value="Python class" />
         <option value="Python Script" />
+        <option value="Python Unit Test" />
       </list>
     </option>
   </component>
@@ -52,27 +52,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
-    &quot;Python.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.installer.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/vince/PycharmProjects/dyflexis-calendar-ics&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Python tests.Python tests for DyflexisTest.MyTestCase.testEventNameParser.executor": "Run",
+    "Python.Main.executor": "Run",
+    "Python.installer.executor": "Run",
+    "Python.test.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/vince/PycharmProjects/dyflexis-calendar-ics",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\vince\PycharmProjects\dyflexis-calendar-ics" />
@@ -81,7 +82,7 @@
       <recent name="V:\kdrive\python\Dyslexis\Modules" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python tests.Python tests for DyflexisTest.MyTestCase.testEventNameParser">
     <configuration name="Main" type="PythonConfigurationType" factoryName="Python" singleton="true" nameIsGenerated="true">
       <module name="dyflexis-calendar-ics" />
       <option name="ENV_FILES" value="" />
@@ -105,8 +106,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Python tests for DyflexisTest.MyTestCase.testEventNameParser" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+      <module name="dyflexis-calendar-ics" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;DyflexisTest.MyTestCase.testEventNameParser&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests for DyflexisTest.MyTestCase.testEventNameParser" />
         <item itemvalue="Python.Main" />
       </list>
     </recent_temporary>
@@ -155,7 +173,8 @@
       <workItem from="1743415415593" duration="20376000" />
       <workItem from="1743437288842" duration="6169000" />
       <workItem from="1743669624561" duration="469000" />
-      <workItem from="1743670640117" duration="2974000" />
+      <workItem from="1743670640117" duration="3773000" />
+      <workItem from="1743675981390" duration="2828000" />
     </task>
     <task id="LOCAL-00001" summary="aanpassingen aan de layout, moet nog aan gewerkt worden. een opzet voor threads maar dat werkt nog niet mooi, todo">
       <option name="closed" value="true" />
@@ -173,7 +192,23 @@
       <option name="project" value="LOCAL" />
       <updated>1743199159251</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="logging in main.py toegevoegd en naar log geschreven. bug gefixt met naam en omschrijving en readme aangepast">
+      <option name="closed" value="true" />
+      <created>1743674643596</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743674643596</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added .env vars voor de toekomst">
+      <option name="closed" value="true" />
+      <created>1743675308425</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1743675308425</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,7 +228,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="aanpassingen aan de layout, moet nog aan gewerkt worden. een opzet voor threads maar dat werkt nog niet mooi, todo" />
     <MESSAGE value="nog wat te doen maar goeie stappen gemaakt" />
-    <option name="LAST_COMMIT_MESSAGE" value="nog wat te doen maar goeie stappen gemaakt" />
+    <MESSAGE value="logging in main.py toegevoegd en naar log geschreven. bug gefixt met naam en omschrijving en readme aangepast" />
+    <MESSAGE value="Added .env vars voor de toekomst" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added .env vars voor de toekomst" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -207,7 +244,8 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/dyflexis_calendar_ics$Main.coverage" NAME="Main Coverage Results" MODIFIED="1743674229622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/dyflexis_calendar_ics$Main.coverage" NAME="Main Coverage Results" MODIFIED="1743697190237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/dyflexis_calendar_ics$.coverage" NAME=" Coverage Results" MODIFIED="1743697355023" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/Tests" />
     <SUITE FILE_PATH="coverage/Dyslexis$installer.coverage" NAME="installer Coverage Results" MODIFIED="1742323185652" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Dyslexis$Main.coverage" NAME="Main Coverage Results" MODIFIED="1742500279509" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Dyslexis$test.coverage" NAME="test Coverage Results" MODIFIED="1742323008407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

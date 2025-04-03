@@ -256,6 +256,8 @@ class Dyflexis:
       if (dates['text'] == ""):
         continue
       for assignments in dates['assignments']:
+        name = None
+        description = None
         if assignments['text'] == "" or assignments['tijd'] == '':
           continue
         ## start date and time
@@ -301,9 +303,11 @@ class Dyflexis:
     # ik moet aan de hand van ass beslissen of ik een naam maak of niet
     description = None
     name =None
+    if "GEANNULEERD".upper() in event['text'].upper():
+      return name,description
     # look in location names for the shift name
     tuplet = [item for item in self.LOCATION_NAMES if
-              item[1].upper() in event['text'].upper()]
+              item[1].upper() in event['text'][0:5].upper()]
     ### look in the event for the event search
     if len(tuplet) != 0 and tuplet[0][0].upper() in assignment['text'].upper():
       # pak de 2e waarde van de tuplet uit location names
