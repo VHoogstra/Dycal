@@ -316,6 +316,7 @@ class Gui(tk.Frame):
     self.dyflexisMessage.config(text=Message, bg='green')
 
   def uploadICS(self):
+    self.ICSMessage.config( bg=Constants.zaantheaterColor)
     if self.calendar is None:
       self.calendar = ICS()
     print('uploadIcs')
@@ -324,21 +325,56 @@ class Gui(tk.Frame):
       title="ICS bestand van uw kalender app",
       initialdir=os.path.expanduser('~/Downloads'))
     if icsdata is not None:
-      self.calendar.connectToICS(file=icsdata)
-      ##todo give feedback
+      try:
+        self.calendar.connectToICS(file=icsdata)
+      except Exception as e:
+        Message = ('Er ging iets mis bij het openen van het ICS bestand: ')
+        Logger().log(str(type(e)))
+        if hasattr(e, 'message'):
+          Message = Message + e.message
+          Logger().log((e.message))
+        else:
+          Message = Message + str(e)
+        Logger().log((traceback.format_exc()))
+        self.ICSMessage.config(text=Message, bg='red', fg='white')
+        raise e
+
+    eventCount = len(self.calendar.calendar.events)
+    self.ICSMessage.config(text=f"{eventCount} agenda items gevonden via bestand")
 
   def loadICS(self):
+    self.ICSMessage.config( bg=Constants.zaantheaterColor)
     if self.calendar is None:
       self.calendar = ICS()
     if self.icsUrl.get() is not None:
-      self.calendar.connectToICS(url=self.icsUrl.get())
+      try:
+
+        self.calendar.connectToICS(url=self.icsUrl.get())
+
+      except Exception as e:
+        Message = ('Er ging iets mis bij het openen van de ICS Link: ')
+        Logger().log(str(type(e)))
+        if hasattr(e, 'message'):
+          Message = Message + e.message
+          Logger().log((e.message))
+        else:
+          Message = Message + str(e)
+        Logger().log((traceback.format_exc()))
+        self.ICSMessage.config(text=Message, bg='red', fg='white')
+        raise e
     print('loadIcs')
-    ##todo give feedback
+    eventCount = len(self.calendar.calendar.events)
+    self.ICSMessage.config(text=f"{eventCount} agenda items gevonden via de link")
 
   def generateICS(self):
+    self.ICSMessage.config( bg=Constants.zaantheaterColor)
     print('generateICS')
     if self.calendar is None:
       self.calendar = ICS()
+    if self.eventData == None:
+      self.ICSMessage.config(text="Kan geen ICS bestand genereren als er geen evenementen data is, lees eerst Dyflexis uit.",
+                             bg='orange')
+      return
       # raise Exception('No calendar data to export')
     print('ics generated')
     name = "Dyflexis-ICS- " + arrow.now().format('YYYY-MM-DD')
@@ -348,7 +384,6 @@ class Gui(tk.Frame):
       initialfile=name)
     if icsdata is None:  # asksaveasfile return `None` if dialog closed with "cancel".
       return
-      # todo throw error?
     try:
       data = self.calendar.generateToICS(self.eventData['shift'])
     except Exception as e:
@@ -395,7 +430,6 @@ class Gui(tk.Frame):
       })
 
   def createLoader(self, parent, variable, period, grid):
-
     grid.update(padx=0, pady=3)
     checkbar = ctk.CTkCheckBox(parent,
                                text=period['period'],
