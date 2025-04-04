@@ -11,10 +11,15 @@ from Modules.Logger import Logger
 ######## Main #########
 
 Constants.cleanLogFolder()
+# print(sys.argv)
+# for arg in sys.argv:
+#     if "--headless" in arg:
+#         print("Headless mode")
 
 try:
     app = Gui()
     app.mainloop()
+
 except Exception as e:
     Message = ('Er ging iets mis in de mainloop: ')
     Logger().log(str(type(e)))

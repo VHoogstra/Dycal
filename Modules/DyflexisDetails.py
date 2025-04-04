@@ -8,10 +8,12 @@ from Modules.Constants import Constants
 
 
 class DyflexisDetails(tk.Toplevel):
+  eventData = None
   def __init__(self, eventData):
     tk.Toplevel.__init__(self)
     window_width = 500
     window_height = 400
+
     self.eventData = eventData
 
     # get screen dimension
@@ -66,17 +68,14 @@ class DyflexisDetails(tk.Toplevel):
     self.treeview.column('1', width=300, anchor=tk.W)
     self.treeview.column('2', width=120, anchor=tk.W)
 
-#todo wat als er geen data is? wat laat je dan zien
-    for shift in self.eventData['shift']:
-      pprint(shift)
-      self.treeview.insert(
-        '',
-        tk.END,
-        values=(shift['date'], shift['title'], shift['id']
-                )
-      )
-      # self.textbox.insert(tk.END, event['date']+"\n")
-
+    if self.eventData is not None:
+      for shift in self.eventData['shift']:
+        self.treeview.insert(
+          '',
+          tk.END,
+          values=(shift['date'], shift['title'], shift['id']
+                  )
+        )
 
     columns = ('date', 'title', 'id')
     self.dyflexisTree = ttk.Treeview(
@@ -97,21 +96,22 @@ class DyflexisDetails(tk.Toplevel):
     self.dyflexisTree.column('1',width=300,anchor=tk.W)
     self.dyflexisTree.column('2',width=120,anchor=tk.W)
 
-    for list in self.eventData['list']:
-      parent =self.dyflexisTree.insert(
-        '',
-        tk.END,
-        values=(list['date'],len(list['events'])+len(list['assignments']))
-      )
-      for event in list['events']:
-        self.dyflexisTree.insert(
-          parent,
+    if self.eventData is not None:
+      for list in self.eventData['list']:
+        parent =self.dyflexisTree.insert(
+          '',
           tk.END,
-          values=(' ' , event['text'], event['id'])
+          values=(list['date'],len(list['events'])+len(list['assignments']))
         )
-      for event in list['assignments']:
-        self.dyflexisTree.insert(
-          parent,
-          tk.END,
-          values=(' ' , event['text'], event['id'])
-        )
+        for event in list['events']:
+          self.dyflexisTree.insert(
+            parent,
+            tk.END,
+            values=(' ' , event['text'], event['id'])
+          )
+        for event in list['assignments']:
+          self.dyflexisTree.insert(
+            parent,
+            tk.END,
+            values=(' ' , event['text'], event['id'])
+          )

@@ -37,14 +37,14 @@ class Gui(tk.Frame):
 
     # self.master.attributes("-topmost", True)
 
-    w = 430  # width for the Tk root
-    h = 630  # height for the Tk root
+    w = 860  # width for the Tk root
+    h = 500  # height for the Tk root
 
     ws = self.master.winfo_screenwidth()
 
     hs = self.master.winfo_screenheight()
 
-    x = ws / 3
+    x = (ws / 2) - (w / 2)
     y = (hs / 2) - (h / 2)
 
     self.master.geometry('%dx%d+%d+%d' % (w, h, x, y))
@@ -72,7 +72,7 @@ class Gui(tk.Frame):
     else:
       self.infoScreen.up()
   def createWidgets(self):
-    self.mainFrame = ctk.CTkScrollableFrame(self, width=410, height=620)
+    self.mainFrame = ctk.CTkScrollableFrame(self, width=840, height=490)
     self.mainFrame.grid(column=0, row=0, sticky=tk.NSEW)
     self.mainFrame.configure(fg_color=Constants.zaantheaterColor)
 
@@ -80,13 +80,13 @@ class Gui(tk.Frame):
     self.mainFrame.rowconfigure(1, minsize=10)
 
     self.configLoad = ctk.CTkButton(self.mainFrame, text='info', command=self.openInfoScreen)
-    self.configLoad.grid(row=0, column=2, sticky=tk.N + tk.E, padx=5, pady=5)
+    self.configLoad.grid(row=0, column=5, sticky=tk.N + tk.E, padx=5, pady=5)
 
 
 
     self.segmentedButtonSave = ctk.CTkSegmentedButton(self.mainFrame, values=["laad uit config", "save naar config"],
                                                          command=self.segmented_button_callback)
-    self.segmentedButtonSave.grid(row=0, column=0,columnspan=2, sticky=tk.N + tk.W, padx=5, pady=5)
+    self.segmentedButtonSave.grid(row=0, column=0,columnspan=3, sticky=tk.N + tk.W, padx=5, pady=5)
     # row 3
     label = tk.Label(text='Dyflexis', fg="white", bg=Constants.zaantheaterColor, width=10, height=1, )
     self.dyflexisFrame = tk.LabelFrame(self.mainFrame, labelwidget=label, bg=Constants.zaantheaterColor, padx=10,
@@ -144,8 +144,8 @@ class Gui(tk.Frame):
                                           bg=Constants.zaantheaterColor,
                                           padx=10,
                                           pady=10)
-    IcsConfigurationFrame.grid(row=8,
-                               column=0,
+    IcsConfigurationFrame.grid(row=3,
+                               column=3,
                                columnspan=3,
                                sticky=tk.NSEW,
                                padx=5, pady=5)

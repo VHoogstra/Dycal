@@ -18,7 +18,8 @@ class InfoScreen(tk.Toplevel):
     tk.Toplevel.__init__(self)
     window_width = 500
     window_height = 400
-
+    self.background_color_primary= '#393534'
+    self.background_color_secondary= "#4a4747"
     # get screen dimension
     screen_width = self.winfo_screenwidth()
     screen_height = self.winfo_screenheight()
@@ -32,15 +33,15 @@ class InfoScreen(tk.Toplevel):
 
     # self.attributes("-topmost", True)
     self.title('Dyflexis Details')
-    self.configure(background=Constants.zaantheaterColor)
+    self.configure(background=self.background_color_primary)
     # self.resizable(False, False)
     frame = tk.Frame(self)
     frame.grid(column=0, row=0, sticky=tk.NSEW)
-    frame.configure(background=Constants.zaantheaterColor)
+    frame.configure(background=self.background_color_primary)
 
     tk.Message(frame,
                text="Deze applicatie is geschreven door Vincent Hoogstra in eigen tijd, Dyflexis zal altijd leidend blijven en het is mogelijk dat er bugs in de software staan. Er word geadviseerd om het ICS bestand dan ook niet in je hoofd agenda te stoppen maar in een losse agenda\n\n vragen en bug meldingen kunnen naar me.vincentvandetechniek.nl\n\n het helpt enorm als je de data exporteert naar een folder en het log bestand van de dag van de error naar mij toe stuurt\n\n tips,features of suggesties? gooi het op de mail!",
-               fg='white', bg=Constants.zaantheaterColor,
+               fg='white', bg=self.background_color_secondary,
                justify=tk.LEFT,
                anchor=tk.W,
                aspect=500,
@@ -50,7 +51,7 @@ class InfoScreen(tk.Toplevel):
     ctk.CTkButton(frame, text='Export Files', command=self.exportFiles).grid(column=1, row=1)
 
     self.release = tk.Message(frame,
-                              fg='white', bg=Constants.zaantheaterColor,
+                              fg='white', bg=self.background_color_secondary,
                               justify=tk.LEFT,
                               anchor=tk.W,
                               aspect=500,
