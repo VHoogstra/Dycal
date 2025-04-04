@@ -1,7 +1,9 @@
+import json
 import os
 import shutil
 import tkinter as tk
 import tkinter.ttk as ttk
+import urllib
 from pprint import pprint
 from tkinter import filedialog
 
@@ -44,8 +46,19 @@ class InfoScreen(tk.Toplevel):
                aspect=500,
                width=400,
                relief=tk.SUNKEN,
-               ).grid(column=0,row=0,columnspan=3,sticky=tk.NSEW,padx=10,pady=10)
-    ctk.CTkButton(frame,text='Export Files',command=self.exportFiles).grid(column=1, row=1)
+               ).grid(column=0, row=0, columnspan=3, sticky=tk.NSEW, padx=10, pady=10)
+    ctk.CTkButton(frame, text='Export Files', command=self.exportFiles).grid(column=1, row=1)
+
+    self.release = tk.Message(frame,
+                              fg='white', bg=Constants.zaantheaterColor,
+                              justify=tk.LEFT,
+                              anchor=tk.W,
+                              aspect=500,
+                              width=400,
+                              relief=tk.SUNKEN,
+                              )
+    self.release.grid(column=0, row=2, columnspan=3, sticky=tk.NSEW, padx=10, pady=10)
+    self.getVersion()
 
   def exportFiles(self):
     print(' export files')
@@ -59,5 +72,13 @@ class InfoScreen(tk.Toplevel):
 
     for file_name in file_names:
       shutil.move(os.path.join(source_dir, file_name), target_dir)
+
+  def getVersion(self):
+    link = Constants.githubVersionLink
+    f = urllib.request.urlopen(link)
+    gitVersions = json.loads(f.read())
+    versie = gitVersions[0]['name']
+    text = f"De meest recente versie is {versie}\nDe huidige versie is {Constants.version}"
+    self.release.config(text=text)
   def up(self):
     self.lift()

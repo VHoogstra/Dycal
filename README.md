@@ -4,8 +4,6 @@ een python script met interface die dyflexis uitleest en omzet naar een ICS voor
 # todo's
 - info enters komt op apple raar uit...
 - als er 2 agenda items zijn, check of deze in dezeflde shift vallen en zo ja, voeg ze in de juiste volgorde toe aan ge agenda
-- github uitlezen op versions? als ik version tracking wil gaan doen natuurlijk
-  - https://api.github.com/repos/VHoogstra/dyflexis-calendar-ics/releases
 - terugkoppeling bij ICS file kiezen en uploaden
 
     

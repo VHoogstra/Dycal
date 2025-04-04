@@ -5,11 +5,13 @@ import time
 
 
 class Constants():
+  version="v0.0.1"
   zaantheaterColor = "#7a4689"
   dyflexisMessage = "test "
   logPrefix = "logs/"
   logFileName = "log_" + time.strftime("%Y-%m-%d", time.gmtime()) + '.txt'
   dyflexisJsonFilename='latestCalendarData.json'
+  githubVersionLink ="https://api.github.com/repos/VHoogstra/dyflexis-calendar-ics/releases"
 
   def resource_path(relative):
     try:

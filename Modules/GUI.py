@@ -33,7 +33,7 @@ class Gui(tk.Frame):
     self.dyflexisProgressBarValue = tk.IntVar()
     self.grid(column=0, row=0, sticky=tk.NSEW)
 
-    self.master.title('Dyflexis -> ICS calendar')
+    self.master.title('Dyflexis -> ICS calendar '+Constants.version)
 
     # self.master.attributes("-topmost", True)
 
