@@ -43,7 +43,7 @@ class Dyflexis:
     endProgress = 5
     # progressbar 0 through 10
     config = self.config.Config
-    self.driver.get(config["routes"]["loginUrl"])
+    self.driver.get(Constants.Dyflexis["routes"]["login"])
     WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.ID, "username")))
 
     # wait for page load
@@ -65,11 +65,11 @@ class Dyflexis:
       # de inlog ging niet goed bij dyflexis
       raise BadLoginException("De login bij dyflexis was niet succesvol")
 
-    if (self.driver.current_url == config["routes"]["loginUrl"]):
+    if (self.driver.current_url == Constants.Dyflexis["routes"]["login"]):
       # inlog mis gegaan, fout geven
       print('er is iets mis gegaan bij het inloggen, zie het scherm')
       return False
-    if (self.driver.current_url == config["routes"]["homepageAfterLogin"]):
+    if (self.driver.current_url == Constants.Dyflexis["routes"]["homepage"]):
       print('login succesvol')
       return True
 
@@ -108,7 +108,7 @@ class Dyflexis:
     if _progressbarCallback:
       _progressbarCallback(startProgress,period)
 
-    route = config['routes']['roosterUrl']
+    route = Constants.Dyflexis['routes']['rooster']
     if period != None:
       route = route + '?periode=' + period
     else:

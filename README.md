@@ -4,12 +4,14 @@ een python script met interface die dyflexis uitleest en omzet naar een ICS voor
 # todo's
 - info enters komt op apple raar uit...
 - als er 2 agenda items zijn, check of deze in dezeflde shift vallen en zo ja, voeg ze in de juiste volgorde toe aan ge agenda
-- terugkoppeling bij ICS file kiezen en uploaden
-
-    
-# ter dev info
-https://pyinstaller.org/en/stable/
-
+  - even een test case voor schrijven?
+- bestand opslaan als en openen doen aan de hand van de laatste keer dat je dat in de app deed
+- config downloaden en uploaden? 
+  - dit ivm nieuwere versies
+- als de tijden in de omschrijving niet overeen komen met de agenda tijd iets aangeven
+- evenementen te verwijderen?? kan niet via ics
+- export naar csv zodat je ook gewerkte shifts mee kan nemen. mogelijkheid om een csv te updaten? 
+  - mogelijk ook excel?
 
 # regels
 1. deze software zal evenementen vanaf 24 uur voor nu pakken en niet eerder
@@ -19,6 +21,11 @@ https://pyinstaller.org/en/stable/
 3. de browser opent fullscreen, als data niet op het scherm staat kan hij het niet lezen namelijk. 
     deze manier zorgt er ook voor dat het zichtbaar is wat de app doet
 
+# disclaimer
+Deze applicatie is geschreven zodat het plannen van persoonlijke afspraken makkelijker is naast dyflexis. Wij zijn niet verantwoordelijk als het script een item mist 
+wat resulteert in afwezigheid of laat komen. Dyflexis is *altijd* lijdend. 
+Wij zijn ook niet verantwoordelijk als er dubbele afspraken in uw agenda komen door het verkeerd gebruik van het ICS bestand.
+
 shifts: 
     diensten die je moet werken
 agenda
@@ -26,5 +33,8 @@ agenda
 events:
     evenementen/verhuringen vanuit dyflexis
 
+
+# ter dev info
+https://pyinstaller.org/en/stable/
 pyinstaller --onefile --windowed --specpath=build --name=Dyflexis-calendar-ics --icon=favicon.icns Main.py
 pyinstaller --onedir --windowed --specpath=build --name=Dyflexis-calendar-ics --noconfirm --icon=favicon.icns Main.py

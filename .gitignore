@@ -4,3 +4,4 @@ config.json
 dist
 build
 logs/*
+credentials.json

@@ -4,6 +4,7 @@ import traceback
 
 from Modules.Constants import Constants
 from Modules.GUI import Gui
+from Modules.Google import Google
 from Modules.Logger import Logger
 
 
@@ -15,7 +16,9 @@ Constants.cleanLogFolder()
 # for arg in sys.argv:
 #     if "--headless" in arg:
 #         print("Headless mode")
-
+google = Google()
+google.main()
+sys.exit(0)
 try:
     app = Gui()
     app.mainloop()

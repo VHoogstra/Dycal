@@ -12,6 +12,14 @@ class Constants():
   logFileName = "log_" + time.strftime("%Y-%m-%d", time.gmtime()) + '.txt'
   dyflexisJsonFilename='latestCalendarData.json'
   githubVersionLink ="https://api.github.com/repos/VHoogstra/dyflexis-calendar-ics/releases"
+  timeZone = "Europe/Amsterdam"
+  Dyflexis={
+    "routes":{
+      "login": "https://app.planning.nu/zaantheater/login",
+      "rooster": "https://app.planning.nu/zaantheater/zaandam/rooster2/index2",
+      "homepage": "https://app.planning.nu/zaantheater/zaandam/"
+    }
+  }
 
   def resource_path(relative):
     try:
