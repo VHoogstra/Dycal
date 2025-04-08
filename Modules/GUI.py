@@ -115,15 +115,12 @@ class Gui(tk.Frame):
       columnspan=1,
       pady=15
     )
-    self.dyflexisMessage = tk.Message(self.dyflexisFrame,
+    self.dyflexisMessage = tk.Label(self.dyflexisFrame,
                                       text="Nog geen informatie",
                                       fg='white', bg=Constants.zaantheaterColor,
                                       justify=tk.LEFT,
                                       anchor=tk.W,
-                                      aspect=500,
-                                      width=400,
                                       relief=tk.SUNKEN,
-
                                       )
     self.dyflexisMessage.grid(row=14, column=0, columnspan=2, sticky=tk.NSEW, pady=5)
     ctk.CTkButton(self.dyflexisFrame,
@@ -135,11 +132,6 @@ class Gui(tk.Frame):
                          sticky=tk.E,
                          pady=10
                          )
-
-
-
-
-
 
 
   def segmented_button_callback(self, selection):
@@ -310,7 +302,7 @@ class Gui(tk.Frame):
     period.update(progressbar=progressBar)
 
   def loadFromBackup(self):
-    with open('logs/latestCalendarData.json', 'r') as fp:
+    with open('logs/latestCalendarData.json', 'r+') as fp:
       superValue = fp.read()
       self.eventData = json.loads(superValue)
       fp.close()

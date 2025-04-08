@@ -1,5 +1,6 @@
 import io
 import json
+import logging
 from pprint import pprint
 
 from Modules.Constants import Constants
@@ -10,6 +11,8 @@ import os.path
 class ConfigLand:
 
   def __init__(self, useConfigFile=1):
+    logger = logging.getLogger(__name__)
+
     self.useConfigFile = useConfigFile
     self.fileName = Constants.resource_path("config.json")
     self.Config = {

@@ -67,7 +67,7 @@ class InfoScreen(tk.Toplevel):
       title="ICS bestand van uw kalender app",
       initialdir=os.path.expanduser('~/Downloads'))
 
-    source_dir = Constants.resource_path(Logger.logPrefix)
+    source_dir = Constants.resource_path(Constants.logPrefix)
 
     file_names = os.listdir(source_dir)
 

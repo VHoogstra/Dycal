@@ -65,11 +65,11 @@ class Dyflexis:
       # de inlog ging niet goed bij dyflexis
       raise BadLoginException("De login bij dyflexis was niet succesvol")
 
-    if (self.driver.current_url == Constants.Dyflexis["routes"]["login"]):
+    if self.driver.current_url == Constants.getDyflexisRoutes("login"):
       # inlog mis gegaan, fout geven
       print('er is iets mis gegaan bij het inloggen, zie het scherm')
       return False
-    if (self.driver.current_url == Constants.Dyflexis["routes"]["homepage"]):
+    if self.driver.current_url == Constants.getDyflexisRoutes("homepage"):
       print('login succesvol')
       return True
 
@@ -108,7 +108,7 @@ class Dyflexis:
     if _progressbarCallback:
       _progressbarCallback(startProgress,period)
 
-    route = Constants.Dyflexis['routes']['rooster']
+    route = Constants.getDyflexisRoutes('rooster')
     if period != None:
       route = route + '?periode=' + period
     else:

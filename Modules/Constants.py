@@ -5,23 +5,28 @@ import time
 
 
 class Constants():
-  version="v0.0.1"
+  version = "v0.0.1"
   zaantheaterColor = "#7a4689"
   dyflexisMessage = "test "
   logPrefix = "logs/"
   logFileName = "log_" + time.strftime("%Y-%m-%d", time.gmtime()) + '.txt'
-  dyflexisJsonFilename='latestCalendarData.json'
-  githubVersionLink ="https://api.github.com/repos/VHoogstra/dyflexis-calendar-ics/releases"
+  dyflexisJsonFilename = 'latestCalendarData.json'
+  githubVersionLink = "https://api.github.com/repos/VHoogstra/dyflexis-calendar-ics/releases"
   timeZone = "Europe/Amsterdam"
-  Dyflexis={
-    "routes":{
-      "login": "https://app.planning.nu/zaantheater/login",
-      "rooster": "https://app.planning.nu/zaantheater/zaandam/rooster2/index2",
-      "homepage": "https://app.planning.nu/zaantheater/zaandam/"
+  Dyflexis = {
+    "routes": {
+      "login": "https://app.planning.nu/{location}/login",
+      "rooster": "https://app.planning.nu/{location}/zaandam/rooster2/index2",
+      "homepage": "https://app.planning.nu/{location}/zaandam/"
     }
   }
+  OrganisationName = 'zaantheater'
   defaultGoogleCalName = "ZTD -> Dyflexis"
-  DESCRIPTION_PREFIX ="=== CODE GENERATED BELOW ==="
+  DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="
+
+  @staticmethod
+  def getDyflexisRoutes(key):
+    return Constants.Dyflexis['routes'][key].replace('{location}', Constants.OrganisationName)
 
   def resource_path(relative):
     try:
@@ -29,7 +34,7 @@ class Constants():
       base_path = sys._MEIPASS
     except Exception:
       base_path = os.path.abspath(".")
-
+    print(base_path, relative)
     return os.path.join(base_path, relative)
 
   @staticmethod
@@ -41,4 +46,4 @@ class Constants():
     for file_name in file_names:
       if Constants.logFileName in file_name or Constants.dyflexisJsonFilename in file_name:
         continue
-      os.remove(source_dir+file_name)
+      os.remove(source_dir + file_name)

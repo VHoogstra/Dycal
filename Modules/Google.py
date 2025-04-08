@@ -64,7 +64,7 @@ class Google:
         # Save the credentials for the next run
         self.getConfigService().storeKey('google', googleConfig)
 
-  def foreceLogin(self):
+  def forceLogin(self):
     flow = InstalledAppFlow.from_client_secrets_file(
       "credentials.json", self.SCOPES
     )
@@ -239,16 +239,24 @@ class Calendar:
     return self.service.calendars().update(calendarId=calendar['id'], body=calendar).execute()
 
   def create(self, name):
-    '''
+    """
     create a new calendar in google
     :param name: the name of the calendar
     :return: a calendar object
-    '''
+    """
     calendar = {
       'summary': name,
       'timeZone': Constants.timeZone
     }
     return self.service.calendars().insert(body=calendar).execute()
+
+  def remove(self,calenderId):
+    """
+    remove a calendar by its id
+    :param calenderId:
+    :return:
+    """
+    return self.service.calendars().delete(calendarId=calenderId).execute()
 
 
 class Event:
