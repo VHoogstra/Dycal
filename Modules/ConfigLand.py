@@ -28,7 +28,6 @@ class ConfigLand:
     self.loadConfig()
 
   def getKey(self, key):
-    print(key, ' get key')
     if key in self.Config:
       print(type(self.Config[key]))
       return self.Config[key]
@@ -46,7 +45,7 @@ class ConfigLand:
     if (localConfig != None):
       self.Config = localConfig
     with open(self.fileName, 'w') as fp:
-      fp.write(json.dumps(self.Config))
+      fp.write(json.dumps(self.Config,indent=2))
       fp.close()
 
   def loadConfig(self):

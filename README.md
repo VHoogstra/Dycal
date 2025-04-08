@@ -12,6 +12,13 @@ een python script met interface die dyflexis uitleest en omzet naar een ICS voor
 - evenementen te verwijderen?? kan niet via ics
 - export naar csv zodat je ook gewerkte shifts mee kan nemen. mogelijkheid om een csv te updaten? 
   - mogelijk ook excel?
+- load en save config moeten events worden zodat exportwidgets daar bij kunnen en op kunnen handelen
+- force login google?
+  - mogelijkheid geven opnieuw te authenticeren
+  - moet dus ook checken of de agenda bestaat voordat ik er iets mee doe.
+- export log is stuk
+- detail scherm resizen zodat het beter leesbaar is
+- als je de agenda verwijderd uit je google cal blijf ik hem zien?
 
 # regels
 1. deze software zal evenementen vanaf 24 uur voor nu pakken en niet eerder
@@ -20,6 +27,7 @@ een python script met interface die dyflexis uitleest en omzet naar een ICS voor
     eg: zaandam > technische dienst > kleine zaal word kleine zaal
 3. de browser opent fullscreen, als data niet op het scherm staat kan hij het niet lezen namelijk. 
     deze manier zorgt er ook voor dat het zichtbaar is wat de app doet
+4. de ics, csv en google naar hun eigen widget files overbrengen
 
 # disclaimer
 Deze applicatie is geschreven zodat het plannen van persoonlijke afspraken makkelijker is naast dyflexis. Wij zijn niet verantwoordelijk als het script een item mist 

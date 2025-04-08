@@ -20,6 +20,8 @@ class Constants():
       "homepage": "https://app.planning.nu/zaantheater/zaandam/"
     }
   }
+  defaultGoogleCalName = "ZTD -> Dyflexis"
+  DESCRIPTION_PREFIX ="=== CODE GENERATED BELOW ==="
 
   def resource_path(relative):
     try:

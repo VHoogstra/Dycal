@@ -16,9 +16,7 @@ Constants.cleanLogFolder()
 # for arg in sys.argv:
 #     if "--headless" in arg:
 #         print("Headless mode")
-google = Google()
-google.main()
-sys.exit(0)
+
 try:
     app = Gui()
     app.mainloop()
@@ -33,6 +31,7 @@ except Exception as e:
         Message = Message + str(e)
     Logger().log((traceback.format_exc()))
     print(Message)
+    raise e
     sys.exit(0)
 
 print('mainloop ended')

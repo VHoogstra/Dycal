@@ -13,6 +13,7 @@ from Modules.ConfigLand import ConfigLand
 from Modules.Constants import Constants
 from Modules.Dyflexis import Dyflexis
 from Modules.DyflexisDetails import DyflexisDetails
+from Modules.ExportWidget import ExportWidget
 from Modules.InfoScreen import InfoScreen
 from Modules.Logger import Logger
 from Modules.ICS import ICS
@@ -20,7 +21,6 @@ from Modules.ICS import ICS
 
 class Gui(tk.Frame):
   driver = None
-  calendar = None
   eventDate = {}
   dyflexisMessage = "test "
   infoScreen = None
@@ -33,13 +33,13 @@ class Gui(tk.Frame):
     self.dyflexisProgressBarValue = tk.IntVar()
     self.grid(column=0, row=0, sticky=tk.NSEW)
 
-    self.master.title('Dyflexis -> ICS calendar '+Constants.version)
+    self.master.title('Dyflexis -> ICS calendar ' + Constants.version)
 
     # self.master.attributes("-topmost", True)
 
     w = 860  # width for the Tk root
     h = 500  # height for the Tk root
-
+    self.scrolWindowHeight = h-10
     ws = self.master.winfo_screenwidth()
 
     hs = self.master.winfo_screenheight()
@@ -54,12 +54,15 @@ class Gui(tk.Frame):
     self.createPeriods()
     self.createWidgets()
     self.config = ConfigLand()
+    self.loadConfig()
     self.master.lift()
     index = 6
     for period in self.periods:
       grid = dict(column=0, row=index)
       self.createLoader(self.dyflexisFrame, 1, self.periods[period], grid)
       index += 1
+    self.placeExportWidget()
+
 
   def closingInfoScreen(self):
     self.infoScreen.destroy()
@@ -71,8 +74,9 @@ class Gui(tk.Frame):
       self.infoScreen.protocol("WM_DELETE_WINDOW", self.closingInfoScreen)
     else:
       self.infoScreen.up()
+
   def createWidgets(self):
-    self.mainFrame = ctk.CTkScrollableFrame(self, width=840, height=490)
+    self.mainFrame = ctk.CTkScrollableFrame(self, width=840, height=self.scrolWindowHeight)
     self.mainFrame.grid(column=0, row=0, sticky=tk.NSEW)
     self.mainFrame.configure(fg_color=Constants.zaantheaterColor)
 
@@ -82,11 +86,9 @@ class Gui(tk.Frame):
     self.configLoad = ctk.CTkButton(self.mainFrame, text='info', command=self.openInfoScreen)
     self.configLoad.grid(row=0, column=5, sticky=tk.N + tk.E, padx=5, pady=5)
 
-
-
     self.segmentedButtonSave = ctk.CTkSegmentedButton(self.mainFrame, values=["laad uit config", "save naar config"],
-                                                         command=self.segmented_button_callback)
-    self.segmentedButtonSave.grid(row=0, column=0,columnspan=3, sticky=tk.N + tk.W, padx=5, pady=5)
+                                                      command=self.segmented_button_callback)
+    self.segmentedButtonSave.grid(row=0, column=0, columnspan=3, sticky=tk.N + tk.W, padx=5, pady=5)
     # row 3
     label = tk.Label(text='Dyflexis', fg="white", bg=Constants.zaantheaterColor, width=10, height=1, )
     self.dyflexisFrame = tk.LabelFrame(self.mainFrame, labelwidget=label, bg=Constants.zaantheaterColor, padx=10,
@@ -134,71 +136,19 @@ class Gui(tk.Frame):
                          pady=10
                          )
 
-    GoogleLabel = tk.Label(text='ICS configuratie',
-                           fg="white",
-                           bg=Constants.zaantheaterColor,
-                           width=15,
-                           height=1, )
-    IcsConfigurationFrame = tk.LabelFrame(self.mainFrame,
-                                          labelwidget=GoogleLabel,
-                                          bg=Constants.zaantheaterColor,
-                                          padx=10,
-                                          pady=10)
-    IcsConfigurationFrame.grid(row=3,
-                               column=3,
-                               columnspan=3,
-                               sticky=tk.NSEW,
-                               padx=5, pady=5)
-    IcsConfigurationFrame.columnconfigure([0, 2], weight=1)
-    IcsConfigurationFrame.columnconfigure([1], weight=5)
 
-    iscInfoText = "Een ICS bestand kan gegenereerd worden zonder een bestaand bestand te openen, echter als je twee keer dezelfde maand draait zal je dubbele afspraken krijgen.\nOmdat dit onpraktisch is kan je een link naar een openbare ics file toevoegen OF een geëxporteerd bestand uploaden. \nWij zullen in de afspraken zoeken naar dyflexis evenementen (door het ID in de omschrijving) en deze updaten"
-    icsInfo = tk.Message(IcsConfigurationFrame,
-                         text=iscInfoText,
-                         fg='white',
-                         bg=Constants.zaantheaterColor,
-                         relief=tk.SUNKEN, anchor=tk.W,
-                         width=360)
-    icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW, pady=5)
 
-    self.createLabel(text="ics url",
-                     parent=IcsConfigurationFrame).grid(row=1, column=0, sticky=tk.NSEW)
-    self.icsUrl = self.createEntry(parent=IcsConfigurationFrame)
-    self.icsUrl.grid(row=1, column=1, columnspan=1, sticky=tk.NSEW, padx=10)
-    ctk.CTkButton(IcsConfigurationFrame, text='Laad ICS uit URL',
-                  command=self.loadICS).grid(row=1, column=2, columnspan=1, padx=10, pady=2)
 
-    ctk.CTkButton(IcsConfigurationFrame,
-                  text='Open ICS bestand',
-                  command=self.uploadICS).grid(row=2,
-                                               column=0,
-                                               columnspan=3,
-                                               pady=10,
-                                               sticky=tk.NSEW)
-    ctk.CTkButton(IcsConfigurationFrame,
-                  text='Genereer ICS',
-                  command=self.generateICS).grid(row=3, column=0, columnspan=3, pady=10, sticky=tk.NSEW)
 
-    self.ICSMessage = tk.Message(IcsConfigurationFrame,
-                                 text='nog geen informatie',
-                                 fg='white', bg=Constants.zaantheaterColor,
-                                 anchor=tk.W,
-                                 justify=tk.LEFT,
-                                 relief=tk.SUNKEN,
-                                 width=360)
-    self.ICSMessage.grid(row=5,
-                         column=0,
-                         columnspan=4,
-                         sticky=tk.NSEW)
 
-  def segmented_button_callback(self,selection):
-    #reset buttons so you can press one again
+
+  def segmented_button_callback(self, selection):
+    # reset buttons so you can press one again
     self.segmentedButtonSave.set(value=4)
     if selection == "laad uit config":
       self.loadConfig()
-    if selection=="save naar config":
+    if selection == "save naar config":
       self.saveConfig()
-
 
   def createLabel(self, text, parent=None, **kwargs):
     if parent == None:
@@ -211,6 +161,13 @@ class Gui(tk.Frame):
       height=1, text_color='white'
     )
 
+  def placeExportWidget(self):
+    self.exportWidget = ExportWidget(self.mainFrame,gui=self)
+    self.exportWidget.grid(row=3,
+                               column=3,
+                               columnspan=3,
+                               sticky=tk.NSEW,)
+
   def createEntry(self, parent=None, variable=None, **kwargs):
     if parent == None:
       parent = self
@@ -222,16 +179,13 @@ class Gui(tk.Frame):
     )
 
   def loadConfig(self):
-    print(' load goncig')
+    print(' load config')
     self.config.loadConfig()
     self.dyflexisPassword.delete(0, 500)
     self.dyflexisPassword.insert(0, self.config.Config['dyflexis']['password'])
 
     self.dyflexisUsername.delete(0, 500)
     self.dyflexisUsername.insert(0, self.config.Config['dyflexis']['username'])
-
-    self.icsUrl.delete(0, 500)
-    self.icsUrl.insert(0, self.config.Config['ics']['url'])
 
   def setConfig(self):
     self.config.Config['dyflexis']['username'] = self.dyflexisUsername.get()
@@ -278,14 +232,15 @@ class Gui(tk.Frame):
     for period in self.periods:
       if (self.periods[period]['on'].get()):
         periodsToRun.append(period)
-        self.updateDyflexisProgressBar(0,period)
+        self.updateDyflexisProgressBar(0, period)
     pprint(periodsToRun)
     self.lift()
     try:
-      self.eventData = self.dyflexis.run(
-        _progressbarCallback=self.updateDyflexisProgressBar,
-        periods=periodsToRun
-      )
+      # self.eventData = self.dyflexis.run(
+      #   _progressbarCallback=self.updateDyflexisProgressBar,
+      #   periods=periodsToRun
+      # )
+      self.loadFromBackup()
     except Exception as e:
       Message = ('Er ging iets mis bij dyflexis: ')
       Logger().log(str(type(e)))
@@ -299,10 +254,7 @@ class Gui(tk.Frame):
       self.dyflexisMessage.config(text=Message, bg='red', fg='white')
       raise e
 
-    # with open('logs/latestCalendarData.json', 'r') as fp:
-    #     superValue = fp.read()
-    #     self.eventData = json.loads(superValue)
-    #     fp.close()
+    # self.loadFromBackup()
 
     # create the information message for the GUI
     assignments = str(self.eventData['assignments'])
@@ -310,97 +262,12 @@ class Gui(tk.Frame):
     events = str(self.eventData['events'])
     start_date = self.eventData['list'][0]['date']
     end_date = self.eventData['list'][len(self.eventData['list']) - 1]['date']
-    #todo check het verschil tussen windows en apple hier.. op windows gaat het goed maar op apple hebben we een extra whitespace?
+    # todo check het verschil tussen windows en apple hier.. op windows gaat het goed maar op apple hebben we een extra whitespace?
     Message = f"Shifts: \t{assignments} \nAgenda: \t{agenda} \nEvents: \t{events} \nperiode: \t{start_date} tot {end_date}"
     pprint(Message)
     self.dyflexisMessage.config(text=Message, bg='green')
 
-  def uploadICS(self):
-    self.ICSMessage.config( bg=Constants.zaantheaterColor)
-    if self.calendar is None:
-      self.calendar = ICS()
-    print('uploadIcs')
-    icsdata = filedialog.askopenfilename(
-      filetypes=[('ICS bestand', 'ics')],
-      title="ICS bestand van uw kalender app",
-      initialdir=os.path.expanduser('~/Downloads'))
-    if icsdata is not None:
-      try:
-        self.calendar.connectToICS(file=icsdata)
-      except Exception as e:
-        Message = ('Er ging iets mis bij het openen van het ICS bestand: ')
-        Logger().log(str(type(e)))
-        if hasattr(e, 'message'):
-          Message = Message + e.message
-          Logger().log((e.message))
-        else:
-          Message = Message + str(e)
-        Logger().log((traceback.format_exc()))
-        self.ICSMessage.config(text=Message, bg='red', fg='white')
-        raise e
 
-    eventCount = len(self.calendar.calendar.events)
-    self.ICSMessage.config(text=f"{eventCount} agenda items gevonden via bestand")
-
-  def loadICS(self):
-    self.ICSMessage.config( bg=Constants.zaantheaterColor)
-    if self.calendar is None:
-      self.calendar = ICS()
-    if self.icsUrl.get() is not None:
-      try:
-
-        self.calendar.connectToICS(url=self.icsUrl.get())
-
-      except Exception as e:
-        Message = ('Er ging iets mis bij het openen van de ICS Link: ')
-        Logger().log(str(type(e)))
-        if hasattr(e, 'message'):
-          Message = Message + e.message
-          Logger().log((e.message))
-        else:
-          Message = Message + str(e)
-        Logger().log((traceback.format_exc()))
-        self.ICSMessage.config(text=Message, bg='red', fg='white')
-        raise e
-    print('loadIcs')
-    eventCount = len(self.calendar.calendar.events)
-    self.ICSMessage.config(text=f"{eventCount} agenda items gevonden via de link")
-
-  def generateICS(self):
-    self.ICSMessage.config( bg=Constants.zaantheaterColor)
-    print('generateICS')
-    if self.calendar is None:
-      self.calendar = ICS()
-    if self.eventData == None:
-      self.ICSMessage.config(text="Kan geen ICS bestand genereren als er geen evenementen data is, lees eerst Dyflexis uit.",
-                             bg='orange')
-      return
-      # raise Exception('No calendar data to export')
-    print('ics generated')
-    name = "Dyflexis-ICS- " + arrow.now().format('YYYY-MM-DD')
-    icsdata = filedialog.asksaveasfile(
-      defaultextension="ics",
-      title="ICS bestand voor uw kalender app",
-      initialfile=name)
-    if icsdata is None:  # asksaveasfile return `None` if dialog closed with "cancel".
-      return
-    try:
-      data = self.calendar.generateToICS(self.eventData['shift'])
-    except Exception as e:
-      Message = ('Er ging iets mis bij het genereren van ICS: ')
-      Logger().log(str(type(e)))
-      if hasattr(e, 'message'):
-        Message = Message + e.message
-        Logger().log((e.message))
-      else:
-        Message = Message + str(e)
-      Logger().log((traceback.format_exc()))
-
-      self.ICSMessage.config(text=Message, bg='red', fg='white')
-      raise e
-
-    icsdata.writelines(data)
-    icsdata.close()
 
   def closeApplication(self):
     self.destroy()
@@ -409,10 +276,7 @@ class Gui(tk.Frame):
   def openDyflexisDetails(self):
     print('openDyflexisDetails')
 
-    # with open('logs/latestCalendarData.json', 'r') as fp:
-    #   superValue = fp.read()
-    #   self.eventData = json.loads(superValue)
-    #   fp.close()
+    # self.loadFromBackup()
     dyflexisDetails = DyflexisDetails(self.eventData)
 
   def createPeriods(self):
@@ -437,10 +301,16 @@ class Gui(tk.Frame):
                                offvalue=False,
                                variable=period['on'],
                                text_color="white")
-    checkbar.grid(column=grid['column'], row=grid['row'])
+    checkbar.grid(column=grid['column'], row=grid['row'],pady=2)
 
     grid.update(columnspan=2, sticky=tk.NSEW, column=grid['column'] + 1)
     progressBar = ttk.Progressbar(parent, mode='determinate', maximum=101,
                                   variable=period['progress'])
     progressBar.grid(grid)
     period.update(progressbar=progressBar)
+
+  def loadFromBackup(self):
+    with open('logs/latestCalendarData.json', 'r') as fp:
+      superValue = fp.read()
+      self.eventData = json.loads(superValue)
+      fp.close()
