@@ -31,9 +31,12 @@ class DyflexisDetails(tk.Toplevel):
     self.title('Dyflexis Details')
     self.master.configure(background=Constants.zaantheaterColor)
     # self.resizable(False, False)
-    frame = tk.Frame(self)
-    frame.grid(column=0, row=0, sticky=tk.NSEW, padx=10, pady=10)
-    frame.configure(background=Constants.zaantheaterColor)
+    # frame = tk.Frame(self)
+    # frame.grid(column=0, row=0, sticky=tk.NSEW, padx=10, pady=10)
+    # frame.configure(background=Constants.zaantheaterColor)
+
+    self.rowconfigure(0,weight=1)
+    self.columnconfigure(0,weight=1)
 
     tabview = ctk.CTkTabview(master=self,width=525)
     tabview.grid(row=0, column=0, sticky=tk.NSEW,padx=10,pady=10)
@@ -47,6 +50,13 @@ class DyflexisDetails(tk.Toplevel):
     # self.textbox = ctk.CTkTextbox(self, width=window_width/2,height=20, corner_radius=0)
     # self.textbox.configure(height=20)
     # self.textbox.grid(row=0, column=0, sticky=tk.NSEW)
+    tabview.tab("agenda items").rowconfigure(0, weight=1)
+    tabview.tab("agenda items").columnconfigure(0, weight=1)
+    tabview.tab("agenda items").columnconfigure(1, weight=0)
+
+    tabview.tab("dyflexis data").rowconfigure(0, weight=1)
+    tabview.tab("dyflexis data").columnconfigure(0, weight=1)
+    tabview.tab("dyflexis data").columnconfigure(1, weight=0)
 
     columns = ('date', 'title', 'id')
     self.treeview = ttk.Treeview(
@@ -58,7 +68,7 @@ class DyflexisDetails(tk.Toplevel):
       master=tabview.tab("agenda items"),
       orient="vertical",
       command=self.treeview.yview)
-    vsb.place(x=490+3, y=0, height=200+30)
+    vsb.grid(row=0,column=1, sticky=tk.NS)
 
     # define headings
     self.treeview.heading('date', text='date')
@@ -87,7 +97,7 @@ class DyflexisDetails(tk.Toplevel):
       master=tabview.tab("dyflexis data"),
       orient="vertical",
       command=self.dyflexisTree.yview)
-    vsb.place(x=490+3, y=0, height=200+30)
+    vsb.grid(row=0,column=1, sticky=tk.NS)
     # define headings 520
     self.dyflexisTree.heading('date', text='date')
     self.dyflexisTree.heading('title', text='title')

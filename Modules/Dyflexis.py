@@ -21,7 +21,8 @@ class Dyflexis:
   DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="
   driver = None
   ## locatie zoektermen (shift zoektekst, event zoektekst)
-  LOCATION_NAMES = [("Kleine Zaal", 'kz'), ("Grote Zaal", "ah")]
+  #todo deze lijst in de config wegzetten
+  LOCATION_NAMES = [("Kleine Zaal", 'kz'), ("Grote Zaal", "ah"),('Foyer','foyr')]
   MAX_NAME_LENGTH = 71
 
   def __init__(self, config, width, height):
