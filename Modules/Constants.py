@@ -15,19 +15,22 @@ class Constants():
   timeZone = "Europe/Amsterdam"
   Dyflexis = {
     "routes": {
-      "login": "https://app.planning.nu/{location}/login",
-      "rooster": "https://app.planning.nu/{location}/zaandam/rooster2/index2",
-      "homepage": "https://app.planning.nu/{location}/zaandam/"
+      "login": "https://app.planning.nu/{organisation}/login",
+      "rooster": "https://app.planning.nu/{organisation}/{location}/rooster2/index2",
+      "homepage": "https://app.planning.nu/{organisation}/{location}/"
     }
   }
-  #todo zaandam ook kiesbaar maken
+  # todo zaandam ook kiesbaar maken
   OrganisationName = 'zaantheater'
+  LocationName = 'zaandam'
   defaultGoogleCalName = "ZTD -> Dyflexis"
   DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="
 
   @staticmethod
   def getDyflexisRoutes(key):
-    return Constants.Dyflexis['routes'][key].replace('{location}', Constants.OrganisationName)
+    return (Constants.Dyflexis['routes'][key]
+            .replace('{organisation}', Constants.OrganisationName)
+            .replace('{location}', Constants.LocationName))
 
   def resource_path(relative):
     try:
