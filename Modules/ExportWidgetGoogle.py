@@ -92,6 +92,7 @@ class ExportWidgetGoogle(tk.Frame):
     self.feedbackMessagebuilder("\tGoogle agenda goed opgehaald\n")
 
     print('got a calendar')
+    msg = "Succesvol de agenda geupdate"
     if self.gui.eventData is not None and 'shift' in self.gui.eventData :
       self.google.manageEvents(googleCal, self.gui.eventData['shift'])
     else:

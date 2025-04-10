@@ -43,7 +43,7 @@ class Dyflexis:
     endProgress = 5
     # progressbar 0 through 10
     config = self.config.Config
-    self.driver.get(Constants.Dyflexis["routes"]["login"])
+    self.driver.get(Constants.getDyflexisRoutes("login"))
     WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.ID, "username")))
 
     # wait for page load

@@ -20,6 +20,7 @@ class Constants():
       "homepage": "https://app.planning.nu/{location}/zaandam/"
     }
   }
+  #todo zaandam ook kiesbaar maken
   OrganisationName = 'zaantheater'
   defaultGoogleCalName = "ZTD -> Dyflexis"
   DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="

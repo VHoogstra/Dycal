@@ -228,11 +228,11 @@ class Gui(tk.Frame):
     pprint(periodsToRun)
     self.lift()
     try:
-      # self.eventData = self.dyflexis.run(
-      #   _progressbarCallback=self.updateDyflexisProgressBar,
-      #   periods=periodsToRun
-      # )
-      self.loadFromBackup()
+      self.eventData = self.dyflexis.run(
+        _progressbarCallback=self.updateDyflexisProgressBar,
+        periods=periodsToRun
+      )
+      # self.loadFromBackup()
     except Exception as e:
       Message = ('Er ging iets mis bij dyflexis: ')
       Logger().log(str(type(e)))

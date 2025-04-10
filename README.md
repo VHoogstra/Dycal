@@ -12,7 +12,6 @@ een python script met interface die dyflexis uitleest en omzet naar een ICS voor
 - export naar csv zodat je ook gewerkte shifts mee kan nemen. mogelijkheid om een csv te updaten? 
   - mogelijk ook excel?
 - load en save config moeten events worden zodat exportwidgets daar bij kunnen en op kunnen handelen
-- export log is stuk
 - detail scherm resizen zodat het beter leesbaar is
 
 # regels
