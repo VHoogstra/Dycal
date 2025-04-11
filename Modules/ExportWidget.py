@@ -16,7 +16,6 @@ class ExportWidget(ctk.CTkTabview):
     window_width = 500
     window_height = 400
     self.parent = parent
-    print(type(parent))
 
     # get screen dimension
     screen_width = self.winfo_screenwidth()

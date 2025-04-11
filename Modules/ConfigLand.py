@@ -1,7 +1,9 @@
 import io
 import json
 import logging
+import shutil
 from pprint import pprint
+from tkinter import filedialog
 
 from Modules.Constants import Constants
 from Modules.Logger import Logger
@@ -67,3 +69,17 @@ class ConfigLand:
       self.saveConfig(self.defaultConfig)
       Logger().log('geen config.json gevonden, we maken dit aan')
     return self.Config
+
+  def exportConfig(self):
+    target_dir = filedialog.askdirectory(
+      title="Locatie om naartoe te exporteren",
+      initialdir=os.path.expanduser('~/Downloads'))
+    shutil.copyfile(Constants.resource_path("config.json"), target_dir+"dyflexisConfig.json")
+
+  def importConfig(self):
+    targetfile = filedialog.askopenfilename(title="locatie van uw config.json",filetypes=[('Json bestand', 'json')])
+    if targetfile is not None:
+      with open(targetfile, 'r') as fp:
+        content = json.loads(fp.read())
+        fp.close()
+        self.saveConfig(content)

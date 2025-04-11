@@ -8,12 +8,7 @@ Een python script met interface die dyflexis uitleest en omzet naar een ICS voor
   agenda
     - even een test case voor schrijven?
 - bestand opslaan als en openen doen aan de hand van de laatste keer dat je dat in de app deed
-- config downloaden en uploaden?
-    - dit i.v.m. nieuwere versies
-- als de tijden in de omschrijving niet overeen komen met de agenda tijd iets aangeven
 - evenementen te verwijderen?? kan niet via ics
-- export naar csv zodat je ook gewerkte shifts mee kan nemen. mogelijkheid om een csv te updaten?
-    - mogelijk ook excel?
 - load en save config moeten events worden zodat exportwidgets daar bij kunnen en op kunnen handelen
 - dyflexis shift vars in config weg stoppen
 - de shift genereer logica in de lijst weg werken.. en dan ideaal dat hij meteen eventData update zodat je in details in
@@ -45,6 +40,9 @@ gewerkte uren (word nu niet geteld)
 events:
 evenementen/verhuringen vanuit dyflexis
 
+# toekomstige features
+- export naar csv zodat er ook een uitdraai van gewerkte diensten mee genomen kan worden. 
+- optie om een extra karakter toe te voegen aan het agenda item als de start/stop tijden niet overeen komen met de tijden van het evenement
 # ter dev info
 
 https://pyinstaller.org/en/stable/

@@ -87,9 +87,12 @@ class Gui(tk.Frame):
     self.configLoad = ctk.CTkButton(self.mainFrame, text='info', command=self.openInfoScreen)
     self.configLoad.grid(row=0, column=5, sticky=tk.N + tk.E, padx=5, pady=5)
 
-    self.segmentedButtonSave = ctk.CTkSegmentedButton(self.mainFrame, values=["laad uit config", "save naar config"],
+    self.segmentedButtonSave = ctk.CTkSegmentedButton(self.mainFrame, values=["laad uit config",
+                                                                              "save naar config",
+                                                                              "reset config",
+                                                                              'export config','import config'],
                                                       command=self.segmented_button_callback)
-    self.segmentedButtonSave.grid(row=0, column=0, columnspan=3, sticky=tk.N + tk.W, padx=5, pady=5)
+    self.segmentedButtonSave.grid(row=0, column=0, columnspan=5, sticky=tk.N + tk.W, padx=5, pady=5)
     # row 3
     label = tk.Label(text='Dyflexis', fg="white", bg=Constants.zaantheaterColor, width=10, height=1, )
     self.dyflexisFrame = tk.LabelFrame(self.mainFrame, labelwidget=label, bg=Constants.zaantheaterColor, padx=10,
@@ -132,8 +135,15 @@ class Gui(tk.Frame):
       self.loadConfig()
     if selection == "save naar config":
       self.saveConfig()
-    if selection == "Reset Config":
+    if selection == "reset config":
       self.resetConfig()
+    if selection == 'export config':
+      self.setConfig()
+      self.config.exportConfig()
+    if selection == 'import config':
+      self.setConfig()
+      self.config.importConfig()
+      self.loadConfig()
 
   def createLabel(self, text, parent=None, **kwargs):
     if parent == None:
@@ -172,7 +182,8 @@ class Gui(tk.Frame):
   def saveConfig(self):
     Logger.getLogger(__name__).info('saving config')
     self.setConfig()
-    self.config.Config['ics']['url'] = self.icsUrl.get()
+    #todo dit verhuizen naar de juiste save
+    # self.config.Config['ics']['url'] = self.icsUrl.get()
     self.config.saveConfig()
 
   def loadConfig(self):
