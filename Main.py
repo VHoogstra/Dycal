@@ -14,13 +14,17 @@ from Modules.Logger import Logger
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s -\t %(message)s',
                     filename=Constants.logPrefix+"console_"+Constants.logFileName,
                     filemode='a')
-logger = logging.getLogger(__name__)
-# todo https://docs.python.org/3/library/logging.html dit uitzoeken
-logger.info('info')
-logger.warning('warn')
-logger.error('error')
-logger.critical('critical')
-logger.exception('exception')
+# logger = logging.getLogger(__name__)
+# # todo https://docs.python.org/3/library/logging.html dit uitzoeken
+# logger.info('info')
+# logger.warning('warn')
+# logger.error('error')
+# logger.critical('critical')
+# logger.exception('exception')
+
+Logger.getLogger(__name__).info(' ###\t\t\tapplication start\t\t\t###')
+
+
 
 Constants.cleanLogFolder()
 # print(sys.argv)
@@ -37,15 +41,11 @@ except Exception as e:
     Logger().log(str(type(e)))
     if hasattr(e, 'message'):
         Message = Message + e.message
-        Logger().log((e.message))
     else:
         Message = Message + str(e)
-    Logger().log((traceback.format_exc()))
-    print(Message)
-    sys.stdout = sys.__stdout__
+    Logger.getLogger(__name__).error('Er ging wat mis bij bij Mainloop', exc_info=True)
+    #todo bug scherm openen?
     raise e
 
-sys.stdout = sys.__stdout__
-print('mainloop ended')
 sys.exit(0)
 

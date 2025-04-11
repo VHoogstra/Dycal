@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 import time
 
@@ -27,6 +28,21 @@ class Logger:
       fp.write(msg)
       fp.close()
 
-  def toFile(self, location, variable):
+  @staticmethod
+  def toFile(location, variable):
     with open(Constants.resource_path(location), 'w+') as fp:
-      fp.write(json.dumps(variable))
+      fp.write(json.dumps(variable, indent=4))
+
+  @staticmethod
+  def getLogger(className):
+    logging.root.handlers = []
+    logging.basicConfig(
+      level=logging.INFO,
+      format="%(asctime)s - %(name)s - %(levelname)s -\t %(message)s",
+      datefmt="%H:%M:%S",
+      handlers=[
+        logging.FileHandler(Constants.logPrefix + "console_" + Constants.logFileName),
+        logging.StreamHandler()
+      ]
+    )
+    return logging.getLogger(className)

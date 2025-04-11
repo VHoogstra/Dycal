@@ -11,7 +11,6 @@ import os.path
 class ConfigLand:
 
   def __init__(self, useConfigFile=1):
-    logger = logging.getLogger(__name__)
 
     self.useConfigFile = useConfigFile
     self.fileName = Constants.resource_path("config.json")
@@ -50,6 +49,9 @@ class ConfigLand:
     with open(self.fileName, 'w') as fp:
       fp.write(json.dumps(self.Config,indent=2))
       fp.close()
+
+  def reset(self):
+    self.saveConfig(self.defaultConfig)
 
   def loadConfig(self):
     if os.path.isfile(self.fileName):

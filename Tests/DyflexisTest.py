@@ -48,7 +48,7 @@ class MyTestCase(unittest.TestCase):
                 }
         output =[]
         for event in events:
-           output.append( self.dyflexis.eventNameParser(event,assignments))
+           output.append(self.dyflexis.eventnameParser(event, assignments))
         for index,expectedResult in enumerate(expectedResults):
             self.assertEqual(output[index], expectedResult)  # add assertion here
 
