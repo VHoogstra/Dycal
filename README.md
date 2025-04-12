@@ -11,7 +11,7 @@ Een python script met interface die dyflexis uitleest en omzet naar een ICS voor
    eg: zaandam > technische dienst > kleine zaal wordt kleine zaal
 4. de browser opent fullscreen, als data niet op het scherm staat kan hij het niet lezen namelijk.
    deze manier zorgt er ook voor dat het zichtbaar is wat de app doet
-5. de ics, csv en google naar hun eigen widget files overbrengen
+
 
 # disclaimer
 
@@ -20,12 +20,12 @@ verantwoordelijk als het script een item mist
 wat resulteert in afwezigheid of laat komen. Dyflexis is *altijd* lijdend.
 Wij zijn ook niet verantwoordelijk als er dubbele afspraken in uw agenda komen door het verkeerd gebruik van het ICS-bestand.
 
-shifts:
-diensten die je moet werken
-agenda
-gewerkte uren (word nu niet geteld)
+shifts: 
+diensten die je moet werken \
+agenda: 
+gewerkte uren (word nu niet geteld) \
 events:
-evenementen/verhuringen vanuit dyflexis
+evenementen/verhuringen vanuit dyflexis 
 
 # toekomstige features
 - export naar csv zodat er ook een uitdraai van gewerkte diensten mee genomen kan worden. 
