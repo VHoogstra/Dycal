@@ -5,7 +5,7 @@ import time
 
 
 class Constants():
-  version = "v0.0.1"
+  version = "v0.1.0-beta"
   zaantheaterColor = "#7a4689"
   dyflexisMessage = "test "
   logPrefix = "logs/"

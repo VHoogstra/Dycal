@@ -1,0 +1,18 @@
+# todo's
+
+- als er 2 agenda-items zijn, check of deze in dezeflde shift vallen en zo ja, voeg ze in de juiste volgorde toe aan ge
+  agenda
+    - even een test case voor schrijven?
+- bestand opslaan als en openen doen aan de hand van de laatste keer dat je dat in de app deed
+- evenementen te verwijderen?? kan niet via ics
+- load en save config moeten events worden zodat exportwidgets daar bij kunnen en op kunnen handelen
+- dyflexis shift vars in config weg stoppen
+- de shift genereer logica in de lijst weg werken.. en dan ideaal dat hij meteen eventData update zodat je in details in
+  real time mee kan kijken
+- in details menu ook de mogelijkheid geven om meer kopjes te laten zien? alle waardes van een shift bv
+
+# ter dev info
+
+https://pyinstaller.org/en/stable/
+pyinstaller --onefile --windowed --specpath=build --name=Dyflexis-calendar-ics --icon=favicon.icns Main.py
+pyinstaller --onedir --windowed --specpath=build --name=Dyflexis-calendar-ics --noconfirm --icon=favicon.icns Main.py
