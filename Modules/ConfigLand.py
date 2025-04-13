@@ -74,7 +74,7 @@ class ConfigLand:
     target_dir = filedialog.askdirectory(
       title="Locatie om naartoe te exporteren",
       initialdir=os.path.expanduser('~/Downloads'))
-    shutil.copyfile(Constants.resource_path("config.json"), target_dir+"dyflexisConfig.json")
+    shutil.copyfile(Constants.resource_path("config.json"), target_dir+"/dyflexisConfig.json")
 
   def importConfig(self):
     targetfile = filedialog.askopenfilename(title="locatie van uw config.json",filetypes=[('Json bestand', 'json')])
