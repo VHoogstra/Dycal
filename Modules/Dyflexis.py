@@ -40,7 +40,7 @@ class Dyflexis:
       options.add_argument("start-maximized")
       self.driver = webdriver.Chrome(options=options)
 
-  def login(self, _progressbarCallback=None):
+  def login(self,username,password, _progressbarCallback=None):
     Logger.getLogger(__name__).info('starting loggin procedure')
 
     config = self.config.Config
@@ -48,17 +48,17 @@ class Dyflexis:
     WebDriverWait(self.driver, 20).until(ec.presence_of_element_located((By.ID, "username")))
 
     # wait for page load
-    if (config["dyflexis"]["username"] == ""):
+    if (username == ""):
       Logger.getLogger(__name__).error('username not set',exc_info=True)
       raise BadLoginException('no username')
     # gebruikersnaam invullen
-    self.driver.find_element(by=By.ID, value="username").send_keys(config["dyflexis"]["username"])
+    self.driver.find_element(by=By.ID, value="username").send_keys(username)
 
-    if (config["dyflexis"]["password"] == ""):
+    if (password == ""):
       Logger.getLogger(__name__).error('password not set', exc_info=True)
       raise BadLoginException('no password')
     # wachtwoord invullen
-    self.driver.find_element(by=By.ID, value="password").send_keys(config["dyflexis"]["password"])
+    self.driver.find_element(by=By.ID, value="password").send_keys(password)
     # knop indrukken en inloggen
     self.driver.find_element(by=By.ID, value="do-login").click()
 
@@ -77,13 +77,12 @@ class Dyflexis:
       Logger.getLogger(__name__).info('logging succesvol')
       return True
 
-  def run(self, _progressbarCallback=None, periods=None):
+  def run(self, _progressbarCallback=None, periods=None,username=None,password=None):
     if periods is None:
       periods = []
-
     try:
       self.openChrome()
-      self.login()
+      self.login(username,password)
       data = {}
       for period in periods:
         data = self.getRooster(

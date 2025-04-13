@@ -93,11 +93,17 @@ class ExportWidgetGoogle(tk.Frame):
 
     print('got a calendar')
     msg = "Succesvol de agenda geupdate"
-    if self.gui.eventData is not None and 'shift' in self.gui.eventData :
-      self.google.manageEvents(googleCal, self.gui.eventData['shift'])
-    else:
-      msg = "Er is nog geen evenementen data om te synchroniseren"
-    self.feedbackMessagebuilder(msg)
+    try:
+
+      if self.gui.eventData is not None and 'shift' in self.gui.eventData :
+        self.google.manageEvents(googleCal, self.gui.eventData['shift'])
+      else:
+        msg = "Er is nog geen evenementen data om te synchroniseren"
+      self.feedbackMessagebuilder(msg)
+    except Exception as e:
+      Logger.getLogger(__name__).error('Er ging iets mis tijdens synchroniseren', exc_info=True)
+      self.feedbackMessagebuilder("\ter ging wat mis\n")
+      self.feedbackMessagebuilder(e)
 
     print('end of syncgoogle')
 

@@ -12,7 +12,6 @@ Een python script met interface die dyflexis uitleest en omzet naar een ICS voor
 4. de browser opent fullscreen, als data niet op het scherm staat kan hij het niet lezen namelijk.
    deze manier zorgt er ook voor dat het zichtbaar is wat de app doet
 
-
 # disclaimer
 
 Deze applicatie is geschreven zodat het plannen van persoonlijke afspraken makkelijker is naast dyflexis. Wij zijn niet

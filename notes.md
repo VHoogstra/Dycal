@@ -14,5 +14,5 @@
 # ter dev info
 
 https://pyinstaller.org/en/stable/
-pyinstaller --onefile --windowed --specpath=build --name=Dyflexis-calendar-ics --icon=favicon.icns Main.py
-pyinstaller --onedir --windowed --specpath=build --name=Dyflexis-calendar-ics --noconfirm --icon=favicon.icns Main.py
+pyinstaller --onefile --windowed --specpath=build --name=dycal-file --icon=favicon.icns Main.py
+pyinstaller --onedir --windowed --specpath=build --name=Dycal-dir --noconfirm --icon=favicon.icns Main.py

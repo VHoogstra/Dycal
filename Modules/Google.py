@@ -1,6 +1,4 @@
-import datetime
 import json
-import os.path
 import traceback
 from pprint import pprint
 
@@ -137,7 +135,7 @@ class Google:
       shiftProcessed = False
       print(shift['date'])
       for gEvent in events:
-        if shift['id'] in gEvent['description']:
+        if 'description' in gEvent and shift['id'] in gEvent['description']:
           print('\t found!! updating')
           gEvent = self.updateEventData(gEvent, shift)
           seenEvents.append(gEvent['id'])

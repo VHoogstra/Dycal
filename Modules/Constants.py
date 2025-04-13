@@ -4,6 +4,7 @@ import sys
 import time
 
 
+
 class Constants():
   version = "v0.1.0-beta"
   zaantheaterColor = "#7a4689"
@@ -43,11 +44,11 @@ class Constants():
 
   @staticmethod
   def cleanLogFolder():
-    print("Cleaning Log Folder")
     source_dir = Constants.resource_path(Constants.logPrefix)
-    file_names = os.listdir(source_dir)
+    if os.path.isdir(source_dir):
+      file_names = os.listdir(source_dir)
 
-    for file_name in file_names:
-      if Constants.logFileName in file_name or Constants.dyflexisJsonFilename in file_name:
-        continue
-      os.remove(source_dir + file_name)
+      for file_name in file_names:
+        if Constants.logFileName in file_name or Constants.dyflexisJsonFilename in file_name:
+          continue
+        os.remove(source_dir + file_name)

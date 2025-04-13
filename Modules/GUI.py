@@ -1,11 +1,7 @@
 import json
-import os
 import tkinter as tk
 import tkinter.ttk as ttk
-import tkinter.filedialog as filedialog
-import traceback
 import arrow
-from pprint import pprint
 
 import customtkinter as ctk
 
@@ -16,7 +12,6 @@ from Modules.DyflexisDetails import DyflexisDetails
 from Modules.ExportWidget import ExportWidget
 from Modules.InfoScreen import InfoScreen
 from Modules.Logger import Logger
-from Modules.ICS import ICS
 
 
 class Gui(tk.Frame):
@@ -54,6 +49,7 @@ class Gui(tk.Frame):
     # self.master.resizable(False, False)
     self.createPeriods()
     self.createWidgets()
+
     self.config = ConfigLand()
     self.loadConfig()
     self.master.lift()
@@ -64,6 +60,9 @@ class Gui(tk.Frame):
       index += 1
     self.placeExportWidget()
     Logger.getLogger(__name__).info('Gui initialized')
+
+    self.update()
+    self.dyflexisMessage.config(wraplength=self.dyflexisFrame.winfo_width()-35)
 
   def closingInfoScreen(self):
     self.infoScreen.destroy()
@@ -90,7 +89,7 @@ class Gui(tk.Frame):
     self.segmentedButtonSave = ctk.CTkSegmentedButton(self.mainFrame, values=["laad uit config",
                                                                               "save naar config",
                                                                               "reset config",
-                                                                              'export config','import config'],
+                                                                              'export config', 'import config'],
                                                       command=self.segmented_button_callback)
     self.segmentedButtonSave.grid(row=0, column=0, columnspan=5, sticky=tk.N + tk.W, padx=5, pady=5)
     # row 3
@@ -114,14 +113,19 @@ class Gui(tk.Frame):
       text='Dyflexis uitlezen',
       command=self.dyflexisRead
     ).grid(row=4, column=1, columnspan=1, pady=15)
+    self.dyflexisMessageVariable = tk.StringVar()
+    self.dyflexisMessageVariable.set('Nog geen informatie bekend')
     self.dyflexisMessage = tk.Label(self.dyflexisFrame,
-                                    text="Nog geen informatie",
+                                    textvariable=self.dyflexisMessageVariable,
                                     fg='white', bg=Constants.zaantheaterColor,
                                     justify=tk.LEFT,
                                     anchor=tk.W,
                                     relief=tk.SUNKEN,
+                                    wraplength=330,padx=5, pady=5
                                     )
-    self.dyflexisMessage.grid(row=14, column=0, columnspan=2, sticky=tk.NSEW, pady=5)
+    self.dyflexisFrame.columnconfigure(2, weight=0, minsize=10)
+    self.dyflexisFrame.rowconfigure(14, weight=1, minsize=10)
+    self.dyflexisMessage.grid(row=15, column=0, columnspan=3, sticky=tk.NSEW, pady=5)
     ctk.CTkButton(self.dyflexisFrame,
                   text='details',
                   command=self.openDyflexisDetails,
@@ -182,7 +186,7 @@ class Gui(tk.Frame):
   def saveConfig(self):
     Logger.getLogger(__name__).info('saving config')
     self.setConfig()
-    #todo dit verhuizen naar de juiste save
+    # todo dit verhuizen naar de juiste save
     # self.config.Config['ics']['url'] = self.icsUrl.get()
     self.config.saveConfig()
 
@@ -202,7 +206,7 @@ class Gui(tk.Frame):
     self.loadConfig()
 
   def updateDyflexisProgressBar(self, amount, period):
-    Logger.getLogger(__name__).info('progressbar update van periode {} naar {}'.format(period,amount))
+    Logger.getLogger(__name__).info('progressbar update van periode {} naar {}'.format(period, amount))
     if not isinstance(amount, tk.IntVar):
       temp = tk.IntVar()
       temp.set(amount)
@@ -239,24 +243,27 @@ class Gui(tk.Frame):
       if (self.periods[period]['on'].get()):
         periodsToRun.append(period)
         self.updateDyflexisProgressBar(0, period)
-    Logger.getLogger(__name__).info('periodes die gerunt gaan worden: %a ',' , '.join(str(x) for x in periodsToRun))
+    Logger.getLogger(__name__).info('periodes die gerunt gaan worden: %a ', ' , '.join(str(x) for x in periodsToRun))
     self.lift()
+    self.update()
     try:
       self.eventData = self.dyflexis.run(
         _progressbarCallback=self.updateDyflexisProgressBar,
-        periods=periodsToRun
+        periods=periodsToRun,
+        username=self.dyflexisUsername.get(), password=self.dyflexisPassword.get()
       )
       Logger.toFile(location=Constants.logPrefix + Constants.dyflexisJsonFilename, variable=self.eventData)
 
       # self.loadFromBackup()
     except Exception as e:
-      Message = ('Er ging iets mis bij dyflexis: ')
+      Message = ('Er ging iets mis bij dyflexis:\n')
       if hasattr(e, 'message'):
         Message = Message + e.message
       else:
         Message = Message + str(e)
       Logger.getLogger(__name__).error('Er ging wat mis bij bij dyflexis.run', exc_info=True)
-      self.dyflexisMessage.config(text=Message, bg='red', fg='white')
+      self.dyflexisMessage.config(bg='red', fg='white')
+      self.dyflexisMessageVariable.set(Message)
       return
 
     # self.loadFromBackup()
@@ -267,9 +274,10 @@ class Gui(tk.Frame):
     events = str(self.eventData['events'])
     start_date = self.eventData['list'][0]['date']
     end_date = self.eventData['list'][len(self.eventData['list']) - 1]['date']
-    Message = f"Shifts: \t{assignments} \nAgenda: \t{agenda} \nEvents: \t{events} \nperiode: \t{start_date} tot {end_date}"
-    Logger.getLogger(__name__).info('dyflexis run klaar met bericht %a',Message)
-    self.dyflexisMessage.config(text=Message, bg='green')
+    Message = "Shifts: {}\nAgenda: {}\nEvents: {}\nperiode: {} tot {}".format(assignments,agenda,events,start_date,end_date)
+    Logger.getLogger(__name__).info('dyflexis run klaar met bericht %a', Message)
+    self.dyflexisMessage.config(bg='green')
+    self.dyflexisMessageVariable.set(Message)
 
   def closeApplication(self):
     self.destroy()
