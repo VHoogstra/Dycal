@@ -9,6 +9,8 @@ from pprint import pprint
 
 import customtkinter as ctk
 import arrow
+from google.auth.exceptions import RefreshError
+
 from Modules.Google import Google
 
 from Modules.Constants import Constants
@@ -53,6 +55,9 @@ class ExportWidgetGoogle(tk.Frame):
                         )
     self.feedbackMessage.grid(row=4,column=0,columnspan=3,sticky=tk.NSEW)
 
+    self.gui.update()
+    self.feedbackMessage.config(wraplength=self.feedbackMessage.winfo_width() - 35)
+
   def clearcalenderId(self):
     response = messagebox.askyesnocancel("Agenda verwijderen", "Wilt u ook de agenda verwijderen uit google", parent=self)
 
@@ -69,10 +74,11 @@ class ExportWidgetGoogle(tk.Frame):
     else:
       self.feedbackMessagebuilder('google Agenda niet aangeraakt maar ik weet niet meer waar hij is\n ik maak een nieuwe aan volgende keer')
     googleConfig['calendarId'] = None
-    self.gui.config.storeKey('google', googleConfig)
+    self.gui.config.setKey('google', googleConfig)
 
   def forceLoginGoogle(self):
     self.google.forceLogin()
+    self.feedbackMessagebuilder('\nOpnieuw ingelogd succesvol\n')
 
   def feedbackMessagebuilder(self,message, blank=False):
     if blank:
@@ -82,29 +88,35 @@ class ExportWidgetGoogle(tk.Frame):
     self.gui.update()
 
   def syncGoogle(self):
+    Logger.getLogger(__name__).info('starting sync')
     self.feedbackMessagebuilder("start sync\n",blank=True)
     self.feedbackMessagebuilder("Gebruiker inloggen:")
 
-    self.google.login()
-    self.feedbackMessagebuilder("\tLogin goed\n"+"Agenda opvragen:")
 
-    googleCal = self.google.manageCalendar()
-    self.feedbackMessagebuilder("\tGoogle agenda goed opgehaald\n")
-
-    print('got a calendar')
-    msg = "Succesvol de agenda geupdate"
     try:
+      self.google.login()
+      Logger.getLogger(__name__).info('user logged in')
+      self.feedbackMessagebuilder("\tLogin goed\n" + "Agenda opvragen:")
+
+      googleCal = self.google.manageCalendar()
+      self.feedbackMessagebuilder("\tGoogle agenda goed opgehaald\n")
+
+      msg = "Succesvol de agenda geupdate"
 
       if self.gui.eventData is not None and 'shift' in self.gui.eventData :
-        self.google.manageEvents(googleCal, self.gui.eventData['shift'])
+        returnObject = self.google.parseEventsToGoogle(googleCal, self.gui.eventData['shift'], periods=self.gui.eventData['periods'])
+        self.google.processData(googleCal,returnObject)
       else:
         msg = "Er is nog geen evenementen data om te synchroniseren"
       self.feedbackMessagebuilder(msg)
+    except RefreshError:
+      Logger.getLogger(__name__).error('Er ging iets mis tijdens synchroniseren, refresh error', exc_info=True)
+      self.feedbackMessagebuilder("\tHet lijkt erop alsof wij niet meer bij uw google account kunnen. met een force login zou dat weer moeten werken\n")
     except Exception as e:
       Logger.getLogger(__name__).error('Er ging iets mis tijdens synchroniseren', exc_info=True)
       self.feedbackMessagebuilder("\ter ging wat mis\n")
-      self.feedbackMessagebuilder(e)
-
+      self.feedbackMessagebuilder(str(type(e)))
+      raise e
     print('end of syncgoogle')
 
     # self.feedbackMessage.configure(text=msg)

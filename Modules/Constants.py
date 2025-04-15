@@ -4,7 +4,6 @@ import sys
 import time
 
 
-
 class Constants():
   version = "v0.1.0-beta"
   zaantheaterColor = "#7a4689"
@@ -33,13 +32,17 @@ class Constants():
             .replace('{organisation}', Constants.OrganisationName)
             .replace('{location}', Constants.LocationName))
 
+  @staticmethod
   def resource_path(relative):
+    """
+    :param relative:
+    :return:
+    """
     try:
       # PyInstaller creates a temp folder and stores path in _MEIPASS
       base_path = sys._MEIPASS
     except Exception:
       base_path = os.path.abspath(".")
-    print(base_path, relative)
     return os.path.join(base_path, relative)
 
   @staticmethod

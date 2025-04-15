@@ -1,85 +1,135 @@
-import io
 import json
-import logging
 import shutil
 from pprint import pprint
 from tkinter import filedialog
+from typing import Any
 
 from Modules.Constants import Constants
 from Modules.Logger import Logger
 import os.path
 
 
+class ConfigObject:
+  dyflexis = None
+  ics = None
+  google = None
+  autoPopulateConfig = None
+  debug = None
+
+  def __init__(self):
+    self.__version__ = Constants.version
+    self.dyflexis = {"username": "", "password": "","location":"","organisation":""}
+    self.ics = {"url": ""}
+    self.google = {"calendarId": None, 'credentials': None}
+    self.autoPopulateConfig = False
+    self.debug = {}
+
+  def __getattr__(self, name: str) -> Any:
+    return self.__dict__[name]
+
+  def __setattr__(self, name, value):
+    # na elke set slaan we op naar de config, zo is die altijd up to date
+    self.__dict__[name] = value
+
+  def save(self):
+    # alleen als we de config gebruiken save ik de waarden. anders draaien we in memory
+    with open(Constants.resource_path("config.json"), 'w') as fp:
+      fp.write(self.toJson())
+      fp.close()
+    return self
+
+  @staticmethod
+  def loadFromFile():
+    if os.path.isfile(Constants.resource_path("config.json")):
+      try:
+        with open(Constants.resource_path("config.json"), 'r') as fp:
+          superValue = fp.read()
+          configObject = ConfigObject.fromJson(superValue)
+          fp.close()
+          configObject.__version__ = Constants.version
+          return configObject
+
+      except:
+        Logger.getLogger(__name__).info('config.json is niet json, overschrijf')
+        return ConfigObject().save()
+    else:
+      return ConfigObject().save()
+
+  def toJson(self):
+    return json.dumps(
+      self,
+      default=lambda o: o.__dict__,
+      sort_keys=True,
+      indent=2)
+
+  @staticmethod
+  def fromJson(jsonText):
+    """
+    load a configuration from json text
+    :param jsonText:
+    :return:
+    """
+    config = json.loads(jsonText)
+    configObject = ConfigObject()
+    # we zetten de keys van de json in onze classe, alles wat niet ingevuld word blijft zo standaard
+    for key in config:
+      configObject.__setattr__(key, config[key])
+    configObject.__version__ = Constants.version
+    configObject.save()
+    return configObject
+
 class ConfigLand:
+  __config: ConfigObject
 
-  def __init__(self, useConfigFile=1):
+  def __init__(self):
 
-    self.useConfigFile = useConfigFile
-    self.fileName = Constants.resource_path("config.json")
-    self.Config = {
-      "dyflexis": {"username": "", "password": ""},
-      "ics": {"url": ""},
-      "google": {"calendarId": None,'credentials':None},
-      "autoPopulateConfig": False,
-    }
+    self.__config = ConfigObject.loadFromFile()
+    self.__updateHandlers = []
+    self.__loadHandlers = []
 
-    self.defaultConfig = {
-      "dyflexis": {"username": "", "password": ""},
-      "ics": {"url": ""},
-      "google": {"calendarId": None,'credentials':None},
-      "autoPopulateConfig": False,
-    }
-    self.loadConfig()
+  def addUpdateHandler(self, handler):
+    self.__updateHandlers.append(handler)
+  def addLoadHandler(self, handler):
+    self.__loadHandlers.append(handler)
+
+  def handleUpdateHandlers(self):
+    Logger.getLogger(__name__).info('handeling handlers')
+    for handler in self.__updateHandlers:
+      if handler is not None:
+        handler()
+
+  def handleLoadHandlers(self):
+      Logger.getLogger(__name__).info('handeling handlers')
+      for handler in self.__loadHandlers:
+        handler()
 
   def getKey(self, key):
-    if key in self.Config:
-      print(type(self.Config[key]))
-      return self.Config[key]
-    else:
-      return self.defaultConfig[key]
+    return self.__config.__getattr__(key)
 
-  def storeKey(self, key, value):
-    self.Config[key] = value
-    pprint(value)
-    pprint(type(value))
-    self.saveConfig()
-
-  def saveConfig(self, localConfig=None):
-    # alleen als we de config gebruiken save ik de waarden. anders draaien we in memory
-    if (localConfig != None):
-      self.Config = localConfig
-    with open(self.fileName, 'w') as fp:
-      fp.write(json.dumps(self.Config,indent=2))
-      fp.close()
+  def setKey(self, key, value):
+    self.__config.__setattr__(key,value)
+    self.__config.save()
 
   def reset(self):
-    self.saveConfig(self.defaultConfig)
-
-  def loadConfig(self):
-    if os.path.isfile(self.fileName):
-      try:
-        with open(self.fileName, 'r') as fp:
-          superValue = fp.read()
-          self.Config = json.loads(superValue)
-          fp.close()
-      except:
-        Logger().log('config.json is niet json')
-        self.saveConfig()
-    else:
-      self.saveConfig(self.defaultConfig)
-      Logger().log('geen config.json gevonden, we maken dit aan')
-    return self.Config
+    self.__config = ConfigObject().save()
 
   def exportConfig(self):
+    self.handleUpdateHandlers()
+
     target_dir = filedialog.askdirectory(
       title="Locatie om naartoe te exporteren",
       initialdir=os.path.expanduser('~/Downloads'))
-    shutil.copyfile(Constants.resource_path("config.json"), target_dir+"/dyflexisConfig.json")
+    self.__config.save()
+    shutil.copyfile(Constants.resource_path("config.json"), target_dir + "/dyflexisConfig.json")
 
   def importConfig(self):
-    targetfile = filedialog.askopenfilename(title="locatie van uw config.json",filetypes=[('Json bestand', 'json')])
+    targetfile = filedialog.askopenfilename(title="locatie van uw config.json", filetypes=[('Json bestand', 'json')])
     if targetfile is not None:
       with open(targetfile, 'r') as fp:
-        content = json.loads(fp.read())
+        content = fp.read()
         fp.close()
-        self.saveConfig(content)
+        self.__config = ConfigObject.fromJson(content)
+    self.handleLoadHandlers()
+
+
+

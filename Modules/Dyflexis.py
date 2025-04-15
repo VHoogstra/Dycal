@@ -10,6 +10,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 
 from Exceptions.BadLoginException import BadLoginException
+from Modules.ConfigLand import ConfigLand
 from Modules.Constants import Constants
 from Modules.Logger import Logger
 
@@ -24,7 +25,7 @@ class Dyflexis:
   #todo dit ook naar een config wegschrijven
   MAX_NAME_LENGTH = 71
 
-  def __init__(self, config, width, height):
+  def __init__(self, config: ConfigLand, width, height):
     self.config = config
     self.width = width
     self.height = height
@@ -43,7 +44,6 @@ class Dyflexis:
   def login(self,username,password, _progressbarCallback=None):
     Logger.getLogger(__name__).info('starting loggin procedure')
 
-    config = self.config.Config
     self.driver.get(Constants.getDyflexisRoutes("login"))
     WebDriverWait(self.driver, 20).until(ec.presence_of_element_located((By.ID, "username")))
 
@@ -139,9 +139,10 @@ class Dyflexis:
         "assignments": 0,
         "agenda": 0,
         "events": 0,
+        "periods":[],
         "list": []
       }
-
+    returnArray['periods'].append(period)
     body = calendar.find_element(by=By.TAG_NAME, value='tbody')
     rows = body.find_elements(by=By.TAG_NAME, value='tr')
 

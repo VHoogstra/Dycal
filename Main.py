@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 import logging
 import sys
+from pprint import pprint
 
+from Modules.ConfigLand import ConfigObject, ConfigLand
 from Modules.Constants import Constants
+from Modules.ExceptionScreen import ExceptionScreen
 from Modules.GUI import Gui
 from Modules.Logger import Logger
+
 
 
 def main():
@@ -31,6 +35,9 @@ def main():
     #     if "--headless" in arg:
     #         print("Headless mode")
 
+
+
+
     try:
         app = Gui()
         app.mainloop()
@@ -44,9 +51,9 @@ def main():
             Message = Message + str(e)
         Logger.getLogger(__name__).error('Er ging wat mis bij bij Mainloop', exc_info=True)
         #todo bug scherm openen?
-        raise e
-
-    sys.exit(0)
+        excep=ExceptionScreen(Message,e)
+        excep.mainloop()
+    Logger.getLogger(__name__).info('screen openet')
 
 if __name__ == "__main__":
     main()

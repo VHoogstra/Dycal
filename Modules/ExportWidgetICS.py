@@ -18,6 +18,8 @@ class ExportWidgetICS(tk.Frame):
   def __init__(self, parent=None,gui=None, **kwargs):
     tk.Frame.__init__(self, parent, **kwargs)
     self.gui = gui
+    self.gui.configLand.addUpdateHandler(self.updateConfig)
+    self.gui.configLand.addLoadHandler(self.loadFromConfig)
 
 
     iscInfoText = "Een ICS bestand kan gegenereerd worden zonder een bestaand bestand te openen, echter als je twee keer dezelfde maand draait zal je dubbele afspraken krijgen.\nOmdat dit onpraktisch is kan je een link naar een openbare ics file toevoegen OF een geëxporteerd bestand uploaden. \nWij zullen in de afspraken zoeken naar dyflexis evenementen (door het ID in de omschrijving) en deze updaten"
@@ -31,6 +33,7 @@ class ExportWidgetICS(tk.Frame):
     self.gui.createLabel(text="ics url",
                      parent=self).grid(row=1, column=0, sticky=tk.NSEW)
     self.icsUrl = self.gui.createEntry(parent=self)
+    self.icsUrl.bind("<KeyPress>", self.updateConfig)
     self.icsUrl.grid(row=1, column=1, columnspan=1, sticky=tk.NSEW, padx=10)
     ctk.CTkButton(self, text='Laad ICS uit URL',
                   command=self.loadICS).grid(row=1, column=2, columnspan=1, padx=10, pady=2)
@@ -57,10 +60,21 @@ class ExportWidgetICS(tk.Frame):
                          column=0,
                          columnspan=4,
                          sticky=tk.NSEW)
+    self.loadFromConfig()
 
+  def updateConfig(self,*args):
+    # window hasnt been visable yet
+    if not hasattr(self,'icsUrl'):
+      return
+    Logger.getLogger(__name__).info('update config')
+    icsConfig = self.gui.configLand.getKey('ics')
+    icsConfig['url'] = self.icsUrl.get()
+    self.gui.configLand.setKey('ics', icsConfig)
+
+  def loadFromConfig(self):
+    value = self.gui.configLand.getKey('ics')['url']
     self.icsUrl.delete(0, 500)
-    self.icsUrl.insert(0, self.gui.config.Config['ics']['url'])
-
+    self.icsUrl.insert(0, value)
 
   def uploadICS(self):
     self.ICSMessage.config(bg=Constants.zaantheaterColor)

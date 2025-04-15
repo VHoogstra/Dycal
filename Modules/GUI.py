@@ -1,6 +1,8 @@
 import json
 import tkinter as tk
 import tkinter.ttk as ttk
+from pprint import pprint
+
 import arrow
 
 import customtkinter as ctk
@@ -12,6 +14,7 @@ from Modules.DyflexisDetails import DyflexisDetails
 from Modules.ExportWidget import ExportWidget
 from Modules.InfoScreen import InfoScreen
 from Modules.Logger import Logger
+from Modules.debug import DebugWindow
 
 
 class Gui(tk.Frame):
@@ -19,25 +22,40 @@ class Gui(tk.Frame):
   eventDate = {}
   dyflexisMessage = "test "
   infoScreen = None
+  debugWindow = None
+  configLand:ConfigLand = None
+
+  def openDebug(self,element):
+    if self.debugWindow is None:
+      self.debugWindow = DebugWindow()
+    else:
+      self.debugWindow.destroy()
+      self.debugWindow = None
+
+  def testKey(self,element, event):
+    print(event.char, event.keysym, event.keycode)
+    pprint(element)
 
   def __init__(self, master=None):
     tk.Frame.__init__(self, master)
+    ## key bindings
+    self.master.bind("<Shift_L><D>", self.openDebug)
+    self.master.bind("<Shift_R><D>", self.openDebug)
+    # self.master.bind("<Key>", self.testKey)
+
     Logger.getLogger(__name__).info('starting Gui')
 
     self.eventData = None
     self.periods = []
     self.dyflexisProgressBarValue = tk.IntVar()
     self.grid(column=0, row=0, sticky=tk.NSEW)
-
     self.master.title('Dyflexis -> ICS calendar ' + Constants.version)
 
     # self.master.attributes("-topmost", True)
-
     w = 860  # width for the Tk root
     h = 500  # height for the Tk root
     self.scrolWindowHeight = h - 10
     ws = self.master.winfo_screenwidth()
-
     hs = self.master.winfo_screenheight()
 
     x = (ws / 2) - (w / 2)
@@ -47,11 +65,16 @@ class Gui(tk.Frame):
 
     # nee resize is niet toegestaan
     # self.master.resizable(False, False)
+
+
     self.createPeriods()
     self.createWidgets()
 
-    self.config = ConfigLand()
+    self.configLand = ConfigLand()
     self.loadConfig()
+    self.configLand.addLoadHandler(self.loadConfig())
+    self.configLand.addUpdateHandler(self.updateDyflexis)
+
     self.master.lift()
     index = 6
     for period in self.periods:
@@ -64,12 +87,14 @@ class Gui(tk.Frame):
     self.update()
     self.dyflexisMessage.config(wraplength=self.dyflexisFrame.winfo_width()-35)
 
+    # self.openDebug('key')
+
   def closingInfoScreen(self):
     self.infoScreen.destroy()
     self.infoScreen = None
 
   def openInfoScreen(self):
-    if self.infoScreen == None:
+    if self.infoScreen is None:
       self.infoScreen = InfoScreen()
       self.infoScreen.protocol("WM_DELETE_WINDOW", self.closingInfoScreen)
     else:
@@ -86,8 +111,7 @@ class Gui(tk.Frame):
     self.configLoad = ctk.CTkButton(self.mainFrame, text='info', command=self.openInfoScreen)
     self.configLoad.grid(row=0, column=5, sticky=tk.N + tk.E, padx=5, pady=5)
 
-    self.segmentedButtonSave = ctk.CTkSegmentedButton(self.mainFrame, values=["laad uit config",
-                                                                              "save naar config",
+    self.segmentedButtonSave = ctk.CTkSegmentedButton(self.mainFrame, values=[
                                                                               "reset config",
                                                                               'export config', 'import config'],
                                                       command=self.segmented_button_callback)
@@ -101,11 +125,14 @@ class Gui(tk.Frame):
     self.dyflexisFrame.columnconfigure([1, 2], weight=4)
 
     self.createLabel(text="username", parent=self.dyflexisFrame).grid(row=1, column=0)
-    self.dyflexisUsername = self.createEntry(parent=self.dyflexisFrame)
+    self.dyflexisUsername = self.createEntry(parent=self.dyflexisFrame,validatecommand=self.updateDyflexis)
     self.dyflexisUsername.grid(row=1, column=1, columnspan=2, sticky=tk.NSEW)
 
     self.createLabel(text="Password", parent=self.dyflexisFrame).grid(row=2, column=0)
     self.dyflexisPassword = self.createEntry(parent=self.dyflexisFrame)
+    self.dyflexisPassword.bind("<KeyPress>", self.updateDyflexis)
+    self.dyflexisUsername.bind("<KeyPress>", self.updateDyflexis)
+
     self.dyflexisPassword.grid(row=2, column=1, columnspan=2, sticky=tk.NSEW)
 
     ctk.CTkButton(
@@ -135,18 +162,12 @@ class Gui(tk.Frame):
   def segmented_button_callback(self, selection):
     # reset buttons so you can press one again
     self.segmentedButtonSave.set(value=4)
-    if selection == "laad uit config":
-      self.loadConfig()
-    if selection == "save naar config":
-      self.saveConfig()
     if selection == "reset config":
       self.resetConfig()
     if selection == 'export config':
-      self.setConfig()
-      self.config.exportConfig()
+      self.configLand.exportConfig()
     if selection == 'import config':
-      self.setConfig()
-      self.config.importConfig()
+      self.configLand.importConfig()
       self.loadConfig()
 
   def createLabel(self, text, parent=None, **kwargs):
@@ -177,33 +198,24 @@ class Gui(tk.Frame):
       width=50,
       textvariable=variable
     )
-
-  def setConfig(self):
-    ##todo dit weg werken als een event listener
-    self.config.Config['dyflexis']['username'] = self.dyflexisUsername.get()
-    self.config.Config['dyflexis']['password'] = self.dyflexisPassword.get()
-
-  def saveConfig(self):
-    Logger.getLogger(__name__).info('saving config')
-    self.setConfig()
-    # todo dit verhuizen naar de juiste save
-    # self.config.Config['ics']['url'] = self.icsUrl.get()
-    self.config.saveConfig()
+  def updateDyflexis(self,*args):
+    dyflexis_data = self.configLand.getKey('dyflexis')
+    dyflexis_data['username'] = self.dyflexisUsername.get()
+    dyflexis_data['password'] = self.dyflexisPassword.get()
+    self.configLand.setKey('dyflexis', dyflexis_data)
 
   def loadConfig(self):
     Logger.getLogger(__name__).info('loading config')
-    self.config.loadConfig()
-
+    dyflexisConfig = self.configLand.getKey('dyflexis')
     self.dyflexisPassword.delete(0, 500)
-    self.dyflexisPassword.insert(0, self.config.Config['dyflexis']['password'])
+    self.dyflexisPassword.insert(0, dyflexisConfig['password'])
 
     self.dyflexisUsername.delete(0, 500)
-    self.dyflexisUsername.insert(0, self.config.Config['dyflexis']['username'])
+    self.dyflexisUsername.insert(0, dyflexisConfig['username'])
 
   def resetConfig(self):
     Logger.getLogger(__name__).info('reseting config')
-    self.config.reset()
-    self.loadConfig()
+    self.configLand.reset()
 
   def updateDyflexisProgressBar(self, amount, period):
     Logger.getLogger(__name__).info('progressbar update van periode {} naar {}'.format(period, amount))
@@ -233,8 +245,9 @@ class Gui(tk.Frame):
       error = True
     if error:
       return
+    self.configLand.handleUpdateHandlers()
 
-    self.dyflexis = Dyflexis(self.config,
+    self.dyflexis = Dyflexis(self.configLand,
                              self.master.winfo_screenwidth(),
                              self.master.winfo_screenheight())
     # reset the periods to 0 in progressbar
@@ -265,8 +278,6 @@ class Gui(tk.Frame):
       self.dyflexisMessage.config(bg='red', fg='white')
       self.dyflexisMessageVariable.set(Message)
       return
-
-    # self.loadFromBackup()
 
     # create the information message for the GUI
     assignments = str(self.eventData['assignments'])
