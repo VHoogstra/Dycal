@@ -51,7 +51,7 @@ def main():
             Message = Message + str(e)
         Logger.getLogger(__name__).error('Er ging wat mis bij bij Mainloop', exc_info=True)
         #todo bug scherm openen?
-        excep=ExceptionScreen(Message,e)
+        excep=ExceptionScreen(Message,e )
         excep.mainloop()
     Logger.getLogger(__name__).info('screen openet')
 

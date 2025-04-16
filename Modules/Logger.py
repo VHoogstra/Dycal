@@ -30,7 +30,7 @@ class Logger:
 
   @staticmethod
   def toFile(location, variable):
-    with open(Constants.resource_path(location), 'w+') as fp:
+    with open(Constants.resource_path(location), 'w') as fp:
       fp.write(json.dumps(variable, indent=4))
 
   @staticmethod

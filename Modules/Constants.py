@@ -6,6 +6,8 @@ import time
 
 class Constants():
   version = "v0.1.0-beta"
+  appname = "Dycal"
+
   zaantheaterColor = "#7a4689"
   dyflexisMessage = "test "
   logPrefix = "logs/"
@@ -23,8 +25,11 @@ class Constants():
   # todo zaandam ook kiesbaar maken
   OrganisationName = 'zaantheater'
   LocationName = 'zaandam'
-  defaultGoogleCalName = "ZTD -> Dyflexis"
   DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="
+
+  @staticmethod
+  def getGoogleCalName():
+    return Constants.appname +": "+Constants.OrganisationName
 
   @staticmethod
   def getDyflexisRoutes(key):
@@ -55,3 +60,5 @@ class Constants():
         if Constants.logFileName in file_name or Constants.dyflexisJsonFilename in file_name:
           continue
         os.remove(source_dir + file_name)
+    else:
+      os.mkdir(source_dir)

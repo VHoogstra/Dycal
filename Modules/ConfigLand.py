@@ -101,7 +101,8 @@ class ConfigLand:
   def handleLoadHandlers(self):
       Logger.getLogger(__name__).info('handeling handlers')
       for handler in self.__loadHandlers:
-        handler()
+        if handler is not None:
+          handler()
 
   def getKey(self, key):
     return self.__config.__getattr__(key)
@@ -124,7 +125,7 @@ class ConfigLand:
 
   def importConfig(self):
     targetfile = filedialog.askopenfilename(title="locatie van uw config.json", filetypes=[('Json bestand', 'json')])
-    if targetfile is not None:
+    if targetfile is not None and targetfile != "":
       with open(targetfile, 'r') as fp:
         content = fp.read()
         fp.close()
