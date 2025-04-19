@@ -21,7 +21,10 @@ class ConfigObject:
     self.dyflexis = {"username": "", "password": "","location":"","organisation":""}
     self.ics = {"url": ""}
     self.google = {"calendarId": None, 'credentials': None}
-    self.autoPopulateConfig = False
+    #todo autopopulate config een checkbox geven in gui
+    #encryption op config save en decription
+    #config naar user folder verhuizen
+    self.autoPopulateConfig = True
     self.debug = {}
 
   def __getattr__(self, name: str) -> Any:

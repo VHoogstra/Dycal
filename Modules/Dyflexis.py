@@ -12,6 +12,7 @@ from selenium import webdriver
 from Exceptions.BadLoginException import BadLoginException
 from Modules.ConfigLand import ConfigLand
 from Modules.Constants import Constants
+from Modules.dataClasses import EventDataList
 from Modules.Logger import Logger
 
 
@@ -83,7 +84,7 @@ class Dyflexis:
     try:
       self.openChrome()
       self.login(username,password)
-      data = {}
+      data = EventDataList()
       for period in periods:
         data = self.getRooster(
           _progressbarCallback,
@@ -112,7 +113,7 @@ class Dyflexis:
     :return: eventData
     """
     if baseData is None:
-      baseData = {}
+      baseData = EventDataList()
     Logger.getLogger(__name__).info('get rooster')
     startProgress = 1
     endProgress = 100
@@ -132,17 +133,7 @@ class Dyflexis:
 
     Logger.getLogger(__name__).info('de maand {} word uitgelezen'.format(period))
 
-    if len(baseData) != 0:
-      returnArray = baseData
-    else:
-      returnArray = {
-        "assignments": 0,
-        "agenda": 0,
-        "events": 0,
-        "periods":[],
-        "list": []
-      }
-    returnArray['periods'].append(period)
+    baseData.periods.append(period)
     body = calendar.find_element(by=By.TAG_NAME, value='tbody')
     rows = body.find_elements(by=By.TAG_NAME, value='tr')
 
@@ -221,7 +212,7 @@ class Dyflexis:
           for agenda in agendas:
             aggList.append({"id": agenda.get_attribute('uo'), "text": agenda.text})
 
-        returnArray['list'].append(
+        baseData.list.append(
           {
             "date": column.get_attribute('title'),
             "text": column.text,
@@ -229,9 +220,9 @@ class Dyflexis:
             'assignments': assList,
             'agenda': aggList,
           })
-        returnArray['events'] = returnArray['events'] + len(eventList)
-        returnArray['assignments'] = returnArray['assignments'] + len(assList)
-        returnArray['agenda'] = returnArray['agenda'] + len(aggList)
+        baseData.events = baseData.events + len(eventList)
+        baseData.assignments = baseData.assignments + len(assList)
+        baseData.agenda = baseData.agenda + len(aggList)
 
         ##progress for column
         if _progressbarCallback:
@@ -241,14 +232,14 @@ class Dyflexis:
 
     if _progressbarCallback:
       _progressbarCallback(endProgress,period)
-    return returnArray
+    return baseData
 
-  def elementArrayToIcs(self, elementArray, _progressbarCallback=None):
+  def elementArrayToIcs(self, eventDataList:EventDataList, _progressbarCallback=None):
     Logger.getLogger(__name__).info('elements to array')
     shift = []
     tz = Constants.timeZone
 
-    for dates in elementArray['list']:
+    for dates in eventDataList.list:
 
       startDate = arrow.get(dates['date'], tzinfo=tz)
       stopDate = arrow.get(dates['date'], tzinfo=tz)
@@ -300,8 +291,8 @@ class Dyflexis:
           'id': assignments['id']
         })
 
-    elementArray["shift"] = shift
-    return elementArray
+    eventDataList.shift = shift
+    return eventDataList
 
   def eventnameParser(self, event, assignment):
     Logger.getLogger(__name__).info('eventNameParser')

@@ -29,9 +29,13 @@ class Logger:
       fp.close()
 
   @staticmethod
-  def toFile(location, variable):
+  def toFile(location, variable,isJson=False):
     with open(Constants.resource_path(location), 'w') as fp:
-      fp.write(json.dumps(variable, indent=4))
+      if isJson:
+        fp.write(variable)
+
+      else:
+        fp.write(json.dumps(variable, indent=4))
 
   @staticmethod
   def getLogger(className):

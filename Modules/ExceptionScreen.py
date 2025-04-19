@@ -34,3 +34,6 @@ class ExceptionScreen(tk.Frame):
     self.master.rowconfigure(0, weight=1)
     label = tk.Label(self.master,text=self.message)
     label.grid(column=0, row=0,sticky=tk.NSEW)
+    self.master.update()
+    label.config(wraplength=label.winfo_width() - 35)
+

@@ -14,7 +14,9 @@ from Modules.DyflexisDetails import DyflexisDetails
 from Modules.ExportWidget import ExportWidget
 from Modules.InfoScreen import InfoScreen
 from Modules.Logger import Logger
+from Modules.dataClasses import PeriodList
 from Modules.debug import DebugWindow
+from Modules.periodGui import PeriodGui
 
 
 class Gui(tk.Frame):
@@ -46,7 +48,8 @@ class Gui(tk.Frame):
     Logger.getLogger(__name__).info('starting Gui')
 
     self.eventData = None
-    self.periods = []
+    self.periods = PeriodList(6)
+    self.periods.addHandler(self.updatePeriodLoaders)
     self.dyflexisProgressBarValue = tk.IntVar()
     self.grid(column=0, row=0, sticky=tk.NSEW)
     self.master.title('{}: {}'.format( Constants.appname,Constants.version))
@@ -66,9 +69,9 @@ class Gui(tk.Frame):
     # nee resize is niet toegestaan
     # self.master.resizable(False, False)
 
-
-    self.createPeriods()
     self.createWidgets()
+
+    self.updatePeriodLoaders()
 
     self.configLand = ConfigLand()
     self.loadConfig()
@@ -76,11 +79,7 @@ class Gui(tk.Frame):
     self.configLand.addUpdateHandler(self.updateDyflexis)
 
     self.master.lift()
-    index = 6
-    for period in self.periods:
-      grid = dict(column=0, row=index)
-      self.createLoader(self.dyflexisFrame, self.periods[period], grid)
-      index += 1
+
     self.placeExportWidget()
     Logger.getLogger(__name__).info('Gui initialized')
 
@@ -134,12 +133,21 @@ class Gui(tk.Frame):
     self.dyflexisUsername.bind("<KeyPress>", self.updateDyflexis)
 
     self.dyflexisPassword.grid(row=2, column=1, columnspan=2, sticky=tk.NSEW)
-
+    ctk.CTkButton(
+      self.dyflexisFrame,
+      text='custom periodes..',
+      command=self.openPeriodsGui
+    ).grid(row=4, column=0, columnspan=1, pady=15)
     ctk.CTkButton(
       self.dyflexisFrame,
       text='Dyflexis uitlezen',
       command=self.dyflexisRead
     ).grid(row=4, column=1, columnspan=1, pady=15)
+    self.dyflexisProgressFrame = tk.Frame(self.dyflexisFrame)
+    self.dyflexisProgressFrame.grid(row=5,column=0,columnspan=3, sticky=tk.NSEW)
+    self.dyflexisProgressFrame.columnconfigure(0, weight=0)
+    self.dyflexisProgressFrame.columnconfigure(1, weight=1)
+    self.dyflexisProgressFrame.configure(bg=Constants.zaantheaterColor)
     self.dyflexisMessageVariable = tk.StringVar()
     self.dyflexisMessageVariable.set('Nog geen informatie bekend')
     self.dyflexisMessage = tk.Label(self.dyflexisFrame,
@@ -169,6 +177,8 @@ class Gui(tk.Frame):
     if selection == 'import config':
       self.configLand.importConfig()
       self.loadConfig()
+  def openPeriodsGui(self):
+    PeriodGui(self.periods)
 
   def createLabel(self, text, parent=None, **kwargs):
     if parent == None:
@@ -265,7 +275,7 @@ class Gui(tk.Frame):
         periods=periodsToRun,
         username=self.dyflexisUsername.get(), password=self.dyflexisPassword.get()
       )
-      Logger.toFile(location=Constants.logPrefix + Constants.dyflexisJsonFilename, variable=self.eventData)
+      Logger.toFile(location=Constants.logPrefix + Constants.dyflexisJsonFilename, variable=self.eventData.toJson(),isJson=True)
 
       # self.loadFromBackup()
     except Exception as e:
@@ -280,11 +290,15 @@ class Gui(tk.Frame):
       return
 
     # create the information message for the GUI
-    assignments = str(self.eventData['assignments'])
-    agenda = str(self.eventData['agenda'])
-    events = str(self.eventData['events'])
-    start_date = self.eventData['list'][0]['date']
-    end_date = self.eventData['list'][len(self.eventData['list']) - 1]['date']
+    assignments = str(self.eventData.assignments)
+    agenda = str(self.eventData.agenda)
+    events = str(self.eventData.events)
+    if len(self.eventData.list) == 0:
+      start_date = "null"
+      end_date = "null"
+    else:
+      start_date = self.eventData.list[0]['date']
+      end_date = self.eventData.list[len(self.eventData.list) - 1]['date']
     Message = "Shifts: {}\nAgenda: {}\nEvents: {}\nperiode: {} tot {}".format(assignments,agenda,events,start_date,end_date)
     Logger.getLogger(__name__).info('dyflexis run klaar met bericht %a', Message)
     self.dyflexisMessage.config(bg='green')
@@ -298,36 +312,30 @@ class Gui(tk.Frame):
     Logger.getLogger(__name__).info('open Dyflexis Details')
     dyflexisDetails = DyflexisDetails(self.eventData)
 
-  def createPeriods(self):
-    Logger.getLogger(__name__).info('create periods')
-    self.periods = dict()
-    for x in range(0, 4):
-      onValue = tk.BooleanVar()
-      if arrow.now().shift(months=2) > arrow.now().shift(months=x):
-        onValue.set(True)
-      self.periods.update({
-        arrow.now().shift(months=x).format('YYYY-MM'): dict(
-          period=arrow.now().shift(months=x).format('YYYY-MM'),
-          on=onValue,
-          progress=tk.IntVar()
-        )
-      })
+  def updatePeriodLoaders(self):
+    #redraw periods and remove unused periods
+    for widget in self.dyflexisProgressFrame.winfo_children():
+      widget.destroy()
+    row =0
+    for period in self.periods.getPeriods():
+      self.createLoader(self.dyflexisProgressFrame,period,{'row':row,'column':0})
+      row +=1
 
   def createLoader(self, parent, period, grid):
-    grid.update(padx=0, pady=3)
+    grid.update(padx=3, pady=3)
     checkbar = ctk.CTkCheckBox(parent,
-                               text=period['period'],
+                               text=period.period,
                                onvalue=True,
                                offvalue=False,
-                               variable=period['on'],
+                               variable=period.getTKOn(),
                                text_color="white")
-    checkbar.grid(column=grid['column'], row=grid['row'], pady=2)
+    checkbar.grid(column=grid['column'], row=grid['row'], pady=grid['pady'])
 
     grid.update(columnspan=2, sticky=tk.NSEW, column=grid['column'] + 1)
     progressBar = ttk.Progressbar(parent, mode='determinate', maximum=101,
-                                  variable=period['progress'])
+                                  variable=period.getTkProgress())
     progressBar.grid(grid)
-    period.update(progressbar=progressBar)
+    period.progressBar =progressBar
 
   def loadFromBackup(self):
     Logger.getLogger(__name__).info('load from backup')

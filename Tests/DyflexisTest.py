@@ -3,7 +3,7 @@ import unittest
 from Modules.Dyflexis import Dyflexis
 
 
-class MyTestCase(unittest.TestCase):
+class DyflexisTest(unittest.TestCase):
     def setup(self):
         self.dyflexis = Dyflexis({},3,3)
 

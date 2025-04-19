@@ -13,6 +13,7 @@ class Constants():
   logPrefix = "logs/"
   logFileName = "log_" + time.strftime("%Y-%m-%d", time.gmtime()) + '.txt'
   dyflexisJsonFilename = 'latestCalendarData.json'
+  googleJsonFile = 'latestGoogleMergeData.json'
   githubVersionLink = "https://api.github.com/repos/VHoogstra/dyflexis-calendar-ics/releases"
   timeZone = "Europe/Amsterdam"
   Dyflexis = {
@@ -43,11 +44,17 @@ class Constants():
     :param relative:
     :return:
     """
-    try:
-      # PyInstaller creates a temp folder and stores path in _MEIPASS
-      base_path = sys._MEIPASS
-    except Exception:
-      base_path = os.path.abspath(".")
+    #todo test if this works on windows
+    base_path = os.path.expanduser('~/dycol')
+    response = os.path.isdir(base_path)
+    if not response:
+      os.makedirs(base_path)
+
+    # try:
+    #   # PyInstaller creates a temp folder and stores path in _MEIPASS
+    #   base_path = sys._MEIPASS
+    # except Exception:
+    #   base_path = os.path.abspath(".")
     return os.path.join(base_path, relative)
 
   @staticmethod
@@ -57,7 +64,7 @@ class Constants():
       file_names = os.listdir(source_dir)
 
       for file_name in file_names:
-        if Constants.logFileName in file_name or Constants.dyflexisJsonFilename in file_name:
+        if Constants.logFileName in file_name or Constants.dyflexisJsonFilename in file_name or Constants.googleJsonFile in file_name:
           continue
         os.remove(source_dir + file_name)
     else:

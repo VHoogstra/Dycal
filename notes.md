@@ -10,13 +10,15 @@
   real time mee kan kijken
 - in details menu ook de mogelijkheid geven om meer kopjes te laten zien? alle waardes van een shift bv
 
-test schrijven op het verwijderen/syncen  van google
+- test schrijven op het verwijderen/syncen  van google
   overzicht geven van de te verwijderen agenda items, synchroniseren en updaten met bevestiging? verantwoordelijkheid verder naar de gebruiker verplaatsen
-kan deze lijst in real time geupdate worden...??
+- kan deze lijst in real time geupdate worden...??
 - evenementen te verwijderen?? kan niet via ics
-export config, geen dubbel check op overschrijven als het bestand al bestaat
+- export config, geen dubbel check op overschrijven als het bestand al bestaat
 - agenda id is te vinden in de cal, ook in config showen
   - als de gebruiker hier bij kan, betere check op agenda id doen
+
+dyflexis herschrijven met gebruik van de eventData classe
 # ter dev info
 
 https://pyinstaller.org/en/stable/
