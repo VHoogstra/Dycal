@@ -9,10 +9,10 @@
 - de shift genereer logica in de lijst weg werken.. en dan ideaal dat hij meteen eventData update zodat je in details in
   real time mee kan kijken
 - in details menu ook de mogelijkheid geven om meer kopjes te laten zien? alle waardes van een shift bv
-
 - test schrijven op het verwijderen/syncen  van google
-  overzicht geven van de te verwijderen agenda items, synchroniseren en updaten met bevestiging? verantwoordelijkheid verder naar de gebruiker verplaatsen
-- kan deze lijst in real time geupdate worden...??
+  - overzicht geven van de te verwijderen agenda items, synchroniseren en updaten met bevestiging? verantwoordelijkheid
+    verder naar de gebruiker verplaatsen
+  - kan deze lijst in real time geupdate worden...??
 - evenementen te verwijderen?? kan niet via ics
 - dyflexis shift parsers verhuizen naar de scanner
 

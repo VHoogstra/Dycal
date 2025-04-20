@@ -1,16 +1,11 @@
-import json
-from pprint import pprint
-
-import requests
 import arrow
+import requests
 from ics import Calendar, Event
 
 from Modules.Constants import Constants
-from Modules.Dyflexis import Dyflexis
+from Modules.Logger import Logger
 
 
-# https://icspy.readthedocs.io/en/stable/index.html
-# https://arrow.readthedocs.io/en/latest/
 class ICS:
     calendar = None
 
@@ -26,17 +21,17 @@ class ICS:
 
         if content == None:
             return
-        print('calender loaded')
+        Logger.getLogger(__name__).info('calender loaded')
         self.calendar = Calendar(content)
         return self
 
     def createNewEvent(self, dyflexysEvent):
-        print('creating new Calendar event from ' + dyflexysEvent['date'])
+        Logger.getLogger(__name__).info('creating new Calendar event from ' + dyflexysEvent['date'])
         event = Event()
         return self.updateEvent(event, dyflexysEvent)
 
     def updateEvent(self, event, dyflexysEvent):
-        print('updating new Calendar event from ' + dyflexysEvent['date'])
+        Logger.getLogger(__name__).info('updating new Calendar event from ' + dyflexysEvent['date'])
         event.name = dyflexysEvent['title']
 
         #nieuwe events hebben geen description
@@ -52,36 +47,24 @@ class ICS:
         event.end = dyflexysEvent['end_date']
         return event
 
-    def isEventOnDate(self, date):
-        eventOnDate = self.calendar.timeline.on(arrow.get(date))
-
-        for event in eventOnDate:
-            print(event.name)
-            if "id" in event.description:
-                print('id is in description ')
-
     def generateToICS(self, events):
         if self.calendar is None:
             self.calendar = Calendar()
 
-        print('calendar created')
+        Logger.getLogger(__name__).info('calendar created')
         tz = "Europe/Amsterdam"
 
         for event in events:
             updated = False
             if arrow.get(event['date']).is_between(arrow.now(tz).shift(years=+1), arrow.now(tz).shift(days=-1)):
                 continue
-            print('\tcreating event ' + event['start_date'])
-            test = self.calendar.timeline.on(arrow.get(event['start_date'], tzinfo=tz))
-            pprint(test)
-            for bla in test:
-                pprint(bla)
-                if event['id'] in bla.description:
-                    self.updateEvent(bla, event)
+            Logger.getLogger(__name__).info('\tcreating event ' + event['start_date'])
+            icsEvents = self.calendar.timeline.on(arrow.get(event['start_date'], tzinfo=tz))
+            for icsEvent in icsEvents:
+                if hasattr(icsEvent, 'description') and icsEvent.description is not None and event[
+                    'id'] in icsEvent.description:
+                    self.updateEvent(icsEvent, event)
                     updated = True
             if not updated:
                 self.calendar.events.add(self.createNewEvent(event))
         return self.calendar.serialize_iter()
-        with open('my.ics', 'w') as fp:
-            fp.writelines(self.calendar.serialize_iter())
-            fp.close()
