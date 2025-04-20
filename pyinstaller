@@ -1,2 +1,2 @@
 #!/bin/sh
-pyinstaller --onedir --specpath=build --name=Dycal-file2 --noconfirm --icon=favicon.icns Main.py
+pyinstaller --onedir --windowed --specpath=build --name=Dycal-file2 --noconfirm --icon=favicon.icns Main.py

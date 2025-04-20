@@ -5,3 +5,5 @@ dist
 build
 logs/*
 credentials.json
+!build/favicon.icns
+!build/favicon.ico

@@ -18,12 +18,12 @@ class ExportWidgetGoogle(tk.Frame):
   def __init__(self, parent=None, gui=None, **kwargs):
     tk.Frame.__init__(self, parent, **kwargs)
     self.gui = gui
-    self.config = ConfigLand().getConfigLand()
+    self.configLand = ConfigLand().getConfigLand()
     self.google = Google()
 
     iscInfoText = 'Deze google integratie zal na het drukken op \"sync Google\" inloggen bij google en alle evenemeten ' \
-                  'in een eigen agenda wegschrijven.\n De naam van deze agenda kan hernoemt worden zonder problemen. de software ' \
-                  'verwijderd automatisch agenda afpsraken uit deze agenda die niet in dyflexis staan\n link je google voor het eerst? ' \
+                  'in een eigen agenda wegschrijven.\nDe naam van deze agenda kan hernoemt worden zonder problemen. de software ' \
+                  'verwijderd automatisch agenda afpsraken uit deze agenda die niet in dyflexis staan\nlink je google voor het eerst? ' \
                   'dan opent er een webbrowser waarin je toestemming kan geven aan deze app'
     icsInfo = tk.Message(self,
                          text=iscInfoText,
@@ -60,18 +60,18 @@ class ExportWidgetGoogle(tk.Frame):
 
     self.gui.update()
 
-    self.config.addLoadHandler(self.loadFromConfig)
-    self.config.addUpdateHandler(self.updateConfig)
+    self.configLand.addLoadHandler(self.loadFromConfig)
+    self.configLand.addUpdateHandler(self.updateConfig)
     self.loadFromConfig()
     self.feedbackMessage.config(wraplength=self.feedbackMessage.winfo_width() - 35)
 
   def updateConfig(self):
-    google = self.config.getKey('google')
+    google = self.configLand.getKey('google')
     google['calendarId'] = self.googleId.get()
-    self.config.setKey('google', google)
+    self.configLand.setKey('google', google)
 
   def loadFromConfig(self):
-    google = self.config.getKey('google')
+    google = self.configLand.getKey('google')
     self.googleId.delete(0, 500)
     self.googleId.insert(0, google['calendarId'])
 
@@ -82,7 +82,7 @@ class ExportWidgetGoogle(tk.Frame):
       return
     self.feedbackMessagebuilder('Agenda aan het verwijderen',blank=True)
     self.google.login()
-    googleConfig = self.config.getKey('google')
+    googleConfig = self.configLand.getKey('google')
 
     if response:
       self.feedbackMessagebuilder('google Agenda verwijderd\n')
@@ -91,7 +91,7 @@ class ExportWidgetGoogle(tk.Frame):
     else:
       self.feedbackMessagebuilder('google Agenda niet aangeraakt maar ik weet niet meer waar hij is\n ik maak een nieuwe aan volgende keer')
     googleConfig['calendarId'] = None
-    self.config.setKey('google', googleConfig)
+    self.configLand.setKey('google', googleConfig)
 
   def forceLoginGoogle(self):
     self.google.forceLogin()
@@ -121,7 +121,7 @@ class ExportWidgetGoogle(tk.Frame):
 
       if self.gui.eventData is not None and  hasattr(self.gui.eventData,'shift') :
         returnObject = self.google.parseEventsToGoogle(googleCal, self.gui.eventData.shift, periods=self.gui.eventData.periods)
-        if self.config.getKey('persistentStorageAllowed'):
+        if self.configLand.getKey('persistentStorageAllowed'):
           Logger.toFile(location=Constants.logPrefix + Constants.googleJsonFile, variable=returnObject.toJson(),isJson=True)
         self.google.processData(googleCal,returnObject)
       else:

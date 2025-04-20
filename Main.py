@@ -1,26 +1,12 @@
 #!/usr/bin/env python3
-import logging
 
-from Modules.Constants import Constants
 from Modules.GUI import Gui
 from Modules.Logger import Logger
 from Modules.ScreenException import ScreenException
 
 
 def main():
-    #https://tkdocs.com/shipman/index-2.html
     ######## Main #########
-    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s -\t %(message)s',
-                        filename=Constants.logPrefix+"console_"+Constants.logFileName,
-                        filemode='a')
-    # logger = logging.getLogger(__name__)
-    # # todo https://docs.python.org/3/library/logging.html dit uitzoeken
-    # logger.info('info')
-    # logger.warning('warn')
-    # logger.error('error')
-    # logger.critical('critical')
-    # logger.exception('exception')
-
     Logger.getLogger(__name__).info(' ###\t\t\tapplication start\t\t\t###')
 
     try:

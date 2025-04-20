@@ -57,7 +57,10 @@ class Gui(tk.Frame):
     self.grid(column=0, row=0, sticky=tk.NSEW)
     self.master.rowconfigure(0,weight=1)
     self.master.columnconfigure(0,weight=1)
-    self.master.title('{}: {}'.format(Constants.appname, Constants.version))
+    titleString = '{}: {}'.format(Constants.appname, Constants.version)
+    if Constants.version != Constants.githubVersion():
+      titleString = titleString + "\t newer version available:{}".format(Constants.githubVersion())
+    self.master.title(titleString)
 
     # self.master.attributes("-topmost", True)
     w = 860  # width for the Tk root
@@ -283,7 +286,7 @@ class Gui(tk.Frame):
       return
     self.configLand.handleUpdateHandlers()
 
-    self.dyflexis = Dyflexis(self.configLand,
+    self.dyflexis = Dyflexis(
                              self.master.winfo_screenwidth(),
                              self.master.winfo_screenheight())
 

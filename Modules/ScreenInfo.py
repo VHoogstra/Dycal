@@ -1,7 +1,5 @@
-import json
 import os
 import tkinter as tk
-import urllib
 import webbrowser
 
 import customtkinter as ctk
@@ -66,10 +64,7 @@ class ScreenInfo(tk.Toplevel):
 
 
   def getVersion(self):
-    link = Constants.githubVersionLink
-    f = urllib.request.urlopen(link)
-    gitVersions = json.loads(f.read())
-    versie = gitVersions[0]['name']
+    versie = Constants.githubVersion()
     text = f"De meest recente versie is {versie}\nDe huidige versie is {Constants.version}"
     self.release.config(text=text)
   def up(self):

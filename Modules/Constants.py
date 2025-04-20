@@ -1,11 +1,11 @@
+import json
 import os
 import time
-
-from Modules.ConfigLand import ConfigLand
+import urllib
 
 
 class Constants():
-  version = "v0.1.0-beta"
+  version = "v0.1.0 - Beta"
   appname = "Dycal"
 
   zaantheaterColor = "#7a4689"
@@ -27,10 +27,6 @@ class Constants():
   }
   # todo zaandam ook kiesbaar maken
   DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="
-
-  @staticmethod
-  def getGoogleCalName():
-    return Constants.appname + ": " + ConfigLand.getConfigLand().getKey('dyflexis')['organisation']
 
   @staticmethod
   def getDyflexisRoutes(key, organisation=None, location=None):
@@ -56,3 +52,10 @@ class Constants():
     else:
       Message = Message + str(exception)
     return Message
+
+  @staticmethod
+  def githubVersion():
+    link = Constants.githubVersionLink
+    f = urllib.request.urlopen(link)
+    gitVersions = json.loads(f.read())
+    return gitVersions[0]['name']

@@ -198,7 +198,8 @@ class Google:
         if response is None or response == False:
           raise Exception('geen geldig of bereikbaar agenda id gevonden')
         if response is True:
-          googleCal = calendar.create(Constants.getGoogleCalName())
+          googleCal = calendar.create(
+            Constants.appname + ": " + ConfigLand.getConfigLand().getKey('dyflexis')['organisation'])
 
     googleConfig['calendarId'] = googleCal['id']
     self.getConfigService().setKey('google', googleConfig)

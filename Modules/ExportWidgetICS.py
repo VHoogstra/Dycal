@@ -18,9 +18,9 @@ class ExportWidgetICS(tk.Frame):
   def __init__(self, parent=None,gui=None, **kwargs):
     tk.Frame.__init__(self, parent, **kwargs)
     self.gui = gui
-    self.config = ConfigLand.getConfigLand()
-    self.config.addUpdateHandler(self.updateConfig)
-    self.config.addLoadHandler(self.loadFromConfig)
+    self.configLand = ConfigLand.getConfigLand()
+    self.configLand.addUpdateHandler(self.updateConfig)
+    self.configLand.addLoadHandler(self.loadFromConfig)
 
 
     iscInfoText = "Een ICS bestand kan gegenereerd worden zonder een bestaand bestand te openen, echter als je twee keer dezelfde maand draait zal je dubbele afspraken krijgen.\nOmdat dit onpraktisch is kan je een link naar een openbare ics file toevoegen OF een geëxporteerd bestand uploaden. \nWij zullen in de afspraken zoeken naar dyflexis evenementen (door het ID in de omschrijving) en deze updaten"
@@ -68,12 +68,13 @@ class ExportWidgetICS(tk.Frame):
     if not hasattr(self,'icsUrl'):
       return
     Logger.getLogger(__name__).info('update config')
-    icsConfig = self.config.getKey('ics')
+    icsConfig = self.configLand.getKey('ics')
     icsConfig['url'] = self.icsUrl.get()
-    self.config.setKey('ics', icsConfig)
+    self.configLand.setKey('ics', icsConfig)
 
   def loadFromConfig(self):
-    value = self.config.getKey('ics')['url']
+    value = self.configLand.getKey('ics')
+    value = value['url']
     self.icsUrl.delete(0, 500)
     self.icsUrl.insert(0, value)
 
@@ -130,7 +131,7 @@ class ExportWidgetICS(tk.Frame):
 
   def generateICS(self):
     self.ICSMessage.config(bg=Constants.zaantheaterColor)
-    print('generateICS')
+    Logger.getLogger(__name__).info('generateICS')
     if self.calendar is None:
       self.calendar = ICS()
     if self.gui.eventData == None:
@@ -139,8 +140,8 @@ class ExportWidgetICS(tk.Frame):
         bg='orange')
       return
       # raise Exception('No calendar data to export')
-    print('ics generated')
-    name = "Dycal-ICS- " + arrow.get().format('YYYY-MM-DD')
+    Logger.getLogger(__name__).info('ics generated')
+    name = "Dycal-ICS-" + arrow.get().format('YYYY-MM-DD')
     icsdata = filedialog.asksaveasfile(
       defaultextension="ics",
       title="ICS bestand voor uw kalender app",
@@ -163,3 +164,4 @@ class ExportWidgetICS(tk.Frame):
 
     icsdata.writelines(data)
     icsdata.close()
+    self.ICSMessage.config(text="succesvol het ICS bestand aangemaakt en gevuld")
