@@ -105,7 +105,8 @@ class ExportWidgetGoogle(tk.Frame):
 
       if self.gui.eventData is not None and  hasattr(self.gui.eventData,'shift') :
         returnObject = self.google.parseEventsToGoogle(googleCal, self.gui.eventData.shift, periods=self.gui.eventData.periods)
-        Logger.toFile(location=Constants.logPrefix + Constants.googleJsonFile, variable=returnObject.toJson(),isJson=True)
+        if self.gui.configLand.getKey('persistentStorageAllowed'):
+          Logger.toFile(location=Constants.logPrefix + Constants.googleJsonFile, variable=returnObject.toJson(),isJson=True)
         self.google.processData(googleCal,returnObject)
       else:
         msg = "Er is nog geen evenementen data om te synchroniseren"

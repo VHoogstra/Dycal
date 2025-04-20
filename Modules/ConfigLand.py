@@ -1,8 +1,11 @@
 import json
 import shutil
 from pprint import pprint
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 from typing import Any
+
+import arrow
+from cryptography.fernet import Fernet
 
 from Modules.Constants import Constants
 from Modules.Logger import Logger
@@ -13,19 +16,31 @@ class ConfigObject:
   dyflexis = None
   ics = None
   google = None
-  autoPopulateConfig = None
+  persistentStorageAllowed = None
   debug = None
+  fileName = "data"
 
   def __init__(self):
     self.__version__ = Constants.version
-    self.dyflexis = {"username": "", "password": "","location":"","organisation":""}
+    self.dyflexis = {"username": "", "password": "", "location": "", "organisation": ""}
     self.ics = {"url": ""}
     self.google = {"calendarId": None, 'credentials': None}
-    #todo autopopulate config een checkbox geven in gui
-    #encryption op config save en decription
-    #config naar user folder verhuizen
-    self.autoPopulateConfig = True
+    # todo persistentStorageAllowed config een checkbox geven in gui
+    self.persistentStorageAllowed = None
     self.debug = {}
+    self.askStorageQuestion()
+
+  def askStorageQuestion(self):
+    base_path = os.path.expanduser('~/' + Constants.userStorageLocation)
+    if not os.path.isdir(base_path):
+      msgBox = messagebox.askyesno("persistent storage",
+                                   "Mogen wij een folder 'dycol' aanmaken in uw thuis folder om configuratie en log data op te slaan?".format(
+                                   ))
+      if msgBox:
+        self.persistentStorageAllowed = True
+        os.makedirs(base_path)
+    else:
+      self.persistentStorageAllowed = True
 
   def __getattr__(self, name: str) -> Any:
     return self.__dict__[name]
@@ -34,29 +49,47 @@ class ConfigObject:
     # na elke set slaan we op naar de config, zo is die altijd up to date
     self.__dict__[name] = value
 
-  def save(self):
+  def save(self, location=None):
+    if not self.persistentStorageAllowed:
+      return self
     # alleen als we de config gebruiken save ik de waarden. anders draaien we in memory
-    with open(Constants.resource_path("config.json"), 'w') as fp:
-      fp.write(self.toJson())
+    savePath = Constants.resource_path(ConfigObject.fileName)
+    if location is not None:
+      savePath = location
+    with open(savePath, 'wb') as fp:
+      data = self.toJson()
+      bytesData = bytes(data.encode())
+      encryptedData = self.encrypt(bytesData)
+      fp.write(encryptedData)
       fp.close()
     return self
 
   @staticmethod
+  def encrypt(content):
+    f = Fernet(b'Ngi3Iv2_rVNRuMXYhKHy1oVJvUCwm-xq_rTd7GmosXY=')
+    return f.encrypt(content)
+
+  @staticmethod
+  def decrypt(content):
+    f = Fernet(b'Ngi3Iv2_rVNRuMXYhKHy1oVJvUCwm-xq_rTd7GmosXY=')
+    return f.decrypt(content)
+
+  @staticmethod
   def loadFromFile():
-    if os.path.isfile(Constants.resource_path("config.json")):
+
+    if os.path.isfile(Constants.resource_path(ConfigObject.fileName)):
       try:
-        with open(Constants.resource_path("config.json"), 'r') as fp:
+        with open(Constants.resource_path(ConfigObject.fileName), 'r') as fp:
           superValue = fp.read()
-          configObject = ConfigObject.fromJson(superValue)
+          configObject = ConfigObject.fromJson(ConfigObject.decrypt(superValue))
           fp.close()
           configObject.__version__ = Constants.version
           return configObject
-
       except:
         Logger.getLogger(__name__).info('config.json is niet json, overschrijf')
-        return ConfigObject().save()
+        return ConfigObject()
     else:
-      return ConfigObject().save()
+      return ConfigObject()
 
   def toJson(self):
     return json.dumps(
@@ -81,17 +114,22 @@ class ConfigObject:
     configObject.save()
     return configObject
 
+
 class ConfigLand:
   __config: ConfigObject
 
   def __init__(self):
-
     self.__config = ConfigObject.loadFromFile()
     self.__updateHandlers = []
     self.__loadHandlers = []
 
+  def save(self):
+    self.handleUpdateHandlers()
+    self.__config.save()
+
   def addUpdateHandler(self, handler):
     self.__updateHandlers.append(handler)
+
   def addLoadHandler(self, handler):
     self.__loadHandlers.append(handler)
 
@@ -102,38 +140,38 @@ class ConfigLand:
         handler()
 
   def handleLoadHandlers(self):
-      Logger.getLogger(__name__).info('handeling handlers')
-      for handler in self.__loadHandlers:
-        if handler is not None:
-          handler()
+    Logger.getLogger(__name__).info('handeling handlers')
+    for handler in self.__loadHandlers:
+      if handler is not None:
+        handler()
 
   def getKey(self, key):
     return self.__config.__getattr__(key)
 
   def setKey(self, key, value):
-    self.__config.__setattr__(key,value)
-    self.__config.save()
+    self.__config.__setattr__(key, value)
+    # self.__config.save()
 
   def reset(self):
-    self.__config = ConfigObject().save()
+    if os.path.isfile(Constants.resource_path(ConfigObject.fileName)):
+      os.remove(Constants.resource_path(ConfigObject.fileName))
+    self.__config = ConfigObject()
 
   def exportConfig(self):
     self.handleUpdateHandlers()
+    name = "Dycal-config- " + arrow.get().format('YYYY-MM-DD')
 
-    target_dir = filedialog.askdirectory(
+    target_dir = filedialog.asksaveasfilename(
       title="Locatie om naartoe te exporteren",
-      initialdir=os.path.expanduser('~/Downloads'))
-    self.__config.save()
-    shutil.copyfile(Constants.resource_path("config.json"), target_dir + "/dyflexisConfig.json")
+      initialdir=os.path.expanduser('~/Downloads'),
+      initialfile=name)
+    self.__config.save(target_dir)
 
   def importConfig(self):
-    targetfile = filedialog.askopenfilename(title="locatie van uw config.json", filetypes=[('Json bestand', 'json')])
+    targetfile = filedialog.askopenfilename(title="locatie van uw config", filetypes=[('Json bestand', '')])
     if targetfile is not None and targetfile != "":
       with open(targetfile, 'r') as fp:
         content = fp.read()
         fp.close()
-        self.__config = ConfigObject.fromJson(content)
+        self.__config = ConfigObject.fromJson(ConfigObject.decrypt(content))
     self.handleLoadHandlers()
-
-
-

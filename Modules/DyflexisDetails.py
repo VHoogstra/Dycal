@@ -5,11 +5,12 @@ from pprint import pprint
 import customtkinter as ctk
 
 from Modules.Constants import Constants
+from Modules.dataClasses import EventDataList
 
 
 class DyflexisDetails(tk.Toplevel):
   eventData = None
-  def __init__(self, eventData):
+  def __init__(self, eventData:EventDataList):
     tk.Toplevel.__init__(self)
     window_width = 500
     window_height = 400
@@ -27,7 +28,7 @@ class DyflexisDetails(tk.Toplevel):
     # create the screen on window console
     # self.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
-    self.attributes("-topmost", True)
+    self.attributes("-topmost", False)
     self.title('Dyflexis Details')
     self.master.configure(background=Constants.zaantheaterColor)
     # self.resizable(False, False)
@@ -79,7 +80,7 @@ class DyflexisDetails(tk.Toplevel):
     self.treeview.column('2', width=120, anchor=tk.W)
 
     if self.eventData is not None:
-      for shift in self.eventData['shift']:
+      for shift in self.eventData.shift:
         self.treeview.insert(
           '',
           tk.END,
@@ -107,11 +108,11 @@ class DyflexisDetails(tk.Toplevel):
     self.dyflexisTree.column('2',width=120,anchor=tk.W)
 
     if self.eventData is not None:
-      for list in self.eventData['list']:
+      for list in self.eventData.list:
         parent =self.dyflexisTree.insert(
           '',
           tk.END,
-          values=(list['date'],len(list['events'])+len(list['assignments']))
+          values=(list['date'],len(list['events'])+len(list['assignments'])+len(list['agenda']))
         )
         for event in list['events']:
           self.dyflexisTree.insert(
@@ -120,6 +121,12 @@ class DyflexisDetails(tk.Toplevel):
             values=(' ' , event['text'], event['id'])
           )
         for event in list['assignments']:
+          self.dyflexisTree.insert(
+            parent,
+            tk.END,
+            values=(' ' , event['text'], event['id'])
+          )
+        for event in list['agenda']:
           self.dyflexisTree.insert(
             parent,
             tk.END,

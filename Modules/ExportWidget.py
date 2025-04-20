@@ -30,7 +30,6 @@ class ExportWidget(ctk.CTkTabview):
 
     # self.attributes("-topmost", True)
     # self.resizable(False, False)
-    print('exportWidget')
     self.add("ICS")  # add tab at the end
     self.add("CSV")  # add tab at the end
     self.add("Google")  # add tab at the end

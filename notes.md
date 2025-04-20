@@ -14,11 +14,11 @@
   overzicht geven van de te verwijderen agenda items, synchroniseren en updaten met bevestiging? verantwoordelijkheid verder naar de gebruiker verplaatsen
 - kan deze lijst in real time geupdate worden...??
 - evenementen te verwijderen?? kan niet via ics
-- export config, geen dubbel check op overschrijven als het bestand al bestaat
 - agenda id is te vinden in de cal, ook in config showen
   - als de gebruiker hier bij kan, betere check op agenda id doen
+- dyflexis shift parsers verhuizen naar de scanner
+- csv feedback met wat er gebeurd, uitleg over ; gescheiden
 
-dyflexis herschrijven met gebruik van de eventData classe
 # ter dev info
 
 https://pyinstaller.org/en/stable/

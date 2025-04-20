@@ -14,7 +14,7 @@ from Modules.DyflexisDetails import DyflexisDetails
 from Modules.ExportWidget import ExportWidget
 from Modules.InfoScreen import InfoScreen
 from Modules.Logger import Logger
-from Modules.dataClasses import PeriodList
+from Modules.dataClasses import PeriodList, EventDataList
 from Modules.debug import DebugWindow
 from Modules.periodGui import PeriodGui
 
@@ -25,18 +25,24 @@ class Gui(tk.Frame):
   dyflexisMessage = "test "
   infoScreen = None
   debugWindow = None
-  configLand:ConfigLand = None
+  configLand: ConfigLand = None
 
-  def openDebug(self,element):
+  def openDebug(self, element):
     if self.debugWindow is None:
-      self.debugWindow = DebugWindow()
+      self.debugWindow = DebugWindow(self)
     else:
       self.debugWindow.destroy()
       self.debugWindow = None
 
-  def testKey(self,element, event):
+  def testKey(self, element, event):
     print(event.char, event.keysym, event.keycode)
     pprint(element)
+
+  def destroy(self):
+    Logger.getLogger(__name__).info('closing application')
+    if self.configLand is not None:
+      self.configLand.save()
+    super().destroy()
 
   def __init__(self, master=None):
     tk.Frame.__init__(self, master)
@@ -44,15 +50,16 @@ class Gui(tk.Frame):
     self.master.bind("<Shift_L><D>", self.openDebug)
     self.master.bind("<Shift_R><D>", self.openDebug)
     # self.master.bind("<Key>", self.testKey)
-
     Logger.getLogger(__name__).info('starting Gui')
 
     self.eventData = None
-    self.periods = PeriodList(6)
+    self.periods = PeriodList(3)
     self.periods.addHandler(self.updatePeriodLoaders)
     self.dyflexisProgressBarValue = tk.IntVar()
     self.grid(column=0, row=0, sticky=tk.NSEW)
-    self.master.title('{}: {}'.format( Constants.appname,Constants.version))
+    self.master.rowconfigure(0,weight=1)
+    self.master.columnconfigure(0,weight=1)
+    self.master.title('{}: {}'.format(Constants.appname, Constants.version))
 
     # self.master.attributes("-topmost", True)
     w = 860  # width for the Tk root
@@ -68,14 +75,13 @@ class Gui(tk.Frame):
 
     # nee resize is niet toegestaan
     # self.master.resizable(False, False)
-
+    self.configLand = ConfigLand()
     self.createWidgets()
+    self.loadConfig()
 
     self.updatePeriodLoaders()
 
-    self.configLand = ConfigLand()
-    self.loadConfig()
-    self.configLand.addLoadHandler(self.loadConfig())
+    self.configLand.addLoadHandler(self.loadConfig)
     self.configLand.addUpdateHandler(self.updateDyflexis)
 
     self.master.lift()
@@ -84,7 +90,7 @@ class Gui(tk.Frame):
     Logger.getLogger(__name__).info('Gui initialized')
 
     self.update()
-    self.dyflexisMessage.config(wraplength=self.dyflexisFrame.winfo_width()-35)
+    self.dyflexisMessage.config(wraplength=self.dyflexisFrame.winfo_width() - 35)
 
     # self.openDebug('key')
 
@@ -100,6 +106,7 @@ class Gui(tk.Frame):
       self.infoScreen.up()
 
   def createWidgets(self):
+    #todo hier moet een event listener op voor als we resizen
     self.mainFrame = ctk.CTkScrollableFrame(self, width=840, height=self.scrolWindowHeight)
     self.mainFrame.grid(column=0, row=0, sticky=tk.NSEW)
     self.mainFrame.configure(fg_color=Constants.zaantheaterColor)
@@ -111,8 +118,8 @@ class Gui(tk.Frame):
     self.configLoad.grid(row=0, column=5, sticky=tk.N + tk.E, padx=5, pady=5)
 
     self.segmentedButtonSave = ctk.CTkSegmentedButton(self.mainFrame, values=[
-                                                                              "reset config",
-                                                                              'export config', 'import config'],
+      "reset config",
+      'export config', 'import config'],
                                                       command=self.segmented_button_callback)
     self.segmentedButtonSave.grid(row=0, column=0, columnspan=5, sticky=tk.N + tk.W, padx=5, pady=5)
     # row 3
@@ -123,28 +130,38 @@ class Gui(tk.Frame):
     self.dyflexisFrame.columnconfigure(0, weight=1)
     self.dyflexisFrame.columnconfigure([1, 2], weight=4)
 
-    self.createLabel(text="username", parent=self.dyflexisFrame).grid(row=1, column=0)
-    self.dyflexisUsername = self.createEntry(parent=self.dyflexisFrame,validatecommand=self.updateDyflexis)
+    self.createLabel(text="Gebruikersnaam", parent=self.dyflexisFrame).grid(row=1, column=0)
+    self.dyflexisUsername = self.createEntry(parent=self.dyflexisFrame, validatecommand=self.updateDyflexis)
     self.dyflexisUsername.grid(row=1, column=1, columnspan=2, sticky=tk.NSEW)
-
-    self.createLabel(text="Password", parent=self.dyflexisFrame).grid(row=2, column=0)
-    self.dyflexisPassword = self.createEntry(parent=self.dyflexisFrame)
-    self.dyflexisPassword.bind("<KeyPress>", self.updateDyflexis)
     self.dyflexisUsername.bind("<KeyPress>", self.updateDyflexis)
 
+    self.createLabel(text="Wachtwoord", parent=self.dyflexisFrame).grid(row=2, column=0)
+    self.dyflexisPassword = self.createEntry(parent=self.dyflexisFrame)
+    self.dyflexisPassword.bind("<KeyPress>", self.updateDyflexis)
     self.dyflexisPassword.grid(row=2, column=1, columnspan=2, sticky=tk.NSEW)
+
+    self.createLabel(text="Organisatie", parent=self.dyflexisFrame).grid(row=3, column=0)
+    self.dyflexisOrganisatie = self.createEntry(parent=self.dyflexisFrame)
+    self.dyflexisOrganisatie.bind("<KeyPress>", self.updateDyflexis)
+    self.dyflexisOrganisatie.grid(row=3, column=1, columnspan=2, sticky=tk.NSEW)
+
+    self.createLabel(text="Locatie", parent=self.dyflexisFrame).grid(row=4, column=0)
+    self.dyflexisLocatie = self.createEntry(parent=self.dyflexisFrame)
+    self.dyflexisLocatie.bind("<KeyPress>", self.updateDyflexis)
+    self.dyflexisLocatie.grid(row=4, column=1, columnspan=2, sticky=tk.NSEW)
+
     ctk.CTkButton(
       self.dyflexisFrame,
       text='custom periodes..',
       command=self.openPeriodsGui
-    ).grid(row=4, column=0, columnspan=1, pady=15)
+    ).grid(row=5, column=0, columnspan=1, pady=15)
     ctk.CTkButton(
       self.dyflexisFrame,
       text='Dyflexis uitlezen',
       command=self.dyflexisRead
-    ).grid(row=4, column=1, columnspan=1, pady=15)
+    ).grid(row=5, column=1, columnspan=1, pady=15)
     self.dyflexisProgressFrame = tk.Frame(self.dyflexisFrame)
-    self.dyflexisProgressFrame.grid(row=5,column=0,columnspan=3, sticky=tk.NSEW)
+    self.dyflexisProgressFrame.grid(row=6, column=0, columnspan=3, sticky=tk.NSEW)
     self.dyflexisProgressFrame.columnconfigure(0, weight=0)
     self.dyflexisProgressFrame.columnconfigure(1, weight=1)
     self.dyflexisProgressFrame.configure(bg=Constants.zaantheaterColor)
@@ -156,7 +173,7 @@ class Gui(tk.Frame):
                                     justify=tk.LEFT,
                                     anchor=tk.W,
                                     relief=tk.SUNKEN,
-                                    wraplength=330,padx=5, pady=5
+                                    wraplength=330, padx=5, pady=5
                                     )
     self.dyflexisFrame.columnconfigure(2, weight=0, minsize=10)
     self.dyflexisFrame.rowconfigure(14, weight=1, minsize=10)
@@ -177,6 +194,7 @@ class Gui(tk.Frame):
     if selection == 'import config':
       self.configLand.importConfig()
       self.loadConfig()
+
   def openPeriodsGui(self):
     PeriodGui(self.periods)
 
@@ -208,10 +226,13 @@ class Gui(tk.Frame):
       width=50,
       textvariable=variable
     )
-  def updateDyflexis(self,*args):
+
+  def updateDyflexis(self, *args):
     dyflexis_data = self.configLand.getKey('dyflexis')
     dyflexis_data['username'] = self.dyflexisUsername.get()
     dyflexis_data['password'] = self.dyflexisPassword.get()
+    dyflexis_data['organisation'] = self.dyflexisOrganisatie.get()
+    dyflexis_data['location'] = self.dyflexisLocatie.get()
     self.configLand.setKey('dyflexis', dyflexis_data)
 
   def loadConfig(self):
@@ -223,20 +244,17 @@ class Gui(tk.Frame):
     self.dyflexisUsername.delete(0, 500)
     self.dyflexisUsername.insert(0, dyflexisConfig['username'])
 
+    self.dyflexisOrganisatie.delete(0, 500)
+    self.dyflexisOrganisatie.insert(0, dyflexisConfig['organisation'])
+
+    self.dyflexisLocatie.delete(0, 500)
+    self.dyflexisLocatie.insert(0, dyflexisConfig['location'])
+
   def resetConfig(self):
     Logger.getLogger(__name__).info('reseting config')
     self.configLand.reset()
 
-  def updateDyflexisProgressBar(self, amount, period):
-    Logger.getLogger(__name__).info('progressbar update van periode {} naar {}'.format(period, amount))
-    if not isinstance(amount, tk.IntVar):
-      temp = tk.IntVar()
-      temp.set(amount)
-      amount = temp
 
-    self.periods[period]["progress"].set(amount.get())
-    ## we sturen een update naar de progressbar zodat hij in real time update
-    self.periods[period]['progressbar'].update()
 
   def validateEntry(self, entry):
     if entry.get() == "":
@@ -248,11 +266,18 @@ class Gui(tk.Frame):
   def dyflexisRead(self):
     error = False
     if not self.validateEntry(self.dyflexisPassword):
-      Logger.getLogger(__name__).warning('invalid password')
+      Logger.getLogger(__name__).warning('Wachtwoord is leeg')
       error = True
     if not self.validateEntry(self.dyflexisUsername):
-      Logger.getLogger(__name__).warning('invalid username')
+      Logger.getLogger(__name__).warning('Gebruikersnaam is leeg')
       error = True
+    if not self.validateEntry(self.dyflexisOrganisatie):
+      Logger.getLogger(__name__).warning('Organisatie is leeg')
+      error = True
+    if not self.validateEntry(self.dyflexisLocatie):
+      Logger.getLogger(__name__).warning('Locatie is leeg')
+      error = True
+
     if error:
       return
     self.configLand.handleUpdateHandlers()
@@ -260,22 +285,24 @@ class Gui(tk.Frame):
     self.dyflexis = Dyflexis(self.configLand,
                              self.master.winfo_screenwidth(),
                              self.master.winfo_screenheight())
+
+
     # reset the periods to 0 in progressbar
     periodsToRun = []
-    for period in self.periods:
-      if (self.periods[period]['on'].get()):
+    for period in self.periods.getPeriods():
+      if period.on :
         periodsToRun.append(period)
-        self.updateDyflexisProgressBar(0, period)
-    Logger.getLogger(__name__).info('periodes die gerunt gaan worden: %a ', ' , '.join(str(x) for x in periodsToRun))
+        period.updateProgressBar(0)
+    Logger.getLogger(__name__).info('periodes die gerunt gaan worden: %a ', ' , '.join(str(x.period) for x in periodsToRun))
     self.lift()
     self.update()
     try:
       self.eventData = self.dyflexis.run(
-        _progressbarCallback=self.updateDyflexisProgressBar,
         periods=periodsToRun,
-        username=self.dyflexisUsername.get(), password=self.dyflexisPassword.get()
       )
-      Logger.toFile(location=Constants.logPrefix + Constants.dyflexisJsonFilename, variable=self.eventData.toJson(),isJson=True)
+      if self.configLand.getKey('persistentStorageAllowed') == True:
+        Logger.toFile(location=Constants.logPrefix + Constants.dyflexisJsonFilename, variable=self.eventData.toJson(),
+                      isJson=True)
 
       # self.loadFromBackup()
     except Exception as e:
@@ -290,6 +317,13 @@ class Gui(tk.Frame):
       return
 
     # create the information message for the GUI
+    Message = self.printDyflexisEventDataMessage()
+    Logger.getLogger(__name__).info('dyflexis run klaar met bericht %a', Message)
+    self.dyflexisMessage.config(bg='green')
+    self.dyflexisMessageVariable.set(Message)
+
+  def printDyflexisEventDataMessage(self):
+    # create the information message for the GUI
     assignments = str(self.eventData.assignments)
     agenda = str(self.eventData.agenda)
     events = str(self.eventData.events)
@@ -299,11 +333,8 @@ class Gui(tk.Frame):
     else:
       start_date = self.eventData.list[0]['date']
       end_date = self.eventData.list[len(self.eventData.list) - 1]['date']
-    Message = "Shifts: {}\nAgenda: {}\nEvents: {}\nperiode: {} tot {}".format(assignments,agenda,events,start_date,end_date)
-    Logger.getLogger(__name__).info('dyflexis run klaar met bericht %a', Message)
-    self.dyflexisMessage.config(bg='green')
-    self.dyflexisMessageVariable.set(Message)
-
+    return "Shifts: {}\nAgenda: {}\nEvents: {}\nperiode: {} tot {}".format(assignments, agenda, events, start_date,
+                                                                              end_date)
   def closeApplication(self):
     self.destroy()
     exit()
@@ -313,13 +344,13 @@ class Gui(tk.Frame):
     dyflexisDetails = DyflexisDetails(self.eventData)
 
   def updatePeriodLoaders(self):
-    #redraw periods and remove unused periods
+    # redraw periods and remove unused periods
     for widget in self.dyflexisProgressFrame.winfo_children():
       widget.destroy()
-    row =0
+    row = 0
     for period in self.periods.getPeriods():
-      self.createLoader(self.dyflexisProgressFrame,period,{'row':row,'column':0})
-      row +=1
+      self.createLoader(self.dyflexisProgressFrame, period, {'row': row, 'column': 0})
+      row += 1
 
   def createLoader(self, parent, period, grid):
     grid.update(padx=3, pady=3)
@@ -327,7 +358,8 @@ class Gui(tk.Frame):
                                text=period.period,
                                onvalue=True,
                                offvalue=False,
-                               variable=period.getTKOn(),
+                               variable=period.getTkOn(),
+                               command=period.checkboxCallback,
                                text_color="white")
     checkbar.grid(column=grid['column'], row=grid['row'], pady=grid['pady'])
 
@@ -335,11 +367,22 @@ class Gui(tk.Frame):
     progressBar = ttk.Progressbar(parent, mode='determinate', maximum=101,
                                   variable=period.getTkProgress())
     progressBar.grid(grid)
-    period.progressBar =progressBar
+    period.progressBar = progressBar
+    period._checkbox = checkbar
 
   def loadFromBackup(self):
     Logger.getLogger(__name__).info('load from backup')
     with open('logs/latestCalendarData.json', 'r+') as fp:
       superValue = fp.read()
-      self.eventData = json.loads(superValue)
+      self.eventData = EventDataList()
+      data = json.loads(superValue)
+      self.eventData.assignments = data['assignments']
+      self.eventData.agenda = data['agenda']
+      self.eventData.events = data['events']
+      self.eventData.periods = data['periods']
+      self.eventData.list = data['list']
+      self.eventData.shift = data['shift']
       fp.close()
+    Message = self.printDyflexisEventDataMessage()
+    self.dyflexisMessage.config(bg='green')
+    self.dyflexisMessageVariable.set(Message)

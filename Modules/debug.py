@@ -3,51 +3,19 @@ import tkinter.ttk as ttk
 from pprint import pprint
 
 import customtkinter as ctk
+from customtkinter import CTkButton
 
 from Modules.Constants import Constants
 
 
 class DebugWindow(tk.Toplevel):
-  debugItems = [
-    {
-      'type': 'labelframe',
-      'txt': 'Dyflexis',
-      'items': [
-        {
-          'type': 'checkbox',
-          'txt': 'gebruik TestGenerator',
-          'variable': None
-        },
-      ]
-    },
-    {
-      'type': 'labelframe',
-      'txt': 'Google',
-      'items': [
-        {
-          'type': 'checkbox',
-          'txt': 'gebruik TestGenerator',
-          'variable': None
-        },
-      ]
-    },
-    {
-      'type': 'labelframe',
-      'txt': 'csv',
-      'items': [
-        {
-          'type': 'checkbox',
-          'txt': 'gebruik TestGenerator',
-          'variable': None
-        },
-      ]
-    },
-  ]
 
-  def __init__(self, ):
+
+  def __init__(self,gui ):
     tk.Toplevel.__init__(self)
     window_width = 500
     window_height = 400
+    self.gui = gui
 
     # get screen dimension
     screen_width = self.winfo_screenwidth()
@@ -75,6 +43,48 @@ class DebugWindow(tk.Toplevel):
 
     frame = tk.Frame(self)
     frame.grid(column=1, row=0, sticky=tk.NSEW, padx=10, pady=10)
+
+    self.debugItems = [
+      {
+        'type': 'labelframe',
+        'txt': 'Dyflexis',
+        'items': [
+          {
+            'type': 'checkbox',
+            'txt': 'gebruik TestGenerator',
+            'variable': None
+          },
+          {
+            'type': 'button',
+            'txt': 'load test data',
+            'command': self.gui.loadFromBackup
+          }
+        ]
+      },
+      {
+        'type': 'labelframe',
+        'txt': 'Google',
+        'items': [
+          {
+            'type': 'checkbox',
+            'txt': 'gebruik TestGenerator',
+            'variable': None
+          },
+        ]
+      },
+      {
+        'type': 'labelframe',
+        'txt': 'csv',
+        'items': [
+          {
+            'type': 'checkbox',
+            'txt': 'gebruik TestGenerator',
+            'variable': None
+          },
+        ]
+      },
+    ]
+
     self.debugGenerator(frame, self.debugItems, 0, 1)
 
   def debugGenerator(self, master, items, rowCount, columnStart):
@@ -82,6 +92,9 @@ class DebugWindow(tk.Toplevel):
       if item['type'] == 'checkbox':
         item['variable'] = tk.IntVar()
         self.createCheckBox(item, master, (rowCount, columnStart))
+      if item['type'] == 'button':
+        item['variable'] = tk.IntVar()
+        self.createButton(item, master, (rowCount, columnStart))
 
       if item['type'] == 'labelframe':
         item['variable'] = tk.StringVar()
@@ -105,3 +118,8 @@ class DebugWindow(tk.Toplevel):
     labelframe = tk.LabelFrame(master, text=item['txt'])
     labelframe.grid(column=grid[1], row=grid[0], sticky=tk.NSEW, padx=10, pady=10)
     return labelframe
+
+  def createButton(self,item,master,grid:(int, int)):
+    button = CTkButton(master, text=item['txt'], command=item['command'])
+    button.grid(column=grid[1], row=grid[0], sticky=tk.NSEW, padx=10, pady=10)
+    return button

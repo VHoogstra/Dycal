@@ -139,7 +139,7 @@ class ExportWidgetICS(tk.Frame):
       return
       # raise Exception('No calendar data to export')
     print('ics generated')
-    name = "Dyflexis-ICS- " + arrow.get().format('YYYY-MM-DD')
+    name = "Dycal-ICS- " + arrow.get().format('YYYY-MM-DD')
     icsdata = filedialog.asksaveasfile(
       defaultextension="ics",
       title="ICS bestand voor uw kalender app",
@@ -147,16 +147,15 @@ class ExportWidgetICS(tk.Frame):
     if icsdata is None:  # asksaveasfile return `None` if dialog closed with "cancel".
       return
     try:
-      data = self.calendar.generateToICS(self.gui.eventData['shift'])
+      data = self.calendar.generateToICS(self.gui.eventData.shift)
     except Exception as e:
       Message = ('Er ging iets mis bij het genereren van ICS: ')
-      Logger().log(str(type(e)))
+      Logger.getLogger(__name__).error('generateICS exception', exc_info=True)
+
       if hasattr(e, 'message'):
         Message = Message + e.message
-        Logger().log((e.message))
       else:
         Message = Message + str(e)
-      Logger().log((traceback.format_exc()))
 
       self.ICSMessage.config(text=Message, bg='red', fg='white')
       raise e

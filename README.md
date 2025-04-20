@@ -1,11 +1,13 @@
 # dyflexis-calendar-ics
 
-Een python script met interface die dyflexis uitleest en omzet naar een ICS voor agenda's
+Een python script met interface die dyflexis uitleest en omzet naar een ICS,csv en Google agenda. 
+de app zal vragen om lokaal data op te slaan, dit is niet vereist voor het gebruik van de app. Het gaat hier om log data voor wanneer er 
+iets niet goed gaat en configuratie data zoals het wachtwoord voor dyflexis
 
 # regels
 
-1. deze software zal evenementen vanaf 24 uur voor nu pakken en niet eerder
-2. de software leest de huidige maand en volgende maand uit
+1. deze software zal alleen shifts vanaf 24 uur voor nu mee pakken. Dit omdat oudere diensten in dyflexis omgezet worden naar gewerkte uren
+2. de software bied de mogelijkheid om een periode bereik te maken die gescanned zullen worden
 3. de software zoekt de naam op van de locatie (grote zaal of kleine zaal), mocht deze niet bestaan pakt hij de naam van
    je shift na de laatste >
    eg: zaandam > technische dienst > kleine zaal wordt kleine zaal

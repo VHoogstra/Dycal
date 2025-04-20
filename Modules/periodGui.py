@@ -3,11 +3,11 @@ import tkinter.ttk as ttk
 from datetime import tzinfo
 
 import customtkinter as ctk
-from arrow import arrow
+import arrow
 
 from Modules.Constants import Constants
 from Modules.Logger import Logger
-from Modules.dataClasses import PeriodList
+from Modules.dataClasses import PeriodList, Period
 
 
 class PeriodGui(tk.Toplevel):
@@ -43,13 +43,32 @@ class PeriodGui(tk.Toplevel):
     self.endPer.grid(row=1, column=2, padx=5, pady=5)
     ctk.CTkButton(self, text='genereer', command=self.generatePeriods).grid(row=2, column=0, columnspan=3, padx=5,
                                                                             pady=5)
+    ctk.CTkButton(self,text='+ voor', command=self.generatePeriodBeforeFirst).grid(row=3, column=0, padx=5,
+                                                                            pady=5)
+    ctk.CTkButton(self,text='+ na', command=self.generatePeriodAfterLast).grid(row=3, column=2, padx=5,
+                                                                            pady=5)
     self.frame = tk.Frame(self)
-    self.frame.grid(row=4, column=0, columnspan=3, sticky=tk.NSEW, padx=5, pady=5)
+    self.frame.grid(row=5, column=0, columnspan=3, sticky=tk.NSEW, padx=5, pady=5)
     self.frame.columnconfigure(0, weight=1)
     self.frame.columnconfigure(1, weight=0)
 
     self.periods.addHandler(self.updatePeriods)
     self.updatePeriods()
+
+  def generatePeriodBeforeFirst(self):
+    periods = self.periods.getPeriods()
+    if len(periods) == 0:
+      self.periods.addPeriod(Period())
+    else:
+      date = arrow.get(periods[0].period,tzinfo=Constants.timeZone).shift(months=-1).format('YYYY-MM')
+      self.periods.addPeriod(Period(date))
+  def generatePeriodAfterLast(self):
+    periods = self.periods.getPeriods()
+    if len(periods) == 0:
+      self.periods.addPeriod(Period())
+    else:
+      date = arrow.get(periods[len(periods)-1].period,tzinfo=Constants.timeZone).shift(months=1).format('YYYY-MM')
+      self.periods.addPeriod(Period(date))
 
   def updatePeriods(self):
     for widget in self.frame.winfo_children():

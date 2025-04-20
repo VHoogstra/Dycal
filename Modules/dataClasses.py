@@ -35,6 +35,7 @@ class EventDataList:
   events = 0
   periods = []
   list = []
+  shift=[]
 
   def __init__(self):
     self.assignments = 0
@@ -42,6 +43,7 @@ class EventDataList:
     self.events = 0
     self.periods = []
     self.list = []
+    self.shift = []
 
   def toJson(self):
     return json.dumps(
@@ -58,14 +60,28 @@ class Period:
     else:
       self.period = arrow.get(period, tzinfo=Constants.timeZone).format('YYYY-MM')
     self.on = True
-    self.progres = 0
+    self.progress = 0
     self.progressBar = None
+    self._checkbox = None
 
-  def getTKOn(self):
+  def checkboxCallback(self):
+    Logger.getLogger(__name__).info('updating on value')
+    self.on = self._checkbox.get()
+
+
+  def updateProgressBar(self,amount=None):
+    if amount is not  None:
+      self.progress = amount
+    if self.progressBar is not None:
+      self.progressBar['value'] = self.progress
+      ## we sturen een update naar de progressbar zodat hij in real time update
+      self.progressBar.update()
+
+  def getTkOn(self):
     return tk.BooleanVar(value=self.on)
 
   def getTkProgress(self):
-    return tk.IntVar(value=self.progres)
+    return tk.IntVar(value=self.progress)
 
 
 class PeriodList:
@@ -86,8 +102,9 @@ class PeriodList:
     for handler in self._handler:
       handler()
 
-  def addPeriod(self, period):
+  def addPeriod(self, period:Period):
     self.periods.append(period)
+    self.periods.sort(key=self.returnKey)
     self.callHandler()
 
   def removePeriod(self, period):
@@ -131,11 +148,12 @@ class PeriodList:
     self.periods.sort(key=self.returnKey)
     self.callHandler()
 
-  def returnKey(self,period):
+  def returnKey(self, period):
     return period.period
+
   def generatePeriodsInFuture(self, amount):
     today = arrow.get(tzinfo=Constants.timeZone)
-    end = arrow.get(tzinfo=Constants.timeZone).shift(months=amount)
+    end = arrow.get(tzinfo=Constants.timeZone).shift(months=amount-1)
     self.generatePeriods(today.format('YYYY-MM'), end.format('YYYY-MM'))
 
   def clearPeriods(self):

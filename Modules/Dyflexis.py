@@ -12,7 +12,7 @@ from selenium import webdriver
 from Exceptions.BadLoginException import BadLoginException
 from Modules.ConfigLand import ConfigLand
 from Modules.Constants import Constants
-from Modules.dataClasses import EventDataList
+from Modules.dataClasses import EventDataList, Period
 from Modules.Logger import Logger
 
 
@@ -21,15 +21,20 @@ class Dyflexis:
   DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="
   driver = None
   ## locatie zoektermen (shift zoektekst, event zoektekst)
-  #todo deze lijst in de config wegzetten
-  LOCATION_NAMES = [("Kleine Zaal", 'kz'), ("Grote Zaal", "ah"),('Foyer','foyr')]
-  #todo dit ook naar een config wegschrijven
+  # todo deze lijst in de config wegzetten
+  LOCATION_NAMES = [("Kleine Zaal", 'kz'), ("Grote Zaal", "ah"), ('Foyer', 'foyr')]
+  # todo dit ook naar een config wegschrijven
   MAX_NAME_LENGTH = 71
 
   def __init__(self, config: ConfigLand, width, height):
     self.config = config
     self.width = width
     self.height = height
+    self.username = config.getKey('dyflexis')['username']
+    self.password = config.getKey('dyflexis')['password']
+    self.location = config.getKey('dyflexis')['location']
+    self.organisation = config.getKey('dyflexis')['organisation']
+
     Logger.getLogger(__name__).info('initializing Dyflexis')
 
   def __str__(self):
@@ -42,24 +47,24 @@ class Dyflexis:
       options.add_argument("start-maximized")
       self.driver = webdriver.Chrome(options=options)
 
-  def login(self,username,password, _progressbarCallback=None):
+  def login(self):
     Logger.getLogger(__name__).info('starting loggin procedure')
 
-    self.driver.get(Constants.getDyflexisRoutes("login"))
+    self.driver.get(Constants.getDyflexisRoutes("login", organisation=self.organisation, location=self.location))
     WebDriverWait(self.driver, 20).until(ec.presence_of_element_located((By.ID, "username")))
 
     # wait for page load
-    if (username == ""):
-      Logger.getLogger(__name__).error('username not set',exc_info=True)
-      raise BadLoginException('no username')
+    if (self.username == ""):
+      Logger.getLogger(__name__).error('self.username not set', exc_info=True)
+      raise BadLoginException('no self.username')
     # gebruikersnaam invullen
-    self.driver.find_element(by=By.ID, value="username").send_keys(username)
+    self.driver.find_element(by=By.ID, value="username").send_keys(self.username)
 
-    if (password == ""):
+    if (self.password == ""):
       Logger.getLogger(__name__).error('password not set', exc_info=True)
       raise BadLoginException('no password')
     # wachtwoord invullen
-    self.driver.find_element(by=By.ID, value="password").send_keys(password)
+    self.driver.find_element(by=By.ID, value="password").send_keys(self.password)
     # knop indrukken en inloggen
     self.driver.find_element(by=By.ID, value="do-login").click()
 
@@ -70,33 +75,41 @@ class Dyflexis:
       Logger.getLogger(__name__).error('login niet succesvol, ww of username niet goed', exc_info=True)
       raise BadLoginException("De login bij dyflexis was niet succesvol")
 
-    if self.driver.current_url == Constants.getDyflexisRoutes("login"):
+    if self.driver.current_url == Constants.getDyflexisRoutes("login", organisation=self.organisation,
+                                                              location=self.location):
       # inlog mis gegaan, fout geven
       Logger.getLogger(__name__).info('logging niet succesvol...')
       return False
-    if self.driver.current_url == Constants.getDyflexisRoutes("homepage"):
-      Logger.getLogger(__name__).info('logging succesvol')
-      return True
 
-  def run(self, _progressbarCallback=None, periods=None,username=None,password=None):
+    postLoginRoute = self.driver.current_url
+    route = Constants.getDyflexisRoutes('homepage', organisation=self.organisation, location=self.location)
+    if not postLoginRoute in route:
+      value = [m.start() for m in re.finditer('/', postLoginRoute)]
+      lastSlash = value[len(value) - 1]
+      secondLastSlash = value[len(value) - 2]
+      locationName = postLoginRoute[secondLastSlash + 1:lastSlash]
+      raise Exception(
+        'locatie komt niet overeen met de locatie na login bij dyflexis namelijk: "{}"'.format(locationName))
+    return True
+
+  def run(self, periods=None):
     if periods is None:
       periods = []
     try:
       self.openChrome()
-      self.login(username,password)
+      self.login()
       data = EventDataList()
       for period in periods:
         data = self.getRooster(
-          _progressbarCallback,
           period=period,
           baseData=data
         )
       # progressbar 75 through 100
-      eventData = self.elementArrayToIcs(data, _progressbarCallback)
+      eventData = self.elementArrayToIcs(data)
     except Exception as e:
       self.driver.quit()
       self.driver = None
-      #word hier niet gelogd omdat het omhoog doorgegooit word
+      # word hier niet gelogd omdat het omhoog doorgegooit word
       raise e
 
     Logger.getLogger(__name__).info('chrome weer sluiten')
@@ -104,10 +117,9 @@ class Dyflexis:
     self.driver = None
     return eventData
 
-  def getRooster(self, _progressbarCallback=None, period=None, baseData=None):
+  def getRooster(self, period=None, baseData=None):
     """
     rooster uitlezen en opslaan als bruikbare data
-    :param _progressbarCallback:
     :param period: als None pakken we deze maand
     :param baseData: eventData om te updaten
     :return: eventData
@@ -118,27 +130,25 @@ class Dyflexis:
     startProgress = 1
     endProgress = 100
 
-    if _progressbarCallback:
-      _progressbarCallback(startProgress,period)
+    route = Constants.getDyflexisRoutes('rooster', organisation=self.organisation, location=self.location)
+    if period is None:
+      period = Period(arrow.get(tzinfo=self.tz).format('YYYY-MM'))
+    route = route + '?periode=' + period.period
 
-    route = Constants.getDyflexisRoutes('rooster')
-    if period is not None:
-      route = route + '?periode=' + period
-    else:
-      period = arrow.get(tzinfo=self.tz).format('YYYY-MM')
+    period.updateProgressBar(startProgress)
 
     self.driver.get(route)
     WebDriverWait(self.driver, 20).until(ec.presence_of_element_located((By.CLASS_NAME, "main-bar-inner")))
     calendar = self.driver.find_element(by=By.CLASS_NAME, value='calender')
 
-    Logger.getLogger(__name__).info('de maand {} word uitgelezen'.format(period))
+    Logger.getLogger(__name__).info('de maand {} word uitgelezen'.format(period.period))
 
-    baseData.periods.append(period)
+    baseData.periods.append(period.period)
     body = calendar.find_element(by=By.TAG_NAME, value='tbody')
     rows = body.find_elements(by=By.TAG_NAME, value='tr')
 
     # het aantal weken gedeelt door het aantal dagen wat we scannen
-    progressRowCount = ((endProgress - startProgress) / len(rows))/7
+    progressRowCount = ((endProgress - startProgress) / len(rows)) / 7
 
     for row in rows:
       Logger.getLogger(__name__).info('\t\tWeek word uitgelezen')
@@ -147,17 +157,13 @@ class Dyflexis:
         Logger.getLogger(__name__).info('\t\t\tKolom word uitgelezen met info:{}\t'.format(column.text[0:2]))
 
         # als de datum in het verleden ligt lezen we hem niet uit
-        startOfMonth = arrow.get(period, tzinfo=self.tz).replace(day=1, hour=0, minute=0, second=0)
-        endOfMonth = arrow.get(period, tzinfo=self.tz).shift(months=1, minutes=-1)
+        startOfMonth = arrow.get(period.period, tzinfo=self.tz).replace(day=1, hour=0, minute=0, second=0)
+        endOfMonth = arrow.get(period.period, tzinfo=self.tz).shift(months=1, minutes=-1)
         eventDate = arrow.get(column.get_attribute('title'), tzinfo=self.tz)
 
         if startOfMonth > eventDate or endOfMonth < eventDate:
-          Logger.getLogger(__name__).warning('\t\t\t\t skipped: verkeerde periode. periode:{}, eventData: {}'.format(period,eventDate))
-          continue
-
-        if not (arrow.get(column.get_attribute('title'), tzinfo=self.tz) >
-                arrow.now().replace(hour=0, minute=0).shift(days=-1)):
-          Logger.getLogger(__name__).warning('\t\t\t\t skipped: voor vandaag')
+          Logger.getLogger(__name__).warning(
+            '\t\t\t\t skipped: verkeerde periode. periode:{}, eventData: {}'.format(period.period, eventDate))
           continue
 
         ################ find assignments, aka diensten ################
@@ -225,16 +231,15 @@ class Dyflexis:
         baseData.agenda = baseData.agenda + len(aggList)
 
         ##progress for column
-        if _progressbarCallback:
-          # gedeeld door 7 omdat er 7 dagen in de week zijn
-          startProgress = startProgress + (progressRowCount)
-          _progressbarCallback(startProgress,period)
 
-    if _progressbarCallback:
-      _progressbarCallback(endProgress,period)
+        # gedeeld door 7 omdat er 7 dagen in de week zijn
+        startProgress = startProgress + (progressRowCount)
+        period.updateProgressBar(startProgress)
+
+    period.updateProgressBar(endProgress)
     return baseData
 
-  def elementArrayToIcs(self, eventDataList:EventDataList, _progressbarCallback=None):
+  def elementArrayToIcs(self, eventDataList: EventDataList):
     Logger.getLogger(__name__).info('elements to array')
     shift = []
     tz = Constants.timeZone
@@ -243,10 +248,15 @@ class Dyflexis:
 
       startDate = arrow.get(dates['date'], tzinfo=tz)
       stopDate = arrow.get(dates['date'], tzinfo=tz)
+
+      # todo naar boven verplaatsen in de rangorde. dit is alleen belangrijk bij het genereren van de agenda items
+      isBeforeToday = not startDate > arrow.now().replace(hour=0, minute=0).shift(days=-1)
+      if(isBeforeToday):
+        continue
       Logger.getLogger(__name__).info('start verwerking dag: {}'.format(dates['date']))
       if dates['text'] == "":
         continue
-        #todo check for null??
+        # todo check for null??
       for assignments in dates['assignments']:
         name = None
         description = None
@@ -257,7 +267,8 @@ class Dyflexis:
         start_time = assignments['tijd'][0:5]
         start_hour = start_time[0:2]
         start_minute = start_time[3:5]
-        Logger.getLogger(__name__).info('\twith date ' + start_time + " and times " + start_hour + " and sec " + start_minute)
+        Logger.getLogger(__name__).info(
+          '\twith date ' + start_time + " and times " + start_hour + " and sec " + start_minute)
 
         startDate = startDate.replace(hour=int(start_hour), minute=int(start_minute))
         print("\t" + startDate.format('YYYY-MM-DDTHH:mm:ss'))
@@ -269,7 +280,7 @@ class Dyflexis:
         # create name depending on what is in text
 
         for event in dates['events']:
-          tempName,tempDescription = self.eventnameParser(event, assignments)
+          tempName, tempDescription = self.eventnameParser(event, assignments)
           if tempName is not tempDescription is not None:
             name = tempName
             description = tempDescription
@@ -292,15 +303,15 @@ class Dyflexis:
         })
 
     eventDataList.shift = shift
+    eventDataList.assignments = len(shift)
     return eventDataList
 
   def eventnameParser(self, event, assignment):
-    Logger.getLogger(__name__).info('eventNameParser')
     # ik moet aan de hand van ass beslissen of ik een naam maak of niet
     description = None
-    name =None
+    name = None
     if "GEANNULEERD".upper() in event['text'].upper():
-      return name,description
+      return name, description
     # look in location names for the shift name
     tuplet = [item for item in self.LOCATION_NAMES if
               item[1].upper() in event['text'][0:5].upper()]
@@ -312,4 +323,4 @@ class Dyflexis:
       if name is not None and len(name) > self.MAX_NAME_LENGTH:
         name = name[0:self.MAX_NAME_LENGTH] + "..."
 
-    return name,description
+    return name, description

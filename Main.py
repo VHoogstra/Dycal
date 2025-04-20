@@ -27,24 +27,12 @@ def main():
 
     Logger.getLogger(__name__).info(' ###\t\t\tapplication start\t\t\t###')
 
-
-
-    Constants.cleanLogFolder()
-    # print(sys.argv)
-    # for arg in sys.argv:
-    #     if "--headless" in arg:
-    #         print("Headless mode")
-
-
-
-
     try:
         app = Gui()
         app.mainloop()
 
     except Exception as e:
         Message = ('Er ging iets mis in de mainloop: ')
-        Logger().log(str(type(e)))
         if hasattr(e, 'message'):
             Message = Message + e.message
         else:
@@ -53,7 +41,6 @@ def main():
         #todo bug scherm openen?
         excep=ExceptionScreen(Message,e )
         excep.mainloop()
-    Logger.getLogger(__name__).info('screen openet')
 
 if __name__ == "__main__":
     main()
