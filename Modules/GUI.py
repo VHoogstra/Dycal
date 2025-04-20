@@ -3,8 +3,6 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from pprint import pprint
 
-import arrow
-
 import customtkinter as ctk
 
 from Modules.ConfigLand import ConfigLand
@@ -12,11 +10,11 @@ from Modules.Constants import Constants
 from Modules.Dyflexis import Dyflexis
 from Modules.DyflexisDetails import DyflexisDetails
 from Modules.ExportWidget import ExportWidget
-from Modules.InfoScreen import InfoScreen
 from Modules.Logger import Logger
+from Modules.ScreenDebug import ScreenDebug
+from Modules.ScreenInfo import ScreenInfo
+from Modules.ScreenPeriod import ScreenPeriod
 from Modules.dataClasses import PeriodList, EventDataList
-from Modules.debug import DebugWindow
-from Modules.periodGui import PeriodGui
 
 
 class Gui(tk.Frame):
@@ -29,7 +27,7 @@ class Gui(tk.Frame):
 
   def openDebug(self, element):
     if self.debugWindow is None:
-      self.debugWindow = DebugWindow(self)
+      self.debugWindow = ScreenDebug(self)
     else:
       self.debugWindow.destroy()
       self.debugWindow = None
@@ -75,7 +73,7 @@ class Gui(tk.Frame):
 
     # nee resize is niet toegestaan
     # self.master.resizable(False, False)
-    self.configLand = ConfigLand()
+    self.configLand = ConfigLand.getConfigLand()
     self.createWidgets()
     self.loadConfig()
 
@@ -100,7 +98,7 @@ class Gui(tk.Frame):
 
   def openInfoScreen(self):
     if self.infoScreen is None:
-      self.infoScreen = InfoScreen()
+      self.infoScreen = ScreenInfo()
       self.infoScreen.protocol("WM_DELETE_WINDOW", self.closingInfoScreen)
     else:
       self.infoScreen.up()
@@ -130,29 +128,32 @@ class Gui(tk.Frame):
     self.dyflexisFrame.columnconfigure(0, weight=1)
     self.dyflexisFrame.columnconfigure([1, 2], weight=4)
 
-    self.createLabel(text="Gebruikersnaam", parent=self.dyflexisFrame).grid(row=1, column=0)
+    self.createLabel(text="Gebruikersnaam", anchor=tk.E, parent=self.dyflexisFrame).grid(row=1, column=0, sticky=tk.E,
+                                                                                         padx=5)
     self.dyflexisUsername = self.createEntry(parent=self.dyflexisFrame, validatecommand=self.updateDyflexis)
-    self.dyflexisUsername.grid(row=1, column=1, columnspan=2, sticky=tk.NSEW)
+    self.dyflexisUsername.grid(row=1, column=1, columnspan=2, sticky=tk.NSEW, pady=2)
     self.dyflexisUsername.bind("<KeyPress>", self.updateDyflexis)
 
-    self.createLabel(text="Wachtwoord", parent=self.dyflexisFrame).grid(row=2, column=0)
+    self.createLabel(text="Wachtwoord", anchor=tk.E, parent=self.dyflexisFrame).grid(row=2, column=0, sticky=tk.E,
+                                                                                     padx=5)
     self.dyflexisPassword = self.createEntry(parent=self.dyflexisFrame)
     self.dyflexisPassword.bind("<KeyPress>", self.updateDyflexis)
-    self.dyflexisPassword.grid(row=2, column=1, columnspan=2, sticky=tk.NSEW)
+    self.dyflexisPassword.grid(row=2, column=1, columnspan=2, sticky=tk.NSEW, pady=2)
 
-    self.createLabel(text="Organisatie", parent=self.dyflexisFrame).grid(row=3, column=0)
+    self.createLabel(text="Organisatie", anchor=tk.E, parent=self.dyflexisFrame).grid(row=3, column=0, sticky=tk.E,
+                                                                                      padx=5)
     self.dyflexisOrganisatie = self.createEntry(parent=self.dyflexisFrame)
     self.dyflexisOrganisatie.bind("<KeyPress>", self.updateDyflexis)
-    self.dyflexisOrganisatie.grid(row=3, column=1, columnspan=2, sticky=tk.NSEW)
+    self.dyflexisOrganisatie.grid(row=3, column=1, columnspan=2, sticky=tk.NSEW, pady=2)
 
-    self.createLabel(text="Locatie", parent=self.dyflexisFrame).grid(row=4, column=0)
+    self.createLabel(text="Locatie", anchor=tk.E, parent=self.dyflexisFrame).grid(row=4, column=0, sticky=tk.E, padx=5)
     self.dyflexisLocatie = self.createEntry(parent=self.dyflexisFrame)
     self.dyflexisLocatie.bind("<KeyPress>", self.updateDyflexis)
-    self.dyflexisLocatie.grid(row=4, column=1, columnspan=2, sticky=tk.NSEW)
+    self.dyflexisLocatie.grid(row=4, column=1, columnspan=2, sticky=tk.NSEW, pady=2)
 
     ctk.CTkButton(
       self.dyflexisFrame,
-      text='custom periodes..',
+      text='Verander periodes..',
       command=self.openPeriodsGui
     ).grid(row=5, column=0, columnspan=1, pady=15)
     ctk.CTkButton(
@@ -196,7 +197,7 @@ class Gui(tk.Frame):
       self.loadConfig()
 
   def openPeriodsGui(self):
-    PeriodGui(self.periods)
+    ScreenPeriod(self.periods)
 
   def createLabel(self, text, parent=None, **kwargs):
     if parent == None:
@@ -306,14 +307,10 @@ class Gui(tk.Frame):
 
       # self.loadFromBackup()
     except Exception as e:
-      Message = ('Er ging iets mis bij dyflexis:\n')
-      if hasattr(e, 'message'):
-        Message = Message + e.message
-      else:
-        Message = Message + str(e)
+      Message = Constants.Exception_to_message(e)
       Logger.getLogger(__name__).error('Er ging wat mis bij bij dyflexis.run', exc_info=True)
       self.dyflexisMessage.config(bg='red', fg='white')
-      self.dyflexisMessageVariable.set(Message)
+      self.dyflexisMessageVariable.set('Er ging iets mis bij dyflexis:\n' + Message)
       return
 
     # create the information message for the GUI

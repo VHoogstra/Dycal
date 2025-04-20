@@ -1,11 +1,8 @@
 import json
 import os
-import shutil
 import tkinter as tk
-import tkinter.ttk as ttk
 import urllib
-from pprint import pprint
-from tkinter import filedialog
+import webbrowser
 
 import customtkinter as ctk
 
@@ -13,7 +10,7 @@ from Modules.Constants import Constants
 from Modules.Logger import Logger
 
 
-class InfoScreen(tk.Toplevel):
+class ScreenInfo(tk.Toplevel):
   def __init__(self):
     tk.Toplevel.__init__(self)
     window_width = 500
@@ -32,7 +29,7 @@ class InfoScreen(tk.Toplevel):
     self.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
     # self.attributes("-topmost", True)
-    self.title('Dyflexis Details')
+    self.title('dycal info')
     self.configure(background=self.background_color_primary)
     # self.resizable(False, False)
     frame = tk.Frame(self)
@@ -40,7 +37,7 @@ class InfoScreen(tk.Toplevel):
     frame.configure(background=self.background_color_primary)
 
     tk.Message(frame,
-               text="Deze applicatie is geschreven door Vincent Hoogstra in eigen tijd, Dyflexis zal altijd leidend blijven en het is mogelijk dat er bugs in de software staan. Er word geadviseerd om het ICS bestand dan ook niet in je hoofd agenda te stoppen maar in een losse agenda\n\n vragen en bug meldingen kunnen naar me.vincentvandetechniek.nl\n\n het helpt enorm als je de data exporteert naar een folder en het log bestand van de dag van de error naar mij toe stuurt\n\n tips,features of suggesties? gooi het op de mail!",
+               text="Deze applicatie is geschreven door Vincent Hoogstra in eigen tijd, Dyflexis zal altijd leidend blijven en het is mogelijk dat er bugs in de software staan.\n\nVragen, ideeen, inspiratie en bug meldingen kunnen naar me.vincentvandetechniek.nl\n\nBij bugs/problemen helpt het als het log bestand mee gestuurd word en de json files samen met een omschrijving van wat er word verwacht en wat er gebeurt. In de .json bestanden staat je werk agenda in data weggezet\n\nTips, features of suggesties? gooi het op de mail!",
                fg='white', bg=self.background_color_secondary,
                justify=tk.LEFT,
                anchor=tk.W,
@@ -48,7 +45,7 @@ class InfoScreen(tk.Toplevel):
                width=400,
                relief=tk.SUNKEN,
                ).grid(column=0, row=0, columnspan=3, sticky=tk.NSEW, padx=10, pady=10)
-    ctk.CTkButton(frame, text='Export Files', command=self.exportFiles).grid(column=1, row=1)
+    ctk.CTkButton(frame, text='Export Files', command=self.openFolder).grid(column=1, row=1)
 
     self.release = tk.Message(frame,
                               fg='white', bg=self.background_color_secondary,
@@ -61,18 +58,12 @@ class InfoScreen(tk.Toplevel):
     self.release.grid(column=0, row=2, columnspan=3, sticky=tk.NSEW, padx=10, pady=10)
     self.getVersion()
 
-  def exportFiles(self):
-    print(' export files')
-    target_dir = filedialog.askdirectory(
-      title="ICS bestand van uw kalender app",
-      initialdir=os.path.expanduser('~/Downloads'))
+  def openFolder(self):
+    Logger.getLogger(__name__).info(' open folder files')
+    base_path = os.path.expanduser('~/' + Constants.userStorageLocation)
+    path = os.path.realpath(base_path)
+    webbrowser.open('file:///' + path)
 
-    source_dir = Constants.resource_path(Constants.logPrefix)
-
-    file_names = os.listdir(source_dir)
-
-    for file_name in file_names:
-      shutil.move(os.path.join(source_dir, file_name), target_dir)
 
   def getVersion(self):
     link = Constants.githubVersionLink

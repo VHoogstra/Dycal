@@ -1,13 +1,9 @@
 import tkinter as tk
-import tkinter.ttk as ttk
-from pprint import pprint
-
-import customtkinter as ctk
 
 from Modules.Constants import Constants
 
 
-class ExceptionScreen(tk.Frame):
+class ScreenException(tk.Frame):
   def __init__(self, message,exception):
     tk.Frame.__init__(self)
     window_width = 500

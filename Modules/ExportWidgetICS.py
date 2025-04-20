@@ -1,12 +1,12 @@
 import os
-import tkinter.ttk as ttk
 import tkinter as tk
 import traceback
 from tkinter import filedialog
 
-import customtkinter as ctk
 import arrow
+import customtkinter as ctk
 
+from Modules.ConfigLand import ConfigLand
 from Modules.Constants import Constants
 from Modules.ICS import ICS
 from Modules.Logger import Logger
@@ -18,8 +18,9 @@ class ExportWidgetICS(tk.Frame):
   def __init__(self, parent=None,gui=None, **kwargs):
     tk.Frame.__init__(self, parent, **kwargs)
     self.gui = gui
-    self.gui.configLand.addUpdateHandler(self.updateConfig)
-    self.gui.configLand.addLoadHandler(self.loadFromConfig)
+    self.config = ConfigLand.getConfigLand()
+    self.config.addUpdateHandler(self.updateConfig)
+    self.config.addLoadHandler(self.loadFromConfig)
 
 
     iscInfoText = "Een ICS bestand kan gegenereerd worden zonder een bestaand bestand te openen, echter als je twee keer dezelfde maand draait zal je dubbele afspraken krijgen.\nOmdat dit onpraktisch is kan je een link naar een openbare ics file toevoegen OF een geëxporteerd bestand uploaden. \nWij zullen in de afspraken zoeken naar dyflexis evenementen (door het ID in de omschrijving) en deze updaten"
@@ -67,12 +68,12 @@ class ExportWidgetICS(tk.Frame):
     if not hasattr(self,'icsUrl'):
       return
     Logger.getLogger(__name__).info('update config')
-    icsConfig = self.gui.configLand.getKey('ics')
+    icsConfig = self.config.getKey('ics')
     icsConfig['url'] = self.icsUrl.get()
-    self.gui.configLand.setKey('ics', icsConfig)
+    self.config.setKey('ics', icsConfig)
 
   def loadFromConfig(self):
-    value = self.gui.configLand.getKey('ics')['url']
+    value = self.config.getKey('ics')['url']
     self.icsUrl.delete(0, 500)
     self.icsUrl.insert(0, value)
 

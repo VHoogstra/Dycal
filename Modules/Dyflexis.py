@@ -1,19 +1,18 @@
 import re
 
-from selenium.common import TimeoutException
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.common.by import By
 import arrow
-
-from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
+from selenium.common import TimeoutException
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.wait import WebDriverWait
 
 from Exceptions.BadLoginException import BadLoginException
 from Modules.ConfigLand import ConfigLand
 from Modules.Constants import Constants
-from Modules.dataClasses import EventDataList, Period
 from Modules.Logger import Logger
+from Modules.dataClasses import EventDataList, Period
 
 
 class Dyflexis:
@@ -26,14 +25,15 @@ class Dyflexis:
   # todo dit ook naar een config wegschrijven
   MAX_NAME_LENGTH = 71
 
-  def __init__(self, config: ConfigLand, width, height):
-    self.config = config
+  def __init__(self, width, height):
+    self.config = ConfigLand.getConfigLand()
     self.width = width
     self.height = height
-    self.username = config.getKey('dyflexis')['username']
-    self.password = config.getKey('dyflexis')['password']
-    self.location = config.getKey('dyflexis')['location']
-    self.organisation = config.getKey('dyflexis')['organisation']
+    tempConfig = self.config.getKey('dyflexis')
+    self.username = tempConfig['username']
+    self.password = tempConfig['password']
+    self.location = tempConfig['location']
+    self.organisation = tempConfig['organisation']
 
     Logger.getLogger(__name__).info('initializing Dyflexis')
 

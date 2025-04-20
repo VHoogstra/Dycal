@@ -1,6 +1,5 @@
 import json
-import shutil
-from pprint import pprint
+import os.path
 from tkinter import filedialog, messagebox
 from typing import Any
 
@@ -9,7 +8,6 @@ from cryptography.fernet import Fernet
 
 from Modules.Constants import Constants
 from Modules.Logger import Logger
-import os.path
 
 
 class ConfigObject:
@@ -34,8 +32,7 @@ class ConfigObject:
     base_path = os.path.expanduser('~/' + Constants.userStorageLocation)
     if not os.path.isdir(base_path):
       msgBox = messagebox.askyesno("persistent storage",
-                                   "Mogen wij een folder 'dycol' aanmaken in uw thuis folder om configuratie en log data op te slaan?".format(
-                                   ))
+                                   "Mogen wij een folder 'dycol' aanmaken in uw thuis folder om configuratie en log data op te slaan?".format())
       if msgBox:
         self.persistentStorageAllowed = True
         os.makedirs(base_path)
@@ -66,12 +63,12 @@ class ConfigObject:
 
   @staticmethod
   def encrypt(content):
-    f = Fernet(b'Ngi3Iv2_rVNRuMXYhKHy1oVJvUCwm-xq_rTd7GmosXY=')
+    f = Fernet(Constants.encryptionKey)
     return f.encrypt(content)
 
   @staticmethod
   def decrypt(content):
-    f = Fernet(b'Ngi3Iv2_rVNRuMXYhKHy1oVJvUCwm-xq_rTd7GmosXY=')
+    f = Fernet(Constants.encryptionKey)
     return f.decrypt(content)
 
   @staticmethod
@@ -92,11 +89,7 @@ class ConfigObject:
       return ConfigObject()
 
   def toJson(self):
-    return json.dumps(
-      self,
-      default=lambda o: o.__dict__,
-      sort_keys=True,
-      indent=2)
+    return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=2)
 
   @staticmethod
   def fromJson(jsonText):
@@ -116,7 +109,13 @@ class ConfigObject:
 
 
 class ConfigLand:
-  __config: ConfigObject
+  __configLand = None
+
+  @staticmethod
+  def getConfigLand():
+    if ConfigLand.__configLand is None:
+      ConfigLand.__configLand = ConfigLand()
+    return ConfigLand.__configLand
 
   def __init__(self):
     self.__config = ConfigObject.loadFromFile()
@@ -128,9 +127,19 @@ class ConfigLand:
     self.__config.save()
 
   def addUpdateHandler(self, handler):
+    """
+    update config
+    :param handler:
+    :return:
+    """
     self.__updateHandlers.append(handler)
 
   def addLoadHandler(self, handler):
+    """
+    load from config
+    :param handler:
+    :return:
+    """
     self.__loadHandlers.append(handler)
 
   def handleUpdateHandlers(self):
@@ -149,22 +158,21 @@ class ConfigLand:
     return self.__config.__getattr__(key)
 
   def setKey(self, key, value):
-    self.__config.__setattr__(key, value)
-    # self.__config.save()
+    self.__config.__setattr__(key, value)  # self.__config.save()
 
   def reset(self):
     if os.path.isfile(Constants.resource_path(ConfigObject.fileName)):
       os.remove(Constants.resource_path(ConfigObject.fileName))
+
     self.__config = ConfigObject()
+    self.handleLoadHandlers()
 
   def exportConfig(self):
     self.handleUpdateHandlers()
-    name = "Dycal-config- " + arrow.get().format('YYYY-MM-DD')
+    name = "Dycal-config-" + arrow.get().format('YYYY-MM-DD')
 
-    target_dir = filedialog.asksaveasfilename(
-      title="Locatie om naartoe te exporteren",
-      initialdir=os.path.expanduser('~/Downloads'),
-      initialfile=name)
+    target_dir = filedialog.asksaveasfilename(title="Locatie om naartoe te exporteren",
+                                              initialdir=os.path.expanduser('~/Downloads'), initialfile=name)
     self.__config.save(target_dir)
 
   def importConfig(self):

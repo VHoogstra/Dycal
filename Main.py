@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 import logging
-import sys
-from pprint import pprint
 
-from Modules.ConfigLand import ConfigObject, ConfigLand
 from Modules.Constants import Constants
-from Modules.ExceptionScreen import ExceptionScreen
 from Modules.GUI import Gui
 from Modules.Logger import Logger
-
+from Modules.ScreenException import ScreenException
 
 
 def main():
@@ -39,7 +35,7 @@ def main():
             Message = Message + str(e)
         Logger.getLogger(__name__).error('Er ging wat mis bij bij Mainloop', exc_info=True)
         #todo bug scherm openen?
-        excep=ExceptionScreen(Message,e )
+        excep = ScreenException(Message, e)
         excep.mainloop()
 
 if __name__ == "__main__":

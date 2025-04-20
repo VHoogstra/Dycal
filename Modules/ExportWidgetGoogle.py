@@ -1,20 +1,13 @@
-import os
-import tkinter
-import tkinter.ttk as ttk
 import tkinter as tk
-from idlelib.tooltip import TooltipBase, Hovertip
-from tkinter import filedialog, Message, messagebox
-import traceback
-from pprint import pprint
+from idlelib.tooltip import Hovertip
+from tkinter import messagebox
 
 import customtkinter as ctk
-import arrow
 from google.auth.exceptions import RefreshError
 
-from Modules.Google import Google
-
+from Modules.ConfigLand import ConfigLand
 from Modules.Constants import Constants
-from Modules.ICS import ICS
+from Modules.Google import Google
 from Modules.Logger import Logger
 
 
@@ -25,6 +18,7 @@ class ExportWidgetGoogle(tk.Frame):
   def __init__(self, parent=None, gui=None, **kwargs):
     tk.Frame.__init__(self, parent, **kwargs)
     self.gui = gui
+    self.config = ConfigLand().getConfigLand()
     self.google = Google()
 
     iscInfoText = 'Deze google integratie zal na het drukken op \"sync Google\" inloggen bij google en alle evenemeten ' \
@@ -39,11 +33,20 @@ class ExportWidgetGoogle(tk.Frame):
                          width=360)
     icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW, pady=5)
 
-    tk.Button(self, text='force login Google', command=self.forceLoginGoogle,cursor="hand2").grid(row=1, column=1, sticky=tk.NSEW)
-    tk.Button(self, text='sync Google', command=self.syncGoogle,cursor="hand2").grid(row=3, column=0, sticky=tk.NSEW)
+    ctk.CTkButton(self, text='force login Google', command=self.forceLoginGoogle, cursor="hand2").grid(row=1, column=1,
+                                                                                                       sticky=tk.NSEW,
+                                                                                                       pady=5)
+    ctk.CTkButton(self, text='sync Google', command=self.syncGoogle, cursor="hand2").grid(row=3, column=0,
+                                                                                          sticky=tk.NSEW, pady=5)
 
-    oepsieButton = tk.Button(self, text='oepsie doepsie de agenda is foetsie', command=self.clearcalenderId,cursor="hand2")
-    oepsieButton.grid(row=2, column=0, sticky=tk.NSEW)
+    ctk.CTkLabel(self, text="Google calendarId").grid(row=4, column=0, sticky=tk.NSEW)
+
+    self.googleId = ctk.CTkEntry(self, placeholder_text="googleCalenderID", )
+    self.googleId.grid(row=4, column=1, columnspan=2, sticky=tk.NSEW)
+
+    oepsieButton = ctk.CTkButton(self, text='oepsie doepsie de agenda is foetsie', command=self.clearcalenderId,
+                                 cursor="hand2")
+    oepsieButton.grid(row=2, column=0, sticky=tk.NSEW, pady=5)
     Hovertip(anchor_widget=oepsieButton, text='verwijder de huidige geregistreerde agenda voor als er afgemeld is ipv verwijderd', hover_delay=None)
 
     self.feedbackMessageVar= tk.StringVar()
@@ -53,10 +56,24 @@ class ExportWidgetGoogle(tk.Frame):
                          bg=Constants.zaantheaterColor,
                          relief=tk.SUNKEN, anchor=tk.W,justify="left"
                         )
-    self.feedbackMessage.grid(row=4,column=0,columnspan=3,sticky=tk.NSEW)
+    self.feedbackMessage.grid(row=5, column=0, columnspan=3, sticky=tk.NSEW)
 
     self.gui.update()
+
+    self.config.addLoadHandler(self.loadFromConfig)
+    self.config.addUpdateHandler(self.updateConfig)
+    self.loadFromConfig()
     self.feedbackMessage.config(wraplength=self.feedbackMessage.winfo_width() - 35)
+
+  def updateConfig(self):
+    google = self.config.getKey('google')
+    google['calendarId'] = self.googleId.get()
+    self.config.setKey('google', google)
+
+  def loadFromConfig(self):
+    google = self.config.getKey('google')
+    self.googleId.delete(0, 500)
+    self.googleId.insert(0, google['calendarId'])
 
   def clearcalenderId(self):
     response = messagebox.askyesnocancel("Agenda verwijderen", "Wilt u ook de agenda verwijderen uit google", parent=self)
@@ -65,7 +82,7 @@ class ExportWidgetGoogle(tk.Frame):
       return
     self.feedbackMessagebuilder('Agenda aan het verwijderen',blank=True)
     self.google.login()
-    googleConfig = self.gui.config.getKey('google')
+    googleConfig = self.config.getKey('google')
 
     if response:
       self.feedbackMessagebuilder('google Agenda verwijderd\n')
@@ -74,7 +91,7 @@ class ExportWidgetGoogle(tk.Frame):
     else:
       self.feedbackMessagebuilder('google Agenda niet aangeraakt maar ik weet niet meer waar hij is\n ik maak een nieuwe aan volgende keer')
     googleConfig['calendarId'] = None
-    self.gui.config.setKey('google', googleConfig)
+    self.config.setKey('google', googleConfig)
 
   def forceLoginGoogle(self):
     self.google.forceLogin()
@@ -92,20 +109,19 @@ class ExportWidgetGoogle(tk.Frame):
     self.feedbackMessagebuilder("start sync\n",blank=True)
     self.feedbackMessagebuilder("Gebruiker inloggen:")
 
-
     try:
       self.google.login()
       Logger.getLogger(__name__).info('user logged in')
       self.feedbackMessagebuilder("\tLogin goed\n" + "Agenda opvragen:")
 
-      googleCal = self.google.manageCalendar()
+      googleCal = self.google.manageCalendar(self.googleId.get())
       self.feedbackMessagebuilder("\tGoogle agenda goed opgehaald\n")
 
       msg = "Succesvol de agenda geupdate"
 
       if self.gui.eventData is not None and  hasattr(self.gui.eventData,'shift') :
         returnObject = self.google.parseEventsToGoogle(googleCal, self.gui.eventData.shift, periods=self.gui.eventData.periods)
-        if self.gui.configLand.getKey('persistentStorageAllowed'):
+        if self.config.getKey('persistentStorageAllowed'):
           Logger.toFile(location=Constants.logPrefix + Constants.googleJsonFile, variable=returnObject.toJson(),isJson=True)
         self.google.processData(googleCal,returnObject)
       else:
@@ -117,7 +133,8 @@ class ExportWidgetGoogle(tk.Frame):
     except Exception as e:
       Logger.getLogger(__name__).error('Er ging iets mis tijdens synchroniseren', exc_info=True)
       self.feedbackMessagebuilder("\ter ging wat mis\n")
-      self.feedbackMessagebuilder(str(type(e)))
+      message = Constants.Exception_to_message(e)
+      self.feedbackMessagebuilder(message)
       raise e
     print('end of syncgoogle')
 

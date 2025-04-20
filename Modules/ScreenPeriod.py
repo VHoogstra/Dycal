@@ -1,16 +1,13 @@
 import tkinter as tk
-import tkinter.ttk as ttk
-from datetime import tzinfo
 
-import customtkinter as ctk
 import arrow
+import customtkinter as ctk
 
 from Modules.Constants import Constants
-from Modules.Logger import Logger
 from Modules.dataClasses import PeriodList, Period
 
 
-class PeriodGui(tk.Toplevel):
+class ScreenPeriod(tk.Toplevel):
   def __init__(self, periods: PeriodList):
     tk.Toplevel.__init__(self)
     window_width = 500
@@ -29,7 +26,7 @@ class PeriodGui(tk.Toplevel):
     # self.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
     # self.attributes("-topmost", True)
-    self.title('period gui')
+    self.title('custom periode')
     self.master.configure(background=Constants.zaantheaterColor)
     # self.resizable(False, False)
     # frame = tk.Frame(self)
@@ -41,11 +38,19 @@ class PeriodGui(tk.Toplevel):
     ctk.CTkLabel(self, text='tot periode').grid(row=0, column=2, padx=5, pady=5)
     self.endPer = ctk.CTkEntry(self, placeholder_text="YYYY-MM")
     self.endPer.grid(row=1, column=2, padx=5, pady=5)
-    ctk.CTkButton(self, text='genereer', command=self.generatePeriods).grid(row=2, column=0, columnspan=3, padx=5,
+
+    self.feedback = ctk.CTkLabel(self, text="", padx=5, pady=5)
+    self.feedback.grid(row=2, column=0, columnspan=3, sticky=tk.NSEW, padx=5, pady=5)
+
+    ctk.CTkButton(self, text='genereer', command=self.generatePeriods).grid(row=3, column=0, columnspan=3, padx=5,
                                                                             pady=5)
-    ctk.CTkButton(self,text='+ voor', command=self.generatePeriodBeforeFirst).grid(row=3, column=0, padx=5,
+    ctk.CTkButton(self, text='+ voor',
+                  width=10,
+                  corner_radius=20,
+                  command=self.generatePeriodBeforeFirst).grid(row=4, column=0, padx=5,
                                                                             pady=5)
-    ctk.CTkButton(self,text='+ na', command=self.generatePeriodAfterLast).grid(row=3, column=2, padx=5,
+    ctk.CTkButton(self, text='+ na', width=10,
+                  corner_radius=20, command=self.generatePeriodAfterLast).grid(row=4, column=2, padx=5,
                                                                             pady=5)
     self.frame = tk.Frame(self)
     self.frame.grid(row=5, column=0, columnspan=3, sticky=tk.NSEW, padx=5, pady=5)
@@ -54,6 +59,9 @@ class PeriodGui(tk.Toplevel):
 
     self.periods.addHandler(self.updatePeriods)
     self.updatePeriods()
+    self.update()
+    self.feedback.configure(wraplength=self.feedback.winfo_width() - 35)
+
 
   def generatePeriodBeforeFirst(self):
     periods = self.periods.getPeriods()
@@ -62,6 +70,7 @@ class PeriodGui(tk.Toplevel):
     else:
       date = arrow.get(periods[0].period,tzinfo=Constants.timeZone).shift(months=-1).format('YYYY-MM')
       self.periods.addPeriod(Period(date))
+
   def generatePeriodAfterLast(self):
     periods = self.periods.getPeriods()
     if len(periods) == 0:
@@ -86,5 +95,13 @@ class PeriodGui(tk.Toplevel):
     self.periods.removePeriod(period)
 
   def generatePeriods(self):
-    #todo error handling feedback
-    self.periods.generatePeriods(self.startPer.get(), self.endPer.get())
+    self.feedback.configure(fg_color='transparent', text_color="white", text='')
+    try:
+      self.periods.generatePeriods(self.startPer.get(), self.endPer.get())
+    except Exception as e:
+      Message = ('Er ging iets mis bij het genereren:\n')
+      if hasattr(e, 'message'):
+        Message = Message + e.message
+      else:
+        Message = Message + str(e)
+      self.feedback.configure(fg_color='red', text_color="white", text=Message)

@@ -1,9 +1,7 @@
 import os
-import shutil
-import sys
 import time
-import tkinter
-from tkinter import messagebox
+
+from Modules.ConfigLand import ConfigLand
 
 
 class Constants():
@@ -19,6 +17,7 @@ class Constants():
   userStorageLocation = "dycal"
   githubVersionLink = "https://api.github.com/repos/VHoogstra/dyflexis-calendar-ics/releases"
   timeZone = "Europe/Amsterdam"
+  encryptionKey = b'Ngi3Iv2_rVNRuMXYhKHy1oVJvUCwm-xq_rTd7GmosXY='
   Dyflexis = {
     "routes": {
       "login": "https://app.planning.nu/{organisation}/login",
@@ -31,15 +30,13 @@ class Constants():
 
   @staticmethod
   def getGoogleCalName():
-    return Constants.appname + ": " + Constants.OrganisationName
+    return Constants.appname + ": " + ConfigLand.getConfigLand().getKey('dyflexis')['organisation']
 
   @staticmethod
-  def getDyflexisRoutes(key,organisation=None,location=None):
+  def getDyflexisRoutes(key, organisation=None, location=None):
     if organisation is None or location is None:
       raise Exception('een Organisatie en Locatie is verplicht!')
-    return (Constants.Dyflexis['routes'][key]
-            .replace('{organisation}', organisation)
-            .replace('{location}', location))
+    return (Constants.Dyflexis['routes'][key].replace('{organisation}', organisation).replace('{location}', location))
 
   @staticmethod
   def resource_path(relative):
@@ -48,7 +45,14 @@ class Constants():
     :return:
     """
     # todo test if this works on windows
-    base_path = os.path.expanduser('~/'+Constants.userStorageLocation)
+    base_path = os.path.expanduser('~/' + Constants.userStorageLocation)
     return os.path.join(base_path, relative)
 
-
+  @staticmethod
+  def Exception_to_message(exception):
+    Message = ""
+    if hasattr(exception, 'message'):
+      Message = Message + exception.message
+    else:
+      Message = Message + str(exception)
+    return Message

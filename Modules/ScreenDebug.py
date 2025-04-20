@@ -1,14 +1,11 @@
 import tkinter as tk
-import tkinter.ttk as ttk
-from pprint import pprint
 
-import customtkinter as ctk
 from customtkinter import CTkButton
 
 from Modules.Constants import Constants
 
 
-class DebugWindow(tk.Toplevel):
+class ScreenDebug(tk.Toplevel):
 
 
   def __init__(self,gui ):

@@ -1,5 +1,5 @@
 import json
-import traceback
+from tkinter import messagebox
 
 import arrow
 from google.auth.transport.requests import Request
@@ -24,6 +24,7 @@ class Google:
 
   def __init__(self):
     Logger.getLogger(__name__).info("Google init")
+    self.config = ConfigLand.getConfigLand()
 
   def get_credentials(self):
     if self.creds is None:
@@ -36,14 +37,9 @@ class Google:
 
   def valid_creds(self):
     self.get_credentials()
-    Logger.getLogger(__name__).info(
-      'validCreds response {} here self.creds is: {} and valid: {}'.format(self.creds and self.creds.valid,
-                                                                           self.creds is not None, self.creds.valid))
     return self.creds is not None and self.creds.valid
 
   def getConfigService(self):
-    if self.config is None:
-      self.config = ConfigLand()
     return self.config
 
   def login(self):
@@ -63,6 +59,7 @@ class Google:
         googleConfig['credentials'] = json.loads(self.creds.to_json())
         # Save the credentials for the next run
         self.getConfigService().setKey('google', googleConfig)
+        self.getConfigService().save()
 
   def forceLogin(self):
     flow = InstalledAppFlow.from_client_secrets_file(
@@ -178,31 +175,33 @@ class Google:
       returnObject.removeCalendarItem.append(gEvent)
     return returnObject
 
-  def manageCalendar(self):
+  def manageCalendar(self, calendarId):
     """
          haal de huidige agenda op, als hij verwijderd is of onvindbaar, maak een nieuwe aan
          :return: het googleCal object
     """
     calendar = self.getCalendarService()
-    config = self.getConfigService().getKey('google')
-    if 'calendarId' in config and config['calendarId'] is not None:
+    googleConfig = self.getConfigService().getKey('google')
+    if calendarId is not None:
       try:
-        googleCal = calendar.get(config['calendarId'])
-        return googleCal
+        googleCal = calendar.get(calendarId)
       except HttpError as e:
         Message = ('Google cal niet gevonden?: ')
-        Logger().log(str(type(e)))
         if hasattr(e, 'message'):
           Message = Message + e.message
-          Logger().log((e.message))
         else:
           Message = Message + str(e)
-        Logger().log((traceback.format_exc()))
+        Logger.getLogger(__name__).error('googlecalendar error', exc_info=True)
 
-    # geen googleCal gevonden, maak nieuwe aan
-    googleCal = calendar.create(Constants.getGoogleCalName())
-    config['calendarId'] = googleCal['id']
-    self.getConfigService().setKey('google', config)
+        response = messagebox.askyesno(title='Google calendar error',
+                                       message="Google agenda niet gevonden, wile je dat wij een nieuwe aanmaken?")
+        if response is None or response == False:
+          raise Exception('geen geldig of bereikbaar agenda id gevonden')
+        if response is True:
+          googleCal = calendar.create(Constants.getGoogleCalName())
+
+    googleConfig['calendarId'] = googleCal['id']
+    self.getConfigService().setKey('google', googleConfig)
     return googleCal
 
   """
