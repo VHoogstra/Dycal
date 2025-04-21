@@ -20,7 +20,6 @@ class Constants():
   userStorageLocation = "dycal"
   githubVersionLink = "https://api.github.com/repos/VHoogstra/dyflexis-calendar-ics/releases"
   timeZone = "Europe/Amsterdam"
-  encryptionKey = b'Ngi3Iv2_rVNRuMXYhKHy1oVJvUCwm-xq_rTd7GmosXY='
   Dyflexis = {
     "routes": {
       "login": "https://app.planning.nu/{organisation}/login",
@@ -28,7 +27,6 @@ class Constants():
       "homepage": "https://app.planning.nu/{organisation}/{location}/"
     }
   }
-  # todo zaandam ook kiesbaar maken
   DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="
 
   @staticmethod

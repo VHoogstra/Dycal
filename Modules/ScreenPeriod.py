@@ -13,6 +13,7 @@ class ScreenPeriod(tk.Toplevel):
     window_width = 500
     window_height = 400
     self.periods = periods
+    self.configure(bg=Constants.background_color_primary)
 
     # get screen dimension
     screen_width = self.winfo_screenwidth()

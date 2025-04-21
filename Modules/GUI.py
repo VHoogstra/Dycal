@@ -1,4 +1,5 @@
 import json
+import os
 import tkinter as tk
 import tkinter.ttk as ttk
 from pprint import pprint
@@ -58,8 +59,11 @@ class Gui(tk.Frame):
     self.master.rowconfigure(0,weight=1)
     self.master.columnconfigure(0,weight=1)
     titleString = '{}: {}'.format(Constants.appname, Constants.version)
-    if Constants.version != Constants.githubVersion():
-      titleString = titleString + "\t newer version available:{}".format(Constants.githubVersion())
+    try:
+      if Constants.version != Constants.githubVersion():
+        titleString = titleString + "\t newer version available:{}".format(Constants.githubVersion())
+    except:
+      pass
     self.master.title(titleString)
 
     # self.master.attributes("-topmost", True)
@@ -92,8 +96,6 @@ class Gui(tk.Frame):
 
     self.update()
     self.dyflexisMessage.config(wraplength=self.dyflexisFrame.winfo_width() - 35)
-
-    # self.openDebug('key')
 
   def closingInfoScreen(self):
     self.infoScreen.destroy()

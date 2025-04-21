@@ -1,4 +1,5 @@
 import json
+import logging
 import os.path
 from tkinter import filedialog, messagebox
 from typing import Any
@@ -63,12 +64,14 @@ class ConfigObject:
 
   @staticmethod
   def encrypt(content):
-    f = Fernet(Constants.encryptionKey)
+    key= os.environ.get('ENCRYPTION_TOKEN')
+
+    f = Fernet(key)
     return f.encrypt(content)
 
   @staticmethod
   def decrypt(content):
-    f = Fernet(Constants.encryptionKey)
+    f = Fernet(os.environ.get('ENCRYPTION_TOKEN'))
     return f.decrypt(content)
 
   @staticmethod

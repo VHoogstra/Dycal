@@ -7,3 +7,4 @@ logs/*
 credentials.json
 !build/favicon.icns
 !build/favicon.ico
+.env
