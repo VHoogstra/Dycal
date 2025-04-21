@@ -15,6 +15,8 @@ class ExportWidgetCSV(tk.Frame):
   def __init__(self, parent=None, gui=None, **kwargs):
     tk.Frame.__init__(self, parent, **kwargs)
     self.gui = gui
+    self.configure(bg=Constants.background_color_primary)
+
     iscInfoText = "Deze module genereerd een ; gescheiden CSV bestand.\nDe use case voor deze module is voornamelijk exporteren van de data"
     "mocht u een andere use case hebben en meer data of andere data willen exporteren, neem gerust contact op"
     icsInfo = tk.Message(self,

@@ -18,6 +18,8 @@ class ExportWidgetICS(tk.Frame):
   def __init__(self, parent=None,gui=None, **kwargs):
     tk.Frame.__init__(self, parent, **kwargs)
     self.gui = gui
+    self.configure(bg=Constants.background_color_primary)
+
     self.configLand = ConfigLand.getConfigLand()
     self.configLand.addUpdateHandler(self.updateConfig)
     self.configLand.addLoadHandler(self.loadFromConfig)

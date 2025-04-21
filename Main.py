@@ -3,6 +3,7 @@
 from Modules.GUI import Gui
 from Modules.Logger import Logger
 from Modules.ScreenException import ScreenException
+import customtkinter as ctk
 
 
 def main():
@@ -10,6 +11,7 @@ def main():
     Logger.getLogger(__name__).info(' ###\t\t\tapplication start\t\t\t###')
 
     try:
+        ctk.set_appearance_mode("dark")
         app = Gui()
         app.mainloop()
 

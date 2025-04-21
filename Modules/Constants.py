@@ -9,6 +9,9 @@ class Constants():
   appname = "Dycal"
 
   zaantheaterColor = "#7a4689"
+  background_color_primary = '#393534'
+  background_color_secondary = "#4a4747"
+
   dyflexisMessage = "test "
   logPrefix = "logs/"
   logFileName = "log_" + time.strftime("%Y-%m-%d", time.gmtime()) + '.txt'
