@@ -1,0 +1,3186 @@
+{
+  "agenda": 58,
+  "assignments": 28,
+  "events": 209,
+  "list": [
+    {
+      "agenda": [
+        {
+          "id": "agenda://27378",
+          "text": "Gewerkt van 14:00 tot 00:00 (8uur + 120min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18225",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal Vincent 1ste dag",
+          "tijd": "14:00 - 00:00"
+        }
+      ],
+      "date": "2025-02-01",
+      "events": [],
+      "text": "1\nZaandam > 60 Technische Dienst > Grote zaal Vincent 1ste dag\n14:00 - 00:00 (120 min. pauze)\nGewerkt van 14:00 tot 00:00 (8uur + 120min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27398",
+          "text": "Gewerkt van 09:30 tot 18:15 (8\u00bcuur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18232",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal vincent",
+          "tijd": "10:00 - 20:00"
+        }
+      ],
+      "date": "2025-02-02",
+      "events": [],
+      "text": "2\nZaandam > 60 Technische Dienst > Grote zaal vincent\n10:00 - 20:00 (150 min. pauze)\nGewerkt van 09:30 tot 18:15 (8\u00bcuur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27402",
+          "text": "Gewerkt van 13:00 tot 01:00 (10uur + 120min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18274",
+          "text": "Zaandam > 60 Technische Dienst > Foyer Vincent",
+          "tijd": "14:00 - 00:00"
+        }
+      ],
+      "date": "2025-02-03",
+      "events": [],
+      "text": "3\nZaandam > 60 Technische Dienst > Foyer Vincent\n14:00 - 00:00 (120 min. pauze)\nGewerkt van 13:00 tot 01:00 (10uur + 120min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27403",
+          "text": "Gewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18270",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud Led-licht",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-02-04",
+      "events": [],
+      "text": "4\nZaandam > 60 Technische Dienst > Onderhoud Led-licht\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-02-05",
+      "events": [],
+      "text": "5"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-02-06",
+      "events": [],
+      "text": "6"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27425",
+          "text": "Gewerkt van 12:30 tot 01:30 (11uur + 120min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18281",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal Vincent",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-02-07",
+      "events": [],
+      "text": "7\nZaandam > 60 Technische Dienst > Grote zaal Vincent\n13:00 - 23:00 (120 min. pauze)\nGewerkt van 12:30 tot 01:30 (11uur + 120min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27427",
+          "text": "Gewerkt van 10:15 tot 17:30 (6\u00beuur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18261",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud Vincent",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-02-08",
+      "events": [],
+      "text": "8\nZaandam > 60 Technische Dienst > Onderhoud Vincent\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 10:15 tot 17:30 (6\u00beuur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://26577",
+          "text": "Gewerkt van 08:05 tot 19:15 (10,67uur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18266",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal Vincent",
+          "tijd": "08:00 - 18:00"
+        }
+      ],
+      "date": "2025-02-09",
+      "events": [],
+      "text": "9\nZaandam > 60 Technische Dienst > Grote zaal Vincent\n08:00 - 18:00 (30 min. pauze)\nGewerkt van 08:05 tot 19:15 (10,67uur + 30min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-02-10",
+      "events": [],
+      "text": "10"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27439",
+          "text": "Gewerkt van 10:00 tot 17:45 (7\u00bcuur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://19964",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-02-11",
+      "events": [],
+      "text": "11\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 10:00 tot 17:45 (7\u00bcuur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27445",
+          "text": "Gewerkt van 13:15 tot 23:00 (7\u00beuur + 120min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18282",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:30 - 23:30"
+        }
+      ],
+      "date": "2025-02-12",
+      "events": [],
+      "text": "12\nZaandam > 60 Technische Dienst > Grote zaal\n13:30 - 23:30 (120 min. pauze)\nGewerkt van 13:15 tot 23:00 (7\u00beuur + 120min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27450",
+          "text": "Gewerkt van 09:00 tot 17:00 (7\u00bduur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://19958",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-02-13",
+      "events": [],
+      "text": "13\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 09:00 tot 17:00 (7\u00bduur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27458",
+          "text": "Gewerkt van 09:45 tot 00:30 (12\u00bcuur + 150min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18290",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "10:00 - 23:00"
+        }
+      ],
+      "date": "2025-02-14",
+      "events": [],
+      "text": "14\nZaandam > 60 Technische Dienst > Grote zaal\n10:00 - 23:00 (150 min. pauze)\nGewerkt van 09:45 tot 00:30 (12\u00bcuur + 150min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-02-15",
+      "events": [],
+      "text": "15"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://26997",
+          "text": "Gewerkt van 12:45 tot 15:45 (3 uur)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://19950",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal BHV oefening",
+          "tijd": "13:00 - 16:00"
+        }
+      ],
+      "date": "2025-02-16",
+      "events": [],
+      "text": "16\nZaandam > 60 Technische Dienst > Grote zaal BHV oefening\n13:00 - 16:00 (0 min. pauze)\nGewerkt van 12:45 tot 15:45 (3 uur)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-02-17",
+      "events": [],
+      "text": "17"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27471",
+          "text": "Gewerkt van 08:45 tot 17:15 (8uur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://19972",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "09:00 - 18:00"
+        }
+      ],
+      "date": "2025-02-18",
+      "events": [],
+      "text": "18\nZaandam > 60 Technische Dienst > Kleine zaal\n09:00 - 18:00 (30 min. pauze)\nGewerkt van 08:45 tot 17:15 (8uur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27475",
+          "text": "Gewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://19977",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-02-19",
+      "events": [],
+      "text": "19\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27483",
+          "text": "Gewerkt van 14:00 tot 00:15 (8\u00bcuur + 120min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18303",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "14:00 - 23:00"
+        }
+      ],
+      "date": "2025-02-20",
+      "events": [],
+      "text": "20\nZaandam > 60 Technische Dienst > Grote zaal\n14:00 - 23:00 (120 min. pauze)\nGewerkt van 14:00 tot 00:15 (8\u00bcuur + 120min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27305",
+          "text": "Gewerkt van 13:04 tot 17:44 (4,67 uur)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18308",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:30 - 23:00"
+        }
+      ],
+      "date": "2025-02-21",
+      "events": [],
+      "text": "21\nZaandam > 60 Technische Dienst > Grote zaal\n13:30 - 23:00 (120 min. pauze)\nGewerkt van 13:04 tot 17:44 (4,67 uur)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27489",
+          "text": "Gewerkt van 11:30 tot 00:15 (10\u00bcuur + 150min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://18313",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "12:00 - 23:00"
+        }
+      ],
+      "date": "2025-02-22",
+      "events": [],
+      "text": "22\nZaandam > 60 Technische Dienst > Grote zaal\n12:00 - 23:00 (150 min. pauze)\nGewerkt van 11:30 tot 00:15 (10\u00bcuur + 150min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-02-23",
+      "events": [],
+      "text": "23"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-02-24",
+      "events": [],
+      "text": "24"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27692",
+          "text": "Gewerkt van 10:00 tot 17:45 (7\u00bcuur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20255",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud Caputer",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-02-25",
+      "events": [],
+      "text": "25\nZaandam > 60 Technische Dienst > Onderhoud Caputer\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 10:00 tot 17:45 (7\u00bcuur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27695",
+          "text": "Gewerkt van 10:00 tot 17:45 (7\u00bcuur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20060",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-02-26",
+      "events": [],
+      "text": "26\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 10:00 tot 17:45 (7\u00bcuur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27703",
+          "text": "Gewerkt van 13:30 tot 00:00 (8\u00bduur + 120min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://19992",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "14:00 - 23:00"
+        }
+      ],
+      "date": "2025-02-27",
+      "events": [],
+      "text": "27\nZaandam > 60 Technische Dienst > Kleine zaal\n14:00 - 23:00 (120 min. pauze)\nGewerkt van 13:30 tot 00:00 (8\u00bduur + 120min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27706",
+          "text": "Gewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20249",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-02-28",
+      "events": [],
+      "text": "28\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27712",
+          "text": "Gewerkt van 13:00 tot 00:30 (9\u00bduur + 120min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20000",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-03-01",
+      "events": [],
+      "text": "1\nZaandam > 60 Technische Dienst > Kleine zaal\n13:00 - 23:00 (120 min. pauze)\nGewerkt van 13:00 tot 00:30 (9\u00bduur + 120min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-03-02",
+      "events": [],
+      "text": "2"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-03-03",
+      "events": [],
+      "text": "3"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://27836",
+          "text": "Gewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20481",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-03-04",
+      "events": [],
+      "text": "4\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28878",
+          "text": "Gewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20487",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-03-05",
+      "events": [],
+      "text": "5\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28882",
+          "text": "Gewerkt van 12:45 tot 23:30 (8\u00beuur + 120min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20307",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-03-06",
+      "events": [],
+      "text": "6\nZaandam > 60 Technische Dienst > Grote zaal\n13:00 - 23:00 (120 min. pauze)\nGewerkt van 12:45 tot 23:30 (8\u00beuur + 120min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28891",
+          "text": "Gewerkt van 12:45 tot 00:00 (9\u00bcuur + 120min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20313",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-03-07",
+      "events": [],
+      "text": "7\nZaandam > 60 Technische Dienst > Kleine zaal\n13:00 - 23:00 (120 min. pauze)\nGewerkt van 12:45 tot 00:00 (9\u00bcuur + 120min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-03-08",
+      "events": [],
+      "text": "8"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://20323",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "09:00 - 19:00"
+        }
+      ],
+      "date": "2025-03-09",
+      "events": [],
+      "text": "9\nZaandam > 60 Technische Dienst > Kleine zaal\n09:00 - 19:00 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-03-10",
+      "events": [],
+      "text": "10"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-03-11",
+      "events": [],
+      "text": "11"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28268",
+          "text": "Gewerkt van 12:40 tot 00:30 (10,17uur + 100min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20334",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-03-12",
+      "events": [],
+      "text": "12\nZaandam > 60 Technische Dienst > Kleine zaal\n13:00 - 23:00 (120 min. pauze)\nGewerkt van 12:40 tot 00:30 (10,17uur + 100min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28906",
+          "text": "Gewerkt van 14:45 tot 23:15 (6\u00bduur + 120min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20337",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "15:00 - 23:00"
+        }
+      ],
+      "date": "2025-03-13",
+      "events": [],
+      "text": "13\nZaandam > 60 Technische Dienst > Kleine zaal\n15:00 - 23:00 (120 min. pauze)\nGewerkt van 14:45 tot 23:15 (6\u00bduur + 120min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28911",
+          "text": "Gewerkt van 09:45 tot 17:30 (7\u00bcuur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20341",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-03-14",
+      "events": [],
+      "text": "14\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 09:45 tot 17:30 (7\u00bcuur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://29164",
+          "text": "Gewerkt van 10:45 tot 00:15 (11uur + 150min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20347",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "11:00 - 23:00"
+        }
+      ],
+      "date": "2025-03-15",
+      "events": [],
+      "text": "15\nZaandam > 60 Technische Dienst > Kleine zaal\n11:00 - 23:00 (150 min. pauze)\nGewerkt van 10:45 tot 00:15 (11uur + 150min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-03-16",
+      "events": [],
+      "text": "16"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28922",
+          "text": "Gewerkt van 08:45 tot 19:00 (9\u00beuur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20512",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal *",
+          "tijd": "09:00 - 18:00"
+        }
+      ],
+      "date": "2025-03-17",
+      "events": [],
+      "text": "17\nZaandam > 60 Technische Dienst > Kleine zaal *\n09:00 - 18:00 (30 min. pauze)\nGewerkt van 08:45 tot 19:00 (9\u00beuur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28925",
+          "text": "Gewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20514",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-03-18",
+      "events": [],
+      "text": "18\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 10:00 tot 17:30 (7uur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28933",
+          "text": "Gewerkt van 09:45 tot 17:15 (7uur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20545",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-03-19",
+      "events": [],
+      "text": "19\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)\nGewerkt van 09:45 tot 17:15 (7uur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28939",
+          "text": "Gewerkt van 12:45 tot 23:15 (8\u00bduur + 120min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20522",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-03-20",
+      "events": [],
+      "text": "20\nZaandam > 60 Technische Dienst > Grote zaal\n13:00 - 23:00 (120 min. pauze)\nGewerkt van 12:45 tot 23:15 (8\u00bduur + 120min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-03-21",
+      "events": [],
+      "text": "21"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-03-22",
+      "events": [],
+      "text": "22"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28869",
+          "text": "Gewerkt van 09:53 tot 22:18 (10,92uur + 90min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://21323",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "10:00 - 23:00"
+        }
+      ],
+      "date": "2025-03-23",
+      "events": [],
+      "text": "23\nZaandam > 60 Technische Dienst > Grote zaal\n10:00 - 23:00 (150 min. pauze)\nGewerkt van 09:53 tot 22:18 (10,92uur + 90min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28870",
+          "text": "Gewerkt van 09:40 tot 22:30 (11,33uur + 90min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20547",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "10:00 - 22:00"
+        }
+      ],
+      "date": "2025-03-24",
+      "events": [],
+      "text": "24\nZaandam > 60 Technische Dienst > Grote zaal\n10:00 - 22:00 (150 min. pauze)\nGewerkt van 09:40 tot 22:30 (11,33uur + 90min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-03-25",
+      "events": [],
+      "text": "25"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28999",
+          "text": "Gewerkt van 08:15 tot 18:30 (9\u00beuur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20299",
+          "text": "Zaandam > 60 Technische Dienst > Algemeen Cursus",
+          "tijd": "09:00 - 17:30"
+        }
+      ],
+      "date": "2025-03-26",
+      "events": [],
+      "text": "26\nZaandam > 60 Technische Dienst > Algemeen Cursus\n09:00 - 17:30 (30 min. pauze)\nGewerkt van 08:15 tot 18:30 (9\u00beuur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://29000",
+          "text": "Gewerkt van 09:30 tot 19:30 (9\u00bduur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20300",
+          "text": "Zaandam > 60 Technische Dienst > Algemeen Cursus",
+          "tijd": "09:00 - 17:30"
+        }
+      ],
+      "date": "2025-03-27",
+      "events": [],
+      "text": "27\nZaandam > 60 Technische Dienst > Algemeen Cursus\n09:00 - 17:30 (30 min. pauze)\nGewerkt van 09:30 tot 19:30 (9\u00bduur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://29121",
+          "text": "Gewerkt van 10:00 tot 17:00 (6\u00bduur + 30min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20562",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal *",
+          "tijd": "10:30 - 18:00"
+        }
+      ],
+      "date": "2025-03-28",
+      "events": [],
+      "text": "28\nZaandam > 60 Technische Dienst > Grote zaal *\n10:30 - 18:00 (30 min. pauze)\nGewerkt van 10:00 tot 17:00 (6\u00bduur + 30min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://29112",
+          "text": "Gewerkt van 10:00 tot 22:00 (11uur + 60min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://20565",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "10:00 - 21:00"
+        }
+      ],
+      "date": "2025-03-29",
+      "events": [],
+      "text": "29\nZaandam > 60 Technische Dienst > Grote zaal\n10:00 - 21:00 (150 min. pauze)\nGewerkt van 10:00 tot 22:00 (11uur + 60min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-03-30",
+      "events": [],
+      "text": "30"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-03-31",
+      "events": [],
+      "text": "31"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21115",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-04-01",
+      "events": [],
+      "text": "1\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21126",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-04-02",
+      "events": [],
+      "text": "2\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21094",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-04-03",
+      "events": [],
+      "text": "3\nZaandam > 60 Technische Dienst > Grote zaal\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21102",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-04-04",
+      "events": [],
+      "text": "4\nZaandam > 60 Technische Dienst > Kleine zaal\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25616",
+          "text": "Onbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-04-05",
+      "events": [],
+      "text": "5\nOnbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25617",
+          "text": "Onbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-04-06",
+      "events": [],
+      "text": "6\nOnbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21192",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal *",
+          "tijd": "10:00 - 18:00"
+        }
+      ],
+      "date": "2025-04-07",
+      "events": [],
+      "text": "7\nZaandam > 60 Technische Dienst > Kleine zaal *\n10:00 - 18:00 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21202",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "10:00 - 18:00"
+        }
+      ],
+      "date": "2025-04-08",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n13:00: Aankomst gezelschap\n14:00: Aanvang\n15:10: Einde\n\nAantal verkochte tickets: 78",
+          "id": "event://1743",
+          "text": "Kz Sahand Sahebdivani - Het verre woord"
+        },
+        {
+          "description": "",
+          "id": "event://1742",
+          "text": "AH AVA/AGM 2025"
+        },
+        {
+          "description": "",
+          "id": "event://1740",
+          "text": "ZTR AVA/AGM 2025"
+        },
+        {
+          "description": "",
+          "id": "event://1739",
+          "text": "foyr AVA/AGM 2025"
+        }
+      ],
+      "text": "8\nKz Sahand Sahebdivani - Het verre woord\nAH AVA/AGM 2025\nZTR AVA/AGM 2025\nfoyr AVA/AGM 2025\nZaandam > 60 Technische Dienst > Kleine zaal\n10:00 - 18:00 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-04-09",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1750",
+          "text": "GEANNULEERD - ZTR RvT vergadering"
+        },
+        {
+          "description": "",
+          "id": "event://2032",
+          "text": "Vz Ahold 13.00 - 13.45 uur"
+        },
+        {
+          "description": "",
+          "id": "event://1775",
+          "text": "ZTR AVA/AGM 2025"
+        },
+        {
+          "description": "",
+          "id": "event://1749",
+          "text": "AH AVA/AGM 2025"
+        },
+        {
+          "description": "",
+          "id": "event://1748",
+          "text": "Kz AVA/AGM 2025"
+        },
+        {
+          "description": "",
+          "id": "event://1747",
+          "text": "foyr AVA/AGM 2025"
+        }
+      ],
+      "text": "9\nGEANNULEERD - ZTR RvT vergadering\nVz Ahold 13.00 - 13.45 uur\nZTR AVA/AGM 2025\nAH AVA/AGM 2025\nKz AVA/AGM 2025\nfoyr AVA/AGM 2025"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://29455",
+          "text": "Gewerkt van 13:30 tot 00:40 (10,17uur + 60min. pauze)"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://21624",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "14:00 - 23:00"
+        }
+      ],
+      "date": "2025-04-10",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n14:00: Aankomst techniek\n20:30: Aanvang\n21:15: Pauze\n22:00: Einde\n\nAantal techniek: 2\nAantal artiesten: 3\n\nAantal verkochte tickets: 56",
+          "id": "event://1755",
+          "text": "Kz Lenny Kuhr"
+        },
+        {
+          "description": "",
+          "id": "event://1753",
+          "text": "AH Geert Mak - Theatercollege"
+        },
+        {
+          "description": "",
+          "id": "event://1754",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "",
+          "id": "event://1827",
+          "text": "Vz Databas"
+        }
+      ],
+      "text": "10\nKz Lenny Kuhr\nAH Geert Mak - Theatercollege\nZTR Diner in ZaanTheaterrestaurant\nVz Databas\nZaandam > 60 Technische Dienst > Kleine zaal\n14:00 - 23:00 (120 min. pauze)\nGewerkt van 13:30 tot 00:40 (10,17uur + 60min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-04-11",
+      "events": [
+        {
+          "description": "",
+          "id": "event://2034",
+          "text": "AH Plein C - Website koppeling"
+        },
+        {
+          "description": "",
+          "id": "event://1758",
+          "text": "AH PleinC"
+        },
+        {
+          "description": "",
+          "id": "event://1757",
+          "text": "foyr Plein C"
+        },
+        {
+          "description": "",
+          "id": "event://1969",
+          "text": "Kz Kleedkamer"
+        }
+      ],
+      "text": "11\nAH Plein C - Website koppeling\nAH PleinC\nfoyr Plein C\nKz Kleedkamer"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21220",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "15:00 - 23:00"
+        }
+      ],
+      "date": "2025-04-12",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n15:00: Aankomst techniek\n17:00: Aankomst gezelschap\n20:30: Aanvang\n22:00: Einde\n\nAantal verkochte tickets: 216",
+          "id": "event://1761",
+          "text": "Kz Soundos El Ahmadi - Witte ruis"
+        },
+        {
+          "description": "",
+          "id": "event://1760",
+          "text": "AH 3JS - In Amerika"
+        },
+        {
+          "description": "",
+          "id": "event://1759",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "12\nKz Soundos El Ahmadi - Witte ruis\nAH 3JS - In Amerika\nZTR Diner in ZaanTheaterrestaurant\nZaandam > 60 Technische Dienst > Kleine zaal\n15:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21222",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "10:30 - 19:00"
+        }
+      ],
+      "date": "2025-04-13",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n10:30: Aankomst techniek\n15:00: Aanvang\n16:00: Einde\n\nAantal techniek: 3\nAantal verkochte tickets: 321",
+          "id": "event://1762",
+          "text": "AH Dirk Scheele & StoryZoo (2+)"
+        },
+        {
+          "description": "",
+          "id": "event://1965",
+          "text": "foyr Rondleiding"
+        }
+      ],
+      "text": "13\nAH Dirk Scheele & StoryZoo (2+)\nfoyr Rondleiding\nZaandam > 60 Technische Dienst > Grote zaal\n10:30 - 19:00 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-04-14",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1970",
+          "text": "ZTR Evaluatie BS gastvrouwen"
+        }
+      ],
+      "text": "14\nZTR Evaluatie BS gastvrouwen"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-04-15",
+      "events": [
+        {
+          "description": "",
+          "id": "event://2042",
+          "text": "Vz Marketing overleg"
+        },
+        {
+          "description": "",
+          "id": "event://2009",
+          "text": "Vz MT overleg"
+        },
+        {
+          "description": "",
+          "id": "event://2039",
+          "text": "Vz Presentatie Vertrouwenspersonen"
+        }
+      ],
+      "text": "15\nVz Marketing overleg\nVz MT overleg\nVz Presentatie Vertrouwenspersonen"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21237",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-04-16",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n13:00: Aankomst techniek\n16:00: Aankomst gezelschap\n20:30: Aanvang\n22:25: Einde\n\nAantal techniek: 2\nAantal artiesten: 5\n\nAantal verkochte tickets: 199",
+          "id": "event://1767",
+          "text": "Kz Circus Treurdier - Wendy Pan"
+        },
+        {
+          "description": "",
+          "id": "event://1768",
+          "text": "AH Ren\u00e9 van Meurs - Noodzakelijk kwaad"
+        },
+        {
+          "description": "",
+          "id": "event://1769",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "",
+          "id": "event://2041",
+          "text": "ZTR crewdiner circus treurdier"
+        }
+      ],
+      "text": "16\nKz Circus Treurdier - Wendy Pan\nAH Ren\u00e9 van Meurs - Noodzakelijk kwaad\nZTR Diner in ZaanTheaterrestaurant\nZTR crewdiner circus treurdier\nZaandam > 60 Technische Dienst > Kleine zaal\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://20578",
+          "text": "Zaandam > 60 Technische Dienst > Algemeen DataBas",
+          "tijd": "09:00 - 17:30"
+        }
+      ],
+      "date": "2025-04-17",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1770",
+          "text": "Kz Fred Delfgaauw - Broos"
+        },
+        {
+          "description": "",
+          "id": "event://1771",
+          "text": "AH Plien & Bianca - Harrekidee!"
+        },
+        {
+          "description": "",
+          "id": "event://1773",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "",
+          "id": "event://1772",
+          "text": "Vz Databas"
+        }
+      ],
+      "text": "17\nKz Fred Delfgaauw - Broos\nAH Plien & Bianca - Harrekidee!\nZTR Diner in ZaanTheaterrestaurant\nVz Databas\nZaandam > 60 Technische Dienst > Algemeen DataBas\n09:00 - 17:30 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21245",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal *",
+          "tijd": "13:30 - 23:00"
+        }
+      ],
+      "date": "2025-04-18",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1777",
+          "text": "Kz Nora Akachar - Tamghart"
+        },
+        {
+          "description": "Status: Bevestigd\n\n13:30: Aankomst techniek\n19:30: Aanvang\n20:35: Einde\n22:05: Einde breek\n\nAantal techniek: 2+1\nAantal artiesten: 3\n\nAantal verkochte tickets: 111",
+          "id": "event://1776",
+          "text": "AH De Klokkenluider van Notre Dame (6+) - Theater Terra"
+        }
+      ],
+      "text": "18\nKz Nora Akachar - Tamghart\nAH De Klokkenluider van Notre Dame (6+) - Theater Terra\nZaandam > 60 Technische Dienst > Grote zaal *\n13:30 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21249",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "14:00 - 23:00"
+        }
+      ],
+      "date": "2025-04-19",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1780",
+          "text": "Kz Anne Neuteboom - En dan nu Anne Neuteboom"
+        },
+        {
+          "description": "Status: Bevestigd\n\n14:00: Aankomst techniek\n17:00: Aankomst gezelschap\n20:00: Aanvang\n21:30: Breek\n22:30: Breek\n\nAantal verkochte tickets: 862",
+          "id": "event://1779",
+          "text": "AH Rayen Panday - Karma"
+        },
+        {
+          "description": "",
+          "id": "event://1778",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "19\nKz Anne Neuteboom - En dan nu Anne Neuteboom\nAH Rayen Panday - Karma\nZTR Diner in ZaanTheaterrestaurant\nZaandam > 60 Technische Dienst > Grote zaal\n14:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-04-20",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1781",
+          "text": "GEANNULEERD - Kz Rappe en de Rots (4+) - Tg. Winterberg"
+        }
+      ],
+      "text": "20\nGEANNULEERD - Kz Rappe en de Rots (4+) - Tg. Winterberg"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25167",
+          "text": "Feestdagverlof"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-04-21",
+      "events": [],
+      "text": "21\nFeestdagverlof"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21265",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-04-22",
+      "events": [
+        {
+          "description": "",
+          "id": "event://2021",
+          "text": "Vz TD overleg"
+        }
+      ],
+      "text": "22\nVz TD overleg\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-04-23",
+      "events": [
+        {
+          "description": "",
+          "id": "event://2049",
+          "text": "AH Nieuw evenement"
+        }
+      ],
+      "text": "23\nAH Nieuw evenement"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21324",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "14:00 - 23:00"
+        }
+      ],
+      "date": "2025-04-24",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n14:00: Aankomst techniek\n16:00: Aankomst gezelschap\n20:00: Aanvang\n21:30: Einde\n\nAantal techniek: 3\nAantal artiesten: 1\n\nAantal verkochte tickets: 784\nAantal gereserveerde kaarten: 5",
+          "id": "event://1802",
+          "text": "AH Alex Ploeg - Unplugged"
+        },
+        {
+          "description": "",
+          "id": "event://1801",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "",
+          "id": "event://2040",
+          "text": "15:00 THB: Boekpresentatie"
+        }
+      ],
+      "text": "24\nAH Alex Ploeg - Unplugged\nZTR Diner in ZaanTheaterrestaurant\n15:00 THB: Boekpresentatie\nZaandam > 60 Technische Dienst > Grote zaal\n14:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-04-25",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1806",
+          "text": "AH Koningsnacht"
+        }
+      ],
+      "text": "25\nAH Koningsnacht"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-04-26",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1807",
+          "text": "AH Koningsdag"
+        }
+      ],
+      "text": "26\nAH Koningsdag"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-04-27",
+      "events": [],
+      "text": "27"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21718",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "11:00 - 23:00"
+        }
+      ],
+      "date": "2025-04-28",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n20:00: Aanvang\n\nAantal verkochte tickets: 789\nAantal gereserveerde kaarten: 2",
+          "id": "event://1809",
+          "text": "AH Najib Amhali - 30 jaar on stage"
+        },
+        {
+          "description": "",
+          "id": "event://1810",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "28\nAH Najib Amhali - 30 jaar on stage\nZTR Diner in ZaanTheaterrestaurant\nZaandam > 60 Technische Dienst > Grote zaal\n11:00 - 23:00 (150 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21721",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal *",
+          "tijd": "15:00 - 23:00"
+        }
+      ],
+      "date": "2025-04-29",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n20:00: Aanvang\n\nAantal verkochte tickets: 769\nAantal gereserveerde kaarten: 3",
+          "id": "event://1814",
+          "text": "AH Najib Amhali - 30 jaar on stage"
+        },
+        {
+          "description": "",
+          "id": "event://1815",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "",
+          "id": "event://1816",
+          "text": "Kz De vrienden van Jan hebben een Rot-middag - Marjolein Meijers, Jakob Klaasse en band"
+        },
+        {
+          "description": "",
+          "id": "event://1817",
+          "text": "ZTR Dimi Lunch"
+        },
+        {
+          "description": "",
+          "id": "event://2047",
+          "text": "Vz MT overleg"
+        }
+      ],
+      "text": "29\nAH Najib Amhali - 30 jaar on stage\nZTR Diner in ZaanTheaterrestaurant\nKz De vrienden van Jan hebben een Rot-middag - Marjolein Meijers, Jakob Klaasse en band\nZTR Dimi Lunch\nVz MT overleg\nZaandam > 60 Technische Dienst > Grote zaal *\n15:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21724",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-04-30",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n13:00: Aankomst techniek\n20:00: Aanvang\n21:00: Pauze\n21:20: einde pauze\n22:05: Einde\n\nAantal techniek: 3\nAantal artiesten: 12\n\nAantal verkochte tickets: 225",
+          "id": "event://1820",
+          "text": "AH The African Mamas - The Big Five"
+        },
+        {
+          "description": "",
+          "id": "event://1821",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "",
+          "id": "event://1819",
+          "text": "Kz Klein, klein vogeltje (4+) - Lloydscompany"
+        },
+        {
+          "description": "",
+          "id": "event://2003",
+          "text": "foyr Randprogramma Klein, klein vogeltje"
+        }
+      ],
+      "text": "30\nAH The African Mamas - The Big Five\nZTR Diner in ZaanTheaterrestaurant\nKz Klein, klein vogeltje (4+) - Lloydscompany\nfoyr Randprogramma Klein, klein vogeltje\nZaandam > 60 Technische Dienst > Grote zaal\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-05-01",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1825",
+          "text": "AH Een levendige avond over De Overgang - Kerkhof & Kerkhof"
+        },
+        {
+          "description": "",
+          "id": "event://1870",
+          "text": "Vz Erfrechtplan"
+        },
+        {
+          "description": "",
+          "id": "event://1826",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "1\nAH Een levendige avond over De Overgang - Kerkhof & Kerkhof\nVz Erfrechtplan\nZTR Diner in ZaanTheaterrestaurant"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21732",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "09:00 - 19:00"
+        }
+      ],
+      "date": "2025-05-02",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n09:00: Aankomst techniek??\n12:30: Aankomst gezelschap\n15:00: Aanvang\n16:15: Einde\n17:15: Breek\n\nAantal verkochte tickets: 237\nAantal gereserveerde kaarten: 2",
+          "id": "event://1828",
+          "text": "AH De NEEhoorn (7+) - Iris Bakker, Dani\u00eblle Deddens e.a."
+        },
+        {
+          "description": "",
+          "id": "event://2002",
+          "text": "foyr Randprogramma meivakantie De NEEhoorn"
+        }
+      ],
+      "text": "2\nAH De NEEhoorn (7+) - Iris Bakker, Dani\u00eblle Deddens e.a.\nfoyr Randprogramma meivakantie De NEEhoorn\nZaandam > 60 Technische Dienst > Grote zaal\n09:00 - 19:00 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21742",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal *",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-05-03",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n14:00: Aankomst techniek\n16:00: Aankomst gezelschap\n20:30: Aanvang\n22:00: Einde\n23:00: Breek\n\nAantal techniek: 2\nAantal artiesten: 2\n\nAantal verkochte tickets: 25",
+          "id": "event://1830",
+          "text": "Kz Bolder & Van Santen - Noem het een huwelijk"
+        },
+        {
+          "description": "",
+          "id": "event://1829",
+          "text": "AH Josephine B. - Met Channah Hewitt e.a."
+        },
+        {
+          "description": "",
+          "id": "event://1831",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "",
+          "id": "event://2014",
+          "text": "Vz Revue Workshop Josephine B."
+        }
+      ],
+      "text": "3\nKz Bolder & Van Santen - Noem het een huwelijk\nAH Josephine B. - Met Channah Hewitt e.a.\nZTR Diner in ZaanTheaterrestaurant\nVz Revue Workshop Josephine B.\nZaandam > 60 Technische Dienst > Kleine zaal *\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-05-04",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1832",
+          "text": "Kz Theater na de Dam: Bevroren tranen - Maarten Peters"
+        },
+        {
+          "description": "",
+          "id": "event://1833",
+          "text": "AH Theater na de Dam"
+        }
+      ],
+      "text": "4\nKz Theater na de Dam: Bevroren tranen - Maarten Peters\nAH Theater na de Dam"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25200",
+          "text": "Feestdagverlof"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-05-05",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1835",
+          "text": "AH Bevrijdingsdag/Nationale Feestdag!"
+        },
+        {
+          "description": "",
+          "id": "event://1834",
+          "text": "Kz Bevrijdingsdag"
+        }
+      ],
+      "text": "5\nAH Bevrijdingsdag/Nationale Feestdag!\nKz Bevrijdingsdag\nFeestdagverlof"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-05-06",
+      "events": [],
+      "text": "6"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21762",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-05-07",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1839",
+          "text": "AH BV Vastgoed - Toneelgroep Maastricht"
+        },
+        {
+          "description": "",
+          "id": "event://1840",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "7\nAH BV Vastgoed - Toneelgroep Maastricht\nZTR Diner in ZaanTheaterrestaurant\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21752",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-05-08",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1846",
+          "text": "Kz Nina de la Parra - Nina speelt"
+        },
+        {
+          "description": "Status: Bevestigd\n\n12:00: Aankomst techniek\n20:00: Aanvang\n21:30: Einde\n\nAantal techniek: 3\nAantal artiesten: 1\n\nAantal verkochte tickets: 847",
+          "id": "event://1845",
+          "text": "AH Tim Fransen - Onbekommerd"
+        },
+        {
+          "description": "",
+          "id": "event://1844",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "8\nKz Nina de la Parra - Nina speelt\nAH Tim Fransen - Onbekommerd\nZTR Diner in ZaanTheaterrestaurant\nZaandam > 60 Technische Dienst > Grote zaal\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21765",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-05-09",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1847",
+          "text": "Kz Ons Moeder - Evrim Akyigit en Sabine Beens"
+        },
+        {
+          "description": "",
+          "id": "event://1848",
+          "text": "GEANNULEERD - AH Jim Deddes - De Joardy Show"
+        },
+        {
+          "description": "",
+          "id": "event://1849",
+          "text": "GEANNULEERD - ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "9\nKz Ons Moeder - Evrim Akyigit en Sabine Beens\nGEANNULEERD - AH Jim Deddes - De Joardy Show\nGEANNULEERD - ZTR Diner in ZaanTheaterrestaurant\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21327",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-05-10",
+      "events": [
+        {
+          "description": "",
+          "id": "event://2045",
+          "text": "ZTR Nagesprek Metgezwel in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "",
+          "id": "event://1853",
+          "text": "Kz REINDIER & Sander Plukaard - Metgezwel"
+        },
+        {
+          "description": "Status: Bevestigd\n\n13:00: Aankomst techniek\n20:00: Aanvang\n20:55: Pauze\n22:10: Einde\n\nAantal verkochte tickets: 837",
+          "id": "event://1852",
+          "text": "AH Bee Gees by Maincourse"
+        },
+        {
+          "description": "Status: Geannuleerd\n\n20:00: Aanvang",
+          "id": "event://1851",
+          "text": "GEANNULEERD - AH Giovanca - Motown Classics"
+        },
+        {
+          "description": "",
+          "id": "event://1850",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "10\nZTR Nagesprek Metgezwel in ZaanTheaterrestaurant\nKz REINDIER & Sander Plukaard - Metgezwel\nAH Bee Gees by Maincourse\nGEANNULEERD - AH Giovanca - Motown Classics\nZTR Diner in ZaanTheaterrestaurant\nZaandam > 60 Technische Dienst > Grote zaal\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21761",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "08:30 - 18:30"
+        }
+      ],
+      "date": "2025-05-11",
+      "events": [
+        {
+          "description": "Status: Succesoptie\n\n16:00: Aanvang",
+          "id": "event://1854",
+          "text": "AH Fien & Teun de musical - Circus op de Boerderij (2+)"
+        },
+        {
+          "description": "Status: Bevestigd\n\n07:30: Aankomst techniek\n13:30: Aanvang\n14:25: Einde\n\nAantal techniek: 3\nAantal artiesten: 4\n\nAantal verkochte tickets: 245\nAantal gereserveerde kaarten: 3",
+          "id": "event://1855",
+          "text": "AH Fien & Teun de musical - Circus op de Boerderij (2+)"
+        }
+      ],
+      "text": "11\nAH Fien & Teun de musical - Circus op de Boerderij (2+)\nAH Fien & Teun de musical - Circus op de Boerderij (2+)\nZaandam > 60 Technische Dienst > Grote zaal\n08:30 - 18:30 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21976",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-05-12",
+      "events": [],
+      "text": "12\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-05-13",
+      "events": [],
+      "text": "13"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21626",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-05-14",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n13:00: Aankomst techniek\n17:00: Aankomst gezelschap\n20:00: Aanvang\n21:40: Pauze\n23:05: Einde\n\nAantal techniek: 3\nAantal artiesten: 10\n\nAantal verkochte tickets: 170",
+          "id": "event://1859",
+          "text": "AH Cyrano - Jeroen Spitzenberger, Keanu Visscher e.a."
+        },
+        {
+          "description": "",
+          "id": "event://1858",
+          "text": "Kz Talentenklas 2025"
+        },
+        {
+          "description": "",
+          "id": "event://1860",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "14\nAH Cyrano - Jeroen Spitzenberger, Keanu Visscher e.a.\nKz Talentenklas 2025\nZTR Diner in ZaanTheaterrestaurant\nZaandam > 60 Technische Dienst > Grote zaal\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25618",
+          "text": "Onbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-05-15",
+      "events": [],
+      "text": "15\nOnbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21635",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-05-16",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1865",
+          "text": "GEANNULEERD - Kz Laat me leven - Theater Rast"
+        },
+        {
+          "description": "Status: Bevestigd\n\n20:00: Aanvang\n\nAantal verkochte tickets: 232",
+          "id": "event://1866",
+          "text": "AH Rob & Emiel - Best of..."
+        },
+        {
+          "description": "",
+          "id": "event://1867",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "16\nGEANNULEERD - Kz Laat me leven - Theater Rast\nAH Rob & Emiel - Best of...\nZTR Diner in ZaanTheaterrestaurant\nZaandam > 60 Technische Dienst > Grote zaal\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-05-17",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1891",
+          "text": "Kz Rasti Rostelli"
+        },
+        {
+          "description": "",
+          "id": "event://1868",
+          "text": "AH Rou\u00e9 Verveer - Op eigen risico"
+        },
+        {
+          "description": "",
+          "id": "event://1869",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "17\nKz Rasti Rostelli\nAH Rou\u00e9 Verveer - Op eigen risico\nZTR Diner in ZaanTheaterrestaurant"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-05-18",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1914",
+          "text": "AH Bouwdag MAX"
+        }
+      ],
+      "text": "18\nAH Bouwdag MAX"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-05-19",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1872",
+          "text": "AH MAX Ledendag"
+        },
+        {
+          "description": "",
+          "id": "event://1873",
+          "text": "foyr MAX Ledendag"
+        }
+      ],
+      "text": "19\nAH MAX Ledendag\nfoyr MAX Ledendag"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21984",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-05-20",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1876",
+          "text": "AH Pieter Derks - Ja, leuk"
+        },
+        {
+          "description": "",
+          "id": "event://1877",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "Status: Bevestigd\n\n14:00: Aanvang\n\nAantal verkochte tickets: 193",
+          "id": "event://1875",
+          "text": "Kz Katell - Aujourd'hui Paris"
+        },
+        {
+          "description": "",
+          "id": "event://1874",
+          "text": "ZTR Dimi Lunch"
+        }
+      ],
+      "text": "20\nAH Pieter Derks - Ja, leuk\nZTR Diner in ZaanTheaterrestaurant\nKz Katell - Aujourd'hui Paris\nZTR Dimi Lunch\nZaandam > 60 Technische Dienst > Kleine zaal\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21988",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-05-21",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n20:00: Aanvang\n\nAantal verkochte tickets: 840",
+          "id": "event://1878",
+          "text": "AH Theo Maassen - Onbegonnen Werk"
+        }
+      ],
+      "text": "21\nAH Theo Maassen - Onbegonnen Werk\nZaandam > 60 Technische Dienst > Grote zaal\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-05-22",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1880",
+          "text": "Kz Musa - Ik ben Musa"
+        },
+        {
+          "description": "",
+          "id": "event://1879",
+          "text": "AH Bouw Danzzin -Krachtstroom"
+        }
+      ],
+      "text": "22\nKz Musa - Ik ben Musa\nAH Bouw Danzzin -Krachtstroom"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28433",
+          "text": "beschikbaar Wov AH"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://21997",
+          "text": "Zaandam > 60 Technische Dienst > Kleine zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-05-23",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n15:00: Aankomst techniek\n20:30: Aanvang\n22:10: Einde\n23:00: Breek\n\nAantal verkochte tickets: 72",
+          "id": "event://1882",
+          "text": "Kz Bakker & Bakker - Ben je bezopen?"
+        },
+        {
+          "description": "",
+          "id": "event://1881",
+          "text": "ZTR E&M bruiloft"
+        },
+        {
+          "description": "",
+          "id": "event://1988",
+          "text": "foyr plechtigheid bruiloft E&M"
+        },
+        {
+          "description": "",
+          "id": "event://1883",
+          "text": "AH Montage DanZin repetite"
+        }
+      ],
+      "text": "23\nKz Bakker & Bakker - Ben je bezopen?\nZTR E&M bruiloft\nfoyr plechtigheid bruiloft E&M\nAH Montage DanZin repetite\nZaandam > 60 Technische Dienst > Kleine zaal\n13:00 - 23:00 (120 min. pauze)\nbeschikbaar Wov AH"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://28432",
+          "text": "beschikbaar Wov AH"
+        }
+      ],
+      "assignments": [
+        {
+          "id": "assignment://22004",
+          "text": "Zaandam > 60 Technische Dienst > Foyer",
+          "tijd": "09:00 - 17:30"
+        }
+      ],
+      "date": "2025-05-24",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1951",
+          "text": "AH DanZin - The Great Escape"
+        },
+        {
+          "description": "",
+          "id": "event://1934",
+          "text": "Vz Brijder Preventie - (Verslavingszorg)"
+        },
+        {
+          "description": "",
+          "id": "event://1945",
+          "text": "Kz Leontien van Moorsel - Leontienhuis"
+        },
+        {
+          "description": "",
+          "id": "event://1932",
+          "text": "Vz Blijf Groep - (Over huiselijk geweld)"
+        },
+        {
+          "description": "",
+          "id": "event://1938",
+          "text": "Vz Stichting Ontdec - (Opleidingscentrum voor jongeren)"
+        },
+        {
+          "description": "",
+          "id": "event://1949",
+          "text": "Kz Mike van der Velden - Wij zijn BROER!"
+        },
+        {
+          "description": "",
+          "id": "event://1939",
+          "text": "Vz Mantelzorgmakelaar - (Mantelzorgondersteuning)"
+        },
+        {
+          "description": "",
+          "id": "event://1935",
+          "text": "Vz Anna\u2019s Huis - (Ondersteuning voor kankerpati\u00ebnt)"
+        },
+        {
+          "description": "",
+          "id": "event://1947",
+          "text": "Kz Karin Bloemen"
+        },
+        {
+          "description": "",
+          "id": "event://1931",
+          "text": "Vz De Federatie Geweldsmisdrijven - (Ondersteuning achterblijvers na geweldsmisdrijven)"
+        },
+        {
+          "description": "",
+          "id": "event://1933",
+          "text": "Vz Blijf Groep - (Over huiselijk geweld)"
+        },
+        {
+          "description": "",
+          "id": "event://1944",
+          "text": "Kz Leontien van Moorsel - Leontienhuis"
+        },
+        {
+          "description": "",
+          "id": "event://1930",
+          "text": "Vz De Federatie Geweldsmisdrijven - (Ondersteuning achterblijvers na geweldsmisdrijven)"
+        },
+        {
+          "description": "",
+          "id": "event://1936",
+          "text": "Vz Anna\u2019s Huis - (Ondersteuning voor kankerpati\u00ebnt)"
+        },
+        {
+          "description": "",
+          "id": "event://1946",
+          "text": "Kz Fieke Opdam - Team Kim"
+        },
+        {
+          "description": "",
+          "id": "event://1941",
+          "text": "Vz Brijder Preventie - (Verslavingszorg)"
+        },
+        {
+          "description": "",
+          "id": "event://1942",
+          "text": "Vz De Zaanse Regenboog"
+        },
+        {
+          "description": "",
+          "id": "event://1948",
+          "text": "Kz Mike van der Velden - Wij zijn BROER!"
+        },
+        {
+          "description": "",
+          "id": "event://1940",
+          "text": "Vz Mantelzorgmakelaar - (Mantelzorgondersteuning)"
+        },
+        {
+          "description": "",
+          "id": "event://1889",
+          "text": "AH DanZin - The Great Escape"
+        },
+        {
+          "description": "",
+          "id": "event://1937",
+          "text": "Vz Stichting Ontdec - (Opleidingscentrum voor jongeren)"
+        },
+        {
+          "description": "",
+          "id": "event://1953",
+          "text": "Kz Krachtstroomfestival (website)"
+        },
+        {
+          "description": "",
+          "id": "event://1952",
+          "text": "Vz Krachtstroomfestival (website)"
+        },
+        {
+          "description": "",
+          "id": "event://1950",
+          "text": "Kz Karin Bloemen"
+        },
+        {
+          "description": "",
+          "id": "event://1943",
+          "text": "Vz Dalisay recovery - (Regionaal inloophuis eetstoornissen)"
+        },
+        {
+          "description": "",
+          "id": "event://2044",
+          "text": "ZTR Safe Space"
+        },
+        {
+          "description": "Status: Bevestigd",
+          "id": "event://2038",
+          "text": "foyr Krachtstroom"
+        }
+      ],
+      "text": "24\nAH DanZin - The Great Escape\nVz Brijder Preventie - (Verslavingszorg)\nKz Leontien van Moorsel - Leontienhuis\nVz Blijf Groep - (Over huiselijk geweld)\nVz Stichting Ontdec - (Opleidingscentrum voor jongeren)\nKz Mike van der Velden - Wij zijn BROER!\nVz Mantelzorgmakelaar - (Mantelzorgondersteuning)\nVz Anna\u2019s Huis - (Ondersteuning voor kankerpati\u00ebnt)\nKz Karin Bloemen\nVz De Federatie Geweldsmisdrijven - (Ondersteuning achterblijvers na geweldsmisdrijven)\nVz Blijf Groep - (Over huiselijk geweld)\nKz Leontien van Moorsel - Leontienhuis\nVz De Federatie Geweldsmisdrijven - (Ondersteuning achterblijvers na geweldsmisdrijven)\nVz Anna\u2019s Huis - (Ondersteuning voor kankerpati\u00ebnt)\nKz Fieke Opdam - Team Kim\nVz Brijder Preventie - (Verslavingszorg)\nVz De Zaanse Regenboog\nKz Mike van der Velden - Wij zijn BROER!\nVz Mantelzorgmakelaar - (Mantelzorgondersteuning)\nAH DanZin - The Great Escape\nVz Stichting Ontdec - (Opleidingscentrum voor jongeren)\nKz Krachtstroomfestival (website)\nVz Krachtstroomfestival (website)\nKz Karin Bloemen\nVz Dalisay recovery - (Regionaal inloophuis eetstoornissen)\nZTR Safe Space\nfoyr Krachtstroom\nZaandam > 60 Technische Dienst > Foyer\n09:00 - 17:30 (30 min. pauze)\nbeschikbaar Wov AH"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25620",
+          "text": "Onbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-05-25",
+      "events": [],
+      "text": "25\nOnbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://22012",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "10:00 - 22:00"
+        }
+      ],
+      "date": "2025-05-26",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n20:00: Aanvang (start)\n21:30: Aanvang (stop)\n\nAantal verkochte tickets: 257",
+          "id": "event://1892",
+          "text": "AH Seizoenspresentatie 2025-2026"
+        }
+      ],
+      "text": "26\nRuilverzoek goedgekeurd door Bj\u00f6rn Kok, wachtend op planner\nAH Seizoenspresentatie 2025-2026\nZaandam > 60 Technische Dienst > Grote zaal\n10:00 - 22:00 (150 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-05-27",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1893",
+          "text": "AH Presentatie Theater op de dinsdag middag seizoen 25/26"
+        },
+        {
+          "description": "",
+          "id": "event://2046",
+          "text": "foyr Start Verkoop Vrienden"
+        }
+      ],
+      "text": "27\nAH Presentatie Theater op de dinsdag middag seizoen 25/26\nfoyr Start Verkoop Vrienden"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://22030",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-05-28",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1894",
+          "text": "GEANNULEERD - AH n00b - nieuw programma"
+        }
+      ],
+      "text": "28\nGEANNULEERD - AH n00b - nieuw programma\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25235",
+          "text": "Feestdagverlof"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-05-29",
+      "events": [],
+      "text": "29\nFeestdagverlof"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://22007",
+          "text": "Zaandam > 60 Technische Dienst > Onderhoud",
+          "tijd": "10:00 - 17:30"
+        }
+      ],
+      "date": "2025-05-30",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1901",
+          "text": "AH SDC"
+        },
+        {
+          "description": "",
+          "id": "event://1920",
+          "text": "Vz Kleedruimte SDC"
+        },
+        {
+          "description": "",
+          "id": "event://1899",
+          "text": "Kz Kleedkamer SDC"
+        }
+      ],
+      "text": "30\nAH SDC\nVz Kleedruimte SDC\nKz Kleedkamer SDC\nZaandam > 60 Technische Dienst > Onderhoud\n10:00 - 17:30 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21339",
+          "text": "Zaandam > 60 Technische Dienst > Foyer",
+          "tijd": "19:00 - 23:00"
+        }
+      ],
+      "date": "2025-05-31",
+      "events": [
+        {
+          "description": "Status: Optie\n\n19:00: Aankomst techniek\n21:20: Start\n22:20: Einde\n23:20: Breek",
+          "id": "event://1921",
+          "text": "foyr Afterparty SDC"
+        },
+        {
+          "description": "",
+          "id": "event://1895",
+          "text": "AH SDC"
+        },
+        {
+          "description": "",
+          "id": "event://1900",
+          "text": "AH SDC"
+        },
+        {
+          "description": "",
+          "id": "event://1919",
+          "text": "Vz Kleedruimte SDC"
+        },
+        {
+          "description": "",
+          "id": "event://1898",
+          "text": "Kz Kleedkamer SDC"
+        }
+      ],
+      "text": "31\nfoyr Afterparty SDC\nAH SDC\nAH SDC\nVz Kleedruimte SDC\nKz Kleedkamer SDC\nZaandam > 60 Technische Dienst > Foyer\n19:00 - 23:00 (0 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://22017",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "07:30 - 20:00"
+        }
+      ],
+      "date": "2025-06-01",
+      "events": [
+        {
+          "description": "Status: Succesoptie\n\n07:30: Aankomst techniek\n16:00: Aanvang\n17:15: Einde\n19:00: Breek\n\nAantal techniek: 4\nAantal artiesten: 10",
+          "id": "event://1896",
+          "text": "AH De Kleine Zeemeermin (4+) - Met Sita Vermeulen, Wesley Florijn e.a"
+        },
+        {
+          "description": "",
+          "id": "event://1902",
+          "text": "Kz Turks Volksmuziekkoor"
+        },
+        {
+          "description": "Status: Bevestigd\n\n07:30: Aankomst techniek\n13:30: Aanvang\n14:45: Einde\n\nAantal techniek: 4\nAantal artiesten: 10\n\nAantal verkochte tickets: 492",
+          "id": "event://1897",
+          "text": "AH De Kleine Zeemeermin (4+) - Met Sita Vermeulen, Wesley Florijn e.a"
+        }
+      ],
+      "text": "1\nAH De Kleine Zeemeermin (4+) - Met Sita Vermeulen, Wesley Florijn e.a\nKz Turks Volksmuziekkoor\nAH De Kleine Zeemeermin (4+) - Met Sita Vermeulen, Wesley Florijn e.a\nZaandam > 60 Technische Dienst > Grote zaal\n07:30 - 20:00 (150 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-02",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1903",
+          "text": "foyr Start Reguliere verkoop"
+        }
+      ],
+      "text": "2\nfoyr Start Reguliere verkoop"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://21797",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "10:00 - 18:00"
+        }
+      ],
+      "date": "2025-06-03",
+      "events": [
+        {
+          "description": "Status: Bevestigd",
+          "id": "event://2017",
+          "text": "AH Doven systeem demo"
+        }
+      ],
+      "text": "3\nAH Doven systeem demo\nZaandam > 60 Technische Dienst > Grote zaal\n10:00 - 18:00 (30 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-04",
+      "events": [],
+      "text": "4"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://22066",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "13:00 - 23:00"
+        }
+      ],
+      "date": "2025-06-05",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1906",
+          "text": "Kz Micha Wertheim Nergens Anders"
+        },
+        {
+          "description": "Status: Bevestigd\n\n13:00: Aankomst techniek\n17:30: Aankomst gezelschap\n20:00: Aanvang\n22:00: Einde\n00:00: Breek\n\nAantal techniek: 4\nAantal artiesten: 6\n\nAantal verkochte tickets: 634\nAantal gereserveerde kaarten: 4",
+          "id": "event://1905",
+          "text": "AH De Verleiders: Bureau Buitenschot - Pierre Bokma, Linde van den Heuvel, Victor L\u00f6w e.a"
+        },
+        {
+          "description": "",
+          "id": "event://1907",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "5\nKz Micha Wertheim Nergens Anders\nAH De Verleiders: Bureau Buitenschot - Pierre Bokma, Linde van den Heuvel, Victor L\u00f6w e.a\nZTR Diner in ZaanTheaterrestaurant\nZaandam > 60 Technische Dienst > Grote zaal\n13:00 - 23:00 (120 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-06",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1909",
+          "text": "Kz Deng Boy - Kijk iets hier!"
+        },
+        {
+          "description": "",
+          "id": "event://1910",
+          "text": "AH Rock mee met Drs. P - Met Erik van Muiswinkel, Ivo de Wijs, Flip Noorman e.a"
+        },
+        {
+          "description": "",
+          "id": "event://1908",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "6\nKz Deng Boy - Kijk iets hier!\nAH Rock mee met Drs. P - Met Erik van Muiswinkel, Ivo de Wijs, Flip Noorman e.a\nZTR Diner in ZaanTheaterrestaurant"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://22040",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "10:00 - 22:00"
+        }
+      ],
+      "date": "2025-06-07",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n10:00: Bouwen Set (start)\n12:00: Aankomst leerlingen (portier aanwezig)\n12:30: Bouwen Set (stop)\n12:30: Lunch td (leerlingen bekijken toneel) (start)\n13:00: Lunch td (leerlingen bekijken toneel) (stop)\n13:00: Afmaken Techniek (start)\n13:00: Leerlingen warmen op in foyer (start)\n14:00: Afmaken Techniek (stop)\n14:00: Leerlingen warmen op in foyer (stop)\n14:00: Repetitie en standen maken (start)\n17:00: Repetitie en standen maken (stop)\n17:00: Diner Techniek (start)\n19:00: Diner Techniek (stop)\n19:00: Generale Repetitie (start)\n21:00: Generale Repetitie (stop)\n21:00: Standen maken (start)\n22:00: Standen maken (stop)",
+          "id": "event://1912",
+          "text": "AH Moving Harmony"
+        },
+        {
+          "description": "",
+          "id": "event://1913",
+          "text": "Kz Kleedkamer MH"
+        }
+      ],
+      "text": "7\nAH Moving Harmony\nKz Kleedkamer MH\nZaandam > 60 Technische Dienst > Grote zaal\n10:00 - 22:00 (150 min. pauze)"
+    },
+    {
+      "agenda": [],
+      "assignments": [
+        {
+          "id": "assignment://22048",
+          "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+          "tijd": "10:00 - 22:00"
+        }
+      ],
+      "date": "2025-06-08",
+      "events": [
+        {
+          "description": "Status: Bevestigd\n\n15:00: Correctieronde\n16:00: Show 2 deel 1 (start)\n17:00: Show 2 deel 1 (stop)\n17:00: Pauze (start)\n17:20: Pauze (stop)\n17:20: Show 2 Deel 2 (start)\n18:20: Show 2 Deel 2 (stop)\n\nAantal verkochte tickets: 26",
+          "id": "event://1918",
+          "text": "AH Moving Harmony - VS 2"
+        },
+        {
+          "description": "Status: Bevestigd\n\n09:30: portier aanwezig\n10:00: standen maken (start)\n10:30: standen maken (stop)\n10:30: buigen (start)\n11:30: buigen (stop)\n11:45: Zaal open\n12:00: Show 1 deel 1 (start)\n13:00: Show 1 deel 1 (stop)\n13:00: Pauze (start)\n13:20: Show 1 deel 2 (start)\n13:30: Pauze (stop)\n14:20: Show 1 deel 2 (stop)",
+          "id": "event://1917",
+          "text": "AH Moving Harmony - VS 1"
+        },
+        {
+          "description": "",
+          "id": "event://1916",
+          "text": "Kz Kleedkamer MH"
+        }
+      ],
+      "text": "8\nAH Moving Harmony - VS 2\nAH Moving Harmony - VS 1\nKz Kleedkamer MH\nZaandam > 60 Technische Dienst > Grote zaal\n10:00 - 22:00 (150 min. pauze)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25266",
+          "text": "Feestdagverlof"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-06-09",
+      "events": [],
+      "text": "9\nFeestdagverlof"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-10",
+      "events": [],
+      "text": "10"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-11",
+      "events": [
+        {
+          "description": "",
+          "id": "event://2043",
+          "text": "Vz Informatieavond \"Verbinding A8 A9\""
+        },
+        {
+          "description": "",
+          "id": "event://2036",
+          "text": "Kz Informatieavond \"Verbinding A8 A9\""
+        }
+      ],
+      "text": "11\nVz Informatieavond \"Verbinding A8 A9\"\nKz Informatieavond \"Verbinding A8 A9\""
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-12",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1923",
+          "text": "AH Jay Francis - Evolutie"
+        },
+        {
+          "description": "",
+          "id": "event://1922",
+          "text": "Kz NICKMS"
+        },
+        {
+          "description": "",
+          "id": "event://1924",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "12\nAH Jay Francis - Evolutie\nKz NICKMS\nZTR Diner in ZaanTheaterrestaurant"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25621",
+          "text": "Onbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-06-13",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1929",
+          "text": "AH Ashton Brothers - Brothers | Reprise"
+        },
+        {
+          "description": "",
+          "id": "event://1928",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "",
+          "id": "event://1926",
+          "text": "Vz Kleedruimte Jemi"
+        },
+        {
+          "description": "",
+          "id": "event://1927",
+          "text": "Kz Jemisquare - Bouwdag"
+        }
+      ],
+      "text": "13\nAH Ashton Brothers - Brothers | Reprise\nZTR Diner in ZaanTheaterrestaurant\nVz Kleedruimte Jemi\nKz Jemisquare - Bouwdag\nOnbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-14",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1957",
+          "text": "Kz Jemisquare - Voorstellingen"
+        },
+        {
+          "description": "",
+          "id": "event://1956",
+          "text": "Kz Jemisquare - Voorstellingen"
+        },
+        {
+          "description": "",
+          "id": "event://1958",
+          "text": "AH Juvat BOUWDAG"
+        },
+        {
+          "description": "",
+          "id": "event://1955",
+          "text": "Vz Kleedruimte Jemi"
+        }
+      ],
+      "text": "14\nKz Jemisquare - Voorstellingen\nKz Jemisquare - Voorstellingen\nAH Juvat BOUWDAG\nVz Kleedruimte Jemi"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-15",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1967",
+          "text": "AH Juvat Voorstelling"
+        },
+        {
+          "description": "",
+          "id": "event://2048",
+          "text": "AH Juvat Generale met publiek"
+        },
+        {
+          "description": "",
+          "id": "event://1966",
+          "text": "Kz Kleedkamer Juvat"
+        }
+      ],
+      "text": "15\nAH Juvat Voorstelling\nAH Juvat Generale met publiek\nKz Kleedkamer Juvat"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-16",
+      "events": [],
+      "text": "16"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-17",
+      "events": [],
+      "text": "17"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-18",
+      "events": [],
+      "text": "18"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-19",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1971",
+          "text": "Kz East Side bouwdag"
+        }
+      ],
+      "text": "19\nKz East Side bouwdag"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25622",
+          "text": "Onbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-06-20",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1972",
+          "text": "foyr Vrijwilligersfeest Zaankanters Voor Elkaar (ZVE)"
+        },
+        {
+          "description": "",
+          "id": "event://1994",
+          "text": "ZTR ZTR ruimte voor org. ZVE"
+        },
+        {
+          "description": "",
+          "id": "event://1974",
+          "text": "AH Dansschool Maaike"
+        },
+        {
+          "description": "",
+          "id": "event://1973",
+          "text": "Kz Kleedruimte Maaike"
+        }
+      ],
+      "text": "20\nfoyr Vrijwilligersfeest Zaankanters Voor Elkaar (ZVE)\nZTR ZTR ruimte voor org. ZVE\nAH Dansschool Maaike\nKz Kleedruimte Maaike\nOnbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-21",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1978",
+          "text": "AH Dansstudio Maaike"
+        },
+        {
+          "description": "",
+          "id": "event://1977",
+          "text": "Kz Kleedruimte Maaike"
+        }
+      ],
+      "text": "21\nAH Dansstudio Maaike\nKz Kleedruimte Maaike"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-22",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1980",
+          "text": "Kz East Side Voorstellingen"
+        },
+        {
+          "description": "",
+          "id": "event://1981",
+          "text": "Kz East Side Voorstellingen"
+        }
+      ],
+      "text": "22\nKz East Side Voorstellingen\nKz East Side Voorstellingen"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-23",
+      "events": [],
+      "text": "23"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-24",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1982",
+          "text": "AH Malle Babbe - de Rob de Nijs musical"
+        },
+        {
+          "description": "",
+          "id": "event://1983",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "",
+          "id": "event://1995",
+          "text": "Kz AH Finance"
+        }
+      ],
+      "text": "24\nAH Malle Babbe - de Rob de Nijs musical\nZTR Diner in ZaanTheaterrestaurant\nKz AH Finance"
+    },
+    {
+      "agenda": [],
+      "assignments": [],
+      "date": "2025-06-25",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1985",
+          "text": "AH Malle Babbe - de Rob de Nijs musical"
+        },
+        {
+          "description": "",
+          "id": "event://1987",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        },
+        {
+          "description": "",
+          "id": "event://1986",
+          "text": "Vz RvT vergadering"
+        }
+      ],
+      "text": "25\nAH Malle Babbe - de Rob de Nijs musical\nZTR Diner in ZaanTheaterrestaurant\nVz RvT vergadering"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25623",
+          "text": "Onbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-06-26",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1991",
+          "text": "AH ABBA The Music - Thank You For The Music"
+        },
+        {
+          "description": "",
+          "id": "event://1990",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ],
+      "text": "26\nAH ABBA The Music - Thank You For The Music\nZTR Diner in ZaanTheaterrestaurant\nOnbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25624",
+          "text": "Onbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-06-27",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1993",
+          "text": "AH Kirsten van Teijn - Jaloezie is een bitch"
+        },
+        {
+          "description": "",
+          "id": "event://1992",
+          "text": "AH Indien aanvraag graag overleg met sales/culturele verhuringen"
+        }
+      ],
+      "text": "27\nAH Kirsten van Teijn - Jaloezie is een bitch\nAH Indien aanvraag graag overleg met sales/culturele verhuringen\nOnbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25625",
+          "text": "Onbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-06-28",
+      "events": [
+        {
+          "description": "",
+          "id": "event://1997",
+          "text": "Kz Seksuele diversiteit in het dierenrijk - Charlotte Vermeulen en Maya van As"
+        },
+        {
+          "description": "",
+          "id": "event://1996",
+          "text": "ZTR Receptie Roze zaterdag 2025"
+        },
+        {
+          "description": "",
+          "id": "event://2050",
+          "text": "ZTR Bestuurlijk ontvangst Zaanstad"
+        },
+        {
+          "description": "",
+          "id": "event://2001",
+          "text": "Vz Roze zaterdag 2025"
+        },
+        {
+          "description": "",
+          "id": "event://2000",
+          "text": "AH Roze zaterdag film vertoning"
+        },
+        {
+          "description": "",
+          "id": "event://1999",
+          "text": "foyr Roze Zaterdag 2025"
+        },
+        {
+          "description": "",
+          "id": "event://1998",
+          "text": "Kz Roze Zaterdag 2025"
+        }
+      ],
+      "text": "28\nKz Seksuele diversiteit in het dierenrijk - Charlotte Vermeulen en Maya van As\nZTR Receptie Roze zaterdag 2025\nZTR Bestuurlijk ontvangst Zaanstad\nVz Roze zaterdag 2025\nAH Roze zaterdag film vertoning\nfoyr Roze Zaterdag 2025\nKz Roze Zaterdag 2025\nOnbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25626",
+          "text": "Onbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-06-29",
+      "events": [
+        {
+          "description": "",
+          "id": "event://2004",
+          "text": "AH Indien aanvraag graag overleg met sales/culturele verhuringen"
+        }
+      ],
+      "text": "29\nAH Indien aanvraag graag overleg met sales/culturele verhuringen\nOnbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+    },
+    {
+      "agenda": [
+        {
+          "id": "agenda://25627",
+          "text": "Onbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+        }
+      ],
+      "assignments": [],
+      "date": "2025-06-30",
+      "events": [
+        {
+          "description": "",
+          "id": "event://2005",
+          "text": "Kz Wat je wilt! Compaen blok 4"
+        }
+      ],
+      "text": "30\nKz Wat je wilt! Compaen blok 4\nOnbeschikbaar zie mail &quot;vragen over BHV, verlof dagen en werk kleding&quot; voorafgesproken tijdens solicitatie (onbehandeld)"
+    }
+  ],
+  "periods": [
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06"
+  ],
+  "shift": [
+    {
+      "date": "2025-04-22",
+      "description": "=== CODE GENERATED BELOW ===",
+      "end_date": "2025-04-22T17:30:00+02:00",
+      "id": "assignment://21265",
+      "start_date": "2025-04-22T10:00:00+02:00",
+      "title": "Onderhoud"
+    },
+    {
+      "date": "2025-04-24",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n14:00: Aankomst techniek\n16:00: Aankomst gezelschap\n20:00: Aanvang\n21:30: Einde\n\nAantal techniek: 3\nAantal artiesten: 1\n\nAantal verkochte tickets: 784\nAantal gereserveerde kaarten: 5",
+      "end_date": "2025-04-24T23:00:00+02:00",
+      "id": "assignment://21324",
+      "start_date": "2025-04-24T14:00:00+02:00",
+      "title": "AH Alex Ploeg - Unplugged"
+    },
+    {
+      "date": "2025-04-28",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n20:00: Aanvang\n\nAantal verkochte tickets: 789\nAantal gereserveerde kaarten: 2",
+      "end_date": "2025-04-28T23:00:00+02:00",
+      "id": "assignment://21718",
+      "start_date": "2025-04-28T11:00:00+02:00",
+      "title": "AH Najib Amhali - 30 jaar on stage"
+    },
+    {
+      "date": "2025-04-29",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n20:00: Aanvang\n\nAantal verkochte tickets: 769\nAantal gereserveerde kaarten: 3",
+      "end_date": "2025-04-29T23:00:00+02:00",
+      "id": "assignment://21721",
+      "start_date": "2025-04-29T15:00:00+02:00",
+      "title": "AH Najib Amhali - 30 jaar on stage"
+    },
+    {
+      "date": "2025-04-30",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n13:00: Aankomst techniek\n20:00: Aanvang\n21:00: Pauze\n21:20: einde pauze\n22:05: Einde\n\nAantal techniek: 3\nAantal artiesten: 12\n\nAantal verkochte tickets: 225",
+      "end_date": "2025-04-30T23:00:00+02:00",
+      "id": "assignment://21724",
+      "start_date": "2025-04-30T13:00:00+02:00",
+      "title": "AH The African Mamas - The Big Five"
+    },
+    {
+      "date": "2025-05-02",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n09:00: Aankomst techniek??\n12:30: Aankomst gezelschap\n15:00: Aanvang\n16:15: Einde\n17:15: Breek\n\nAantal verkochte tickets: 237\nAantal gereserveerde kaarten: 2",
+      "end_date": "2025-05-02T19:00:00+02:00",
+      "id": "assignment://21732",
+      "start_date": "2025-05-02T09:00:00+02:00",
+      "title": "AH De NEEhoorn (7+) - Iris Bakker, Dani\u00eblle Deddens e.a."
+    },
+    {
+      "date": "2025-05-03",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n14:00: Aankomst techniek\n16:00: Aankomst gezelschap\n20:30: Aanvang\n22:00: Einde\n23:00: Breek\n\nAantal techniek: 2\nAantal artiesten: 2\n\nAantal verkochte tickets: 25",
+      "end_date": "2025-05-03T23:00:00+02:00",
+      "id": "assignment://21742",
+      "start_date": "2025-05-03T13:00:00+02:00",
+      "title": "Kz Bolder & Van Santen - Noem het een huwelijk"
+    },
+    {
+      "date": "2025-05-07",
+      "description": "=== CODE GENERATED BELOW ===",
+      "end_date": "2025-05-07T17:30:00+02:00",
+      "id": "assignment://21762",
+      "start_date": "2025-05-07T10:00:00+02:00",
+      "title": "Onderhoud"
+    },
+    {
+      "date": "2025-05-08",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n12:00: Aankomst techniek\n20:00: Aanvang\n21:30: Einde\n\nAantal techniek: 3\nAantal artiesten: 1\n\nAantal verkochte tickets: 847",
+      "end_date": "2025-05-08T23:00:00+02:00",
+      "id": "assignment://21752",
+      "start_date": "2025-05-08T13:00:00+02:00",
+      "title": "AH Tim Fransen - Onbekommerd"
+    },
+    {
+      "date": "2025-05-09",
+      "description": "=== CODE GENERATED BELOW ===",
+      "end_date": "2025-05-09T17:30:00+02:00",
+      "id": "assignment://21765",
+      "start_date": "2025-05-09T10:00:00+02:00",
+      "title": "Onderhoud"
+    },
+    {
+      "date": "2025-05-10",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n13:00: Aankomst techniek\n20:00: Aanvang\n20:55: Pauze\n22:10: Einde\n\nAantal verkochte tickets: 837",
+      "end_date": "2025-05-10T23:00:00+02:00",
+      "id": "assignment://21327",
+      "start_date": "2025-05-10T13:00:00+02:00",
+      "title": "AH Bee Gees by Maincourse"
+    },
+    {
+      "date": "2025-05-11",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n07:30: Aankomst techniek\n13:30: Aanvang\n14:25: Einde\n\nAantal techniek: 3\nAantal artiesten: 4\n\nAantal verkochte tickets: 245\nAantal gereserveerde kaarten: 3",
+      "end_date": "2025-05-11T18:30:00+02:00",
+      "id": "assignment://21761",
+      "start_date": "2025-05-11T08:30:00+02:00",
+      "title": "AH Fien & Teun de musical - Circus op de Boerderij (2+)"
+    },
+    {
+      "date": "2025-05-12",
+      "description": "=== CODE GENERATED BELOW ===",
+      "end_date": "2025-05-12T17:30:00+02:00",
+      "id": "assignment://21976",
+      "start_date": "2025-05-12T10:00:00+02:00",
+      "title": "Onderhoud"
+    },
+    {
+      "date": "2025-05-14",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n13:00: Aankomst techniek\n17:00: Aankomst gezelschap\n20:00: Aanvang\n21:40: Pauze\n23:05: Einde\n\nAantal techniek: 3\nAantal artiesten: 10\n\nAantal verkochte tickets: 170",
+      "end_date": "2025-05-14T23:00:00+02:00",
+      "id": "assignment://21626",
+      "start_date": "2025-05-14T13:00:00+02:00",
+      "title": "AH Cyrano - Jeroen Spitzenberger, Keanu Visscher e.a."
+    },
+    {
+      "date": "2025-05-16",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n20:00: Aanvang\n\nAantal verkochte tickets: 232",
+      "end_date": "2025-05-16T23:00:00+02:00",
+      "id": "assignment://21635",
+      "start_date": "2025-05-16T13:00:00+02:00",
+      "title": "AH Rob & Emiel - Best of..."
+    },
+    {
+      "date": "2025-05-20",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n14:00: Aanvang\n\nAantal verkochte tickets: 193",
+      "end_date": "2025-05-20T23:00:00+02:00",
+      "id": "assignment://21984",
+      "start_date": "2025-05-20T13:00:00+02:00",
+      "title": "Kz Katell - Aujourd'hui Paris"
+    },
+    {
+      "date": "2025-05-21",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n20:00: Aanvang\n\nAantal verkochte tickets: 840",
+      "end_date": "2025-05-21T23:00:00+02:00",
+      "id": "assignment://21988",
+      "start_date": "2025-05-21T13:00:00+02:00",
+      "title": "AH Theo Maassen - Onbegonnen Werk"
+    },
+    {
+      "date": "2025-05-23",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n15:00: Aankomst techniek\n20:30: Aanvang\n22:10: Einde\n23:00: Breek\n\nAantal verkochte tickets: 72",
+      "end_date": "2025-05-23T23:00:00+02:00",
+      "id": "assignment://21997",
+      "start_date": "2025-05-23T13:00:00+02:00",
+      "title": "Kz Bakker & Bakker - Ben je bezopen?"
+    },
+    {
+      "date": "2025-05-24",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd",
+      "end_date": "2025-05-24T17:30:00+02:00",
+      "id": "assignment://22004",
+      "start_date": "2025-05-24T09:00:00+02:00",
+      "title": "foyr Krachtstroom"
+    },
+    {
+      "date": "2025-05-26",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n20:00: Aanvang (start)\n21:30: Aanvang (stop)\n\nAantal verkochte tickets: 257",
+      "end_date": "2025-05-26T22:00:00+02:00",
+      "id": "assignment://22012",
+      "start_date": "2025-05-26T10:00:00+02:00",
+      "title": "AH Seizoenspresentatie 2025-2026"
+    },
+    {
+      "date": "2025-05-28",
+      "description": "=== CODE GENERATED BELOW ===",
+      "end_date": "2025-05-28T17:30:00+02:00",
+      "id": "assignment://22030",
+      "start_date": "2025-05-28T10:00:00+02:00",
+      "title": "Onderhoud"
+    },
+    {
+      "date": "2025-05-30",
+      "description": "=== CODE GENERATED BELOW ===",
+      "end_date": "2025-05-30T17:30:00+02:00",
+      "id": "assignment://22007",
+      "start_date": "2025-05-30T10:00:00+02:00",
+      "title": "Onderhoud"
+    },
+    {
+      "date": "2025-05-31",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Optie\n\n19:00: Aankomst techniek\n21:20: Start\n22:20: Einde\n23:20: Breek",
+      "end_date": "2025-05-31T23:00:00+02:00",
+      "id": "assignment://21339",
+      "start_date": "2025-05-31T19:00:00+02:00",
+      "title": "foyr Afterparty SDC"
+    },
+    {
+      "date": "2025-06-01",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n07:30: Aankomst techniek\n13:30: Aanvang\n14:45: Einde\n\nAantal techniek: 4\nAantal artiesten: 10\n\nAantal verkochte tickets: 492",
+      "end_date": "2025-06-01T20:00:00+02:00",
+      "id": "assignment://22017",
+      "start_date": "2025-06-01T07:30:00+02:00",
+      "title": "AH De Kleine Zeemeermin (4+) - Met Sita Vermeulen, Wesley Florijn e.a"
+    },
+    {
+      "date": "2025-06-03",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd",
+      "end_date": "2025-06-03T18:00:00+02:00",
+      "id": "assignment://21797",
+      "start_date": "2025-06-03T10:00:00+02:00",
+      "title": "AH Doven systeem demo"
+    },
+    {
+      "date": "2025-06-05",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n13:00: Aankomst techniek\n17:30: Aankomst gezelschap\n20:00: Aanvang\n22:00: Einde\n00:00: Breek\n\nAantal techniek: 4\nAantal artiesten: 6\n\nAantal verkochte tickets: 634\nAantal gereserveerde kaarten: 4",
+      "end_date": "2025-06-05T23:00:00+02:00",
+      "id": "assignment://22066",
+      "start_date": "2025-06-05T13:00:00+02:00",
+      "title": "AH De Verleiders: Bureau Buitenschot - Pierre Bokma, Linde van den Heuv..."
+    },
+    {
+      "date": "2025-06-07",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n10:00: Bouwen Set (start)\n12:00: Aankomst leerlingen (portier aanwezig)\n12:30: Bouwen Set (stop)\n12:30: Lunch td (leerlingen bekijken toneel) (start)\n13:00: Lunch td (leerlingen bekijken toneel) (stop)\n13:00: Afmaken Techniek (start)\n13:00: Leerlingen warmen op in foyer (start)\n14:00: Afmaken Techniek (stop)\n14:00: Leerlingen warmen op in foyer (stop)\n14:00: Repetitie en standen maken (start)\n17:00: Repetitie en standen maken (stop)\n17:00: Diner Techniek (start)\n19:00: Diner Techniek (stop)\n19:00: Generale Repetitie (start)\n21:00: Generale Repetitie (stop)\n21:00: Standen maken (start)\n22:00: Standen maken (stop)",
+      "end_date": "2025-06-07T22:00:00+02:00",
+      "id": "assignment://22040",
+      "start_date": "2025-06-07T10:00:00+02:00",
+      "title": "AH Moving Harmony"
+    },
+    {
+      "date": "2025-06-08",
+      "description": "=== CODE GENERATED BELOW ===\nStatus: Bevestigd\n\n09:30: portier aanwezig\n10:00: standen maken (start)\n10:30: standen maken (stop)\n10:30: buigen (start)\n11:30: buigen (stop)\n11:45: Zaal open\n12:00: Show 1 deel 1 (start)\n13:00: Show 1 deel 1 (stop)\n13:00: Pauze (start)\n13:20: Show 1 deel 2 (start)\n13:30: Pauze (stop)\n14:20: Show 1 deel 2 (stop)",
+      "end_date": "2025-06-08T22:00:00+02:00",
+      "id": "assignment://22048",
+      "start_date": "2025-06-08T10:00:00+02:00",
+      "title": "AH Moving Harmony - VS 1"
+    }
+  ]
+}

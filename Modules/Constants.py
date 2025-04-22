@@ -8,7 +8,7 @@ class Constants():
   version = "v0.1.0 - Beta"
   appname = "Dycal"
 
-  zaantheaterColor = "#7a4689"
+  primary_color = "#03969c"
   background_color_primary = '#393534'
   background_color_secondary = "#4a4747"
 

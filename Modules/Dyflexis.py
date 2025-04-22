@@ -1,4 +1,5 @@
 import re
+from os import times_result
 
 import arrow
 from selenium import webdriver
@@ -12,7 +13,7 @@ from Exceptions.BadLoginException import BadLoginException
 from Modules.ConfigLand import ConfigLand
 from Modules.Constants import Constants
 from Modules.Logger import Logger
-from Modules.dataClasses import EventDataList, Period
+from Modules.dataClasses import EventDataObject, Period, EventDataList, EventDataShift, CustomTime
 
 
 class Dyflexis:
@@ -98,14 +99,13 @@ class Dyflexis:
     try:
       self.openChrome()
       self.login()
-      data = EventDataList()
+      eventData = EventDataObject()
       for period in periods:
         data = self.getRooster(
           period=period,
-          baseData=data
+          baseData=eventData
         )
       # progressbar 75 through 100
-      eventData = self.elementArrayToIcs(data)
     except Exception as e:
       self.driver.quit()
       self.driver = None
@@ -117,7 +117,7 @@ class Dyflexis:
     self.driver = None
     return eventData
 
-  def getRooster(self, period=None, baseData=None):
+  def getRooster(self, period=None, baseData: EventDataObject = None):
     """
     rooster uitlezen en opslaan als bruikbare data
     :param period: als None pakken we deze maand
@@ -125,7 +125,7 @@ class Dyflexis:
     :return: eventData
     """
     if baseData is None:
-      baseData = EventDataList()
+      baseData = EventDataObject()
     Logger.getLogger(__name__).info('get rooster')
     startProgress = 1
     endProgress = 100
@@ -154,173 +154,139 @@ class Dyflexis:
       Logger.getLogger(__name__).info('\t\tWeek word uitgelezen')
       columns = row.find_elements(by=By.TAG_NAME, value='td')
       for column in columns:
+        eventDataList = EventDataList()
+        eventDataList.date = column.get_attribute('title')
+        eventDataList.text = column.text
+
         Logger.getLogger(__name__).info('\t\t\tKolom word uitgelezen met info:{}\t'.format(column.text[0:2]))
 
         # als de datum in het verleden ligt lezen we hem niet uit
-        startOfMonth = arrow.get(period.period, tzinfo=self.tz).replace(day=1, hour=0, minute=0, second=0)
-        endOfMonth = arrow.get(period.period, tzinfo=self.tz).shift(months=1, minutes=-1)
-        eventDate = arrow.get(column.get_attribute('title'), tzinfo=self.tz)
-
-        if startOfMonth > eventDate or endOfMonth < eventDate:
+        if self.check_is_current_month(period, column.get_attribute('title')):
           Logger.getLogger(__name__).warning(
-            '\t\t\t\t skipped: verkeerde periode. periode:{}, eventData: {}'.format(period.period, eventDate))
+            '\t\t\t\t skipped: verkeerde periode. periode:{}, eventData: {}'.format(period.period,
+                                                                                    column.get_attribute('title')))
           continue
 
-        ################ find assignments, aka diensten ################
-        assignments = column.find_elements(by=By.CLASS_NAME, value='ass')
-        assList = []
-        if len(assignments) != 0:
-          for assignment in assignments:
-            assignmentInnerDiv = assignment.find_element(by=By.TAG_NAME, value='div')
-            tijd = assignment.find_element(by=By.TAG_NAME, value='b')
-
-            assList.append({
-              "id": assignment.get_attribute('uo'),
-              "tijd": tijd.text,
-              "text": assignmentInnerDiv.text
-            })
-
-        # todo, scan ass list for shift en genereer hier al
         ################ find events aka shows in the day ################
-        events = column.find_elements(by=By.CLASS_NAME, value='evt')
-        eventList = []
-        if len(events) != 0:
-          for event in events:
-            # check if an assignment has this event
-            # alleen als het event een assignment heeft klikken we er op, anders is de omschrijving niet boeiend
-            description = ""
-            for assignement in assList:
-              tuplet = [item for item in self.LOCATION_NAMES if
-                        item[0].upper() in assignement['text'].upper()]
-              if len(tuplet) != 0:
-                if tuplet[0][1].upper() in event.text.upper():
-                  # click event to open info
-                  event.click()
-                  WebDriverWait(self.driver, 20).until(
-                    ec.visibility_of_element_located((By.CSS_SELECTOR, "div.c-rooster2.a-info")))
+        eventDataList = self.create_events_list(column.find_elements(by=By.CLASS_NAME, value='evt'), eventDataList)
 
-                  popup = self.driver.find_element(by=By.CSS_SELECTOR, value="div.c-rooster2.a-info")
-                  description = popup.find_elements(by=By.TAG_NAME, value='div')[2].text
-                  self.driver.find_element(by=By.CLASS_NAME, value='close-flux').click()
-                  WebDriverWait(self.driver, 20).until(
-                    ec.invisibility_of_element_located((By.CSS_SELECTOR, "div.c-rooster2.a-info")))
-
-            eventList.append({
-              "id": event.get_attribute('uo'),
-              "text": event.text,
-              'description': description
-            })
+        ################ find assignments, aka diensten ################
+        # dit moet na events omdat we meteen de shifts genereren
+        eventDataList = self.create_assignment_list(column.find_elements(by=By.CLASS_NAME, value='ass'), eventDataList)
 
         ################ find agenda aka gewerkte uren ################
-        agendas = column.find_elements(by=By.CLASS_NAME, value='agen')
-        aggList = []
-        if len(agendas) != 0:
-          for agenda in agendas:
-            aggList.append({"id": agenda.get_attribute('uo'), "text": agenda.text})
+        eventDataList = self.create_agenda_list(column.find_elements(by=By.CLASS_NAME, value='agen'), eventDataList)
 
-        baseData.list.append(
-          {
-            "date": column.get_attribute('title'),
-            "text": column.text,
-            "events": eventList,
-            'assignments': assList,
-            'agenda': aggList,
-          })
-        baseData.events = baseData.events + len(eventList)
-        baseData.assignments = baseData.assignments + len(assList)
-        baseData.agenda = baseData.agenda + len(aggList)
+        if len(eventDataList.assignments) > 0:
+          for assignment in eventDataList.assignments:
+            date = EventDataShift()
+            date.date =  arrow.get(eventDataList.date, tzinfo=Constants.timeZone).format('YYYY-MM-DD')
+            date.id =  assignment['id']
 
-        ##progress for column
+            date = arrow.get(eventDataList.date, tzinfo=Constants.timeZone)
+            isBeforeToday = not date > arrow.now().replace(hour=0, minute=0).shift(days=-1)
+            if isBeforeToday or assignment['text']=="" :
+              continue
 
-        # gedeeld door 7 omdat er 7 dagen in de week zijn
+            startTime = CustomTime.stringToText(assignment['tijd'][0:5])
+            startDate = arrow.get(eventDataList.date, tzinfo=Constants.timeZone).replace(hour=startTime.hour, minute=startTime.minute).format('YYYY-MM-DDTHH:mm:ss')
+            date.start_date = startDate
+            stopTime = CustomTime.stringToText(assignment['tijd'][8:13])
+            stopDateTime = arrow.get(eventDataList.date, tzinfo=Constants.timeZone).replace(hour=stopTime.hour,
+                                                                                         minute=stopTime.minute).format(
+              'YYYY-MM-DDTHH:mm:ss')
+            name, description = self.eventnameParser(eventDataList.events, assignment)
+            if name is None or description is None:
+              ##bij td is de preset Zaandam > 60 Technische Dienst > Grote zaal
+              search = [match.start() for match in re.finditer('>', assignment['text'])]
+              # get the index from the > and add 1 to it so its not showing
+              indexIs = search[len(search) - 1] + 1
+              name = assignment['text'][indexIs:].lstrip()
+              description = self.DESCRIPTION_PREFIX
+
+            date.end_date = stopDateTime
+            date.title =  name
+            date.description =  description
+
+        baseData.events = baseData.events + len(eventDataList.events)
+        baseData.assignments = baseData.assignments + len(eventDataList.assignments)
+        baseData.agenda = baseData.agenda + len(eventDataList.agenda)
+
         startProgress = startProgress + (progressRowCount)
         period.updateProgressBar(startProgress)
 
     period.updateProgressBar(endProgress)
     return baseData
 
-  def elementArrayToIcs(self, eventDataList: EventDataList):
-    Logger.getLogger(__name__).info('elements to array')
-    shift = []
-    tz = Constants.timeZone
-
-    for dates in eventDataList.list:
-
-      startDate = arrow.get(dates['date'], tzinfo=tz)
-      stopDate = arrow.get(dates['date'], tzinfo=tz)
-
-      # todo naar boven verplaatsen in de rangorde. dit is alleen belangrijk bij het genereren van de agenda items
-      isBeforeToday = not startDate > arrow.now().replace(hour=0, minute=0).shift(days=-1)
-      if(isBeforeToday):
-        continue
-      Logger.getLogger(__name__).info('start verwerking dag: {}'.format(dates['date']))
-      if dates['text'] == "":
-        continue
-        # todo check for null??
-      for assignments in dates['assignments']:
-        name = None
-        description = None
-        ##hier is er geen info van het event, mogelijk doordat dit niet goed gegaan is
-        if assignments['text'] == "" or assignments['tijd'] == '':
-          continue
-        ## start date and time ->"10:00 - 17:30"
-        start_time = assignments['tijd'][0:5]
-        start_hour = start_time[0:2]
-        start_minute = start_time[3:5]
-        Logger.getLogger(__name__).info(
-          '\twith date ' + start_time + " and times " + start_hour + " and sec " + start_minute)
-
-        startDate = startDate.replace(hour=int(start_hour), minute=int(start_minute))
-        print("\t" + startDate.format('YYYY-MM-DDTHH:mm:ss'))
-        # stop date and time
-        stop_time = assignments['tijd'][8:13]
-        stop_hour = stop_time[0:2]
-        stop_minute = stop_time[3:5]
-        stopDate = stopDate.replace(hour=int(stop_hour), minute=int(stop_minute))
-        # create name depending on what is in text
-
-        for event in dates['events']:
-          tempName, tempDescription = self.eventnameParser(event, assignments)
-          if tempName is not tempDescription is not None:
-            name = tempName
-            description = tempDescription
-
-        if name is None or description is None:
-          ##bij td is de preset Zaandam > 60 Technische Dienst > Grote zaal
-          search = [match.start() for match in re.finditer('>', assignments['text'])]
-          # get the index from the > and add 1 to it so its not showing
-          indexIs = search[len(search) - 1] + 1
-          name = assignments['text'][indexIs:].lstrip()
-          description = self.DESCRIPTION_PREFIX
-
-        shift.append({
-          'date': startDate.format('YYYY-MM-DD'),
-          "start_date": startDate.format('YYYY-MM-DDTHH:mm:ssZZ'),  # 20250321T090000Z
-          "end_date": stopDate.format('YYYY-MM-DDTHH:mm:ssZZ'),  # 20250321T170000Z
-          'title': name,
-          'description': description,
-          'id': assignments['id']
-        })
-
-    eventDataList.shift = shift
-    eventDataList.assignments = len(shift)
+  def create_agenda_list(self, agendaDyflexis, eventDataList: EventDataList):
+    if len(agendaDyflexis) != 0:
+      for agenda in agendaDyflexis:
+        eventDataList.agenda.append({"id": agenda.get_attribute('uo'), "text": agenda.text})
     return eventDataList
 
-  def eventnameParser(self, event, assignment):
-    # ik moet aan de hand van ass beslissen of ik een naam maak of niet
-    description = None
-    name = None
-    if "GEANNULEERD".upper() in event['text'].upper():
-      return name, description
-    # look in location names for the shift name
-    tuplet = [item for item in self.LOCATION_NAMES if
-              item[1].upper() in event['text'][0:5].upper()]
-    ### look in the event for the event search
-    if len(tuplet) != 0 and tuplet[0][0].upper() in assignment['text'].upper():
-      # pak de 2e waarde van de tuplet uit location names
-      name = event['text']
-      description = self.DESCRIPTION_PREFIX + "\n" + event['description']
-      if name is not None and len(name) > self.MAX_NAME_LENGTH:
-        name = name[0:self.MAX_NAME_LENGTH] + "..."
+  def create_events_list(self, eventsDyflexis, eventDataList: EventDataList):
+    if len(eventsDyflexis) != 0:
+      for event in eventsDyflexis:
+        # check if an assignment has this event
+        # alleen als het event een assignment heeft klikken we er op, anders is de omschrijving niet boeiend
+        description = ""
+        for assignement in eventDataList.assignments:
+          tuplet = [item for item in self.LOCATION_NAMES if
+                    item[0].upper() in assignement['text'].upper()]
+          if len(tuplet) != 0:
+            if tuplet[0][1].upper() in event.text.upper():
+              # click event to open info
+              event.click()
+              WebDriverWait(self.driver, 20).until(
+                ec.visibility_of_element_located((By.CSS_SELECTOR, "div.c-rooster2.a-info")))
+
+              popup = self.driver.find_element(by=By.CSS_SELECTOR, value="div.c-rooster2.a-info")
+              description = popup.find_elements(by=By.TAG_NAME, value='div')[2].text
+              self.driver.find_element(by=By.CLASS_NAME, value='close-flux').click()
+              WebDriverWait(self.driver, 20).until(
+                ec.invisibility_of_element_located((By.CSS_SELECTOR, "div.c-rooster2.a-info")))
+        eventDataList.events.append({
+          "id": event.get_attribute('uo'),
+          "text": event.text,
+          'description': description
+        })
+    return eventDataList
+
+  def check_is_current_month(self, period: Period, eventDate):
+    start_of_month = arrow.get(period.period, tzinfo=self.tz).replace(day=1, hour=0, minute=0, second=0)
+    end_of_month = arrow.get(period.period, tzinfo=self.tz).shift(months=1, minutes=-1)
+    event_date = arrow.get(eventDate, tzinfo=self.tz)
+    return start_of_month > event_date or end_of_month < event_date
+
+  def create_assignment_list(self, assignmentsDyflexis, eventDataList: EventDataList):
+    if len(assignmentsDyflexis) != 0:
+      for assignment in assignmentsDyflexis:
+        assignmentInnerDiv = assignment.find_element(by=By.TAG_NAME, value='div')
+        tijd = assignment.find_element(by=By.TAG_NAME, value='b')
+
+        eventDataList.assignments.append({
+          "id": assignment.get_attribute('uo'),
+          "tijd": tijd.text,
+          "text": assignmentInnerDiv.text
+        })
+    return eventDataList
+
+  def eventnameParser(self, events, assignment):
+    for event in events:
+      # ik moet aan de hand van ass beslissen of ik een naam maak of niet
+      description = None
+      name = None
+      if "GEANNULEERD".upper() in event['text'].upper():
+        return name, description
+      # look in location names for the shift name
+      tuplet = [item for item in self.LOCATION_NAMES if
+                item[1].upper() in event['text'][0:5].upper()]
+      ### look in the event for the event search
+      if len(tuplet) != 0 and tuplet[0][0].upper() in assignment['text'].upper():
+        # pak de 2e waarde van de tuplet uit location names
+        name = event['text']
+        description = self.DESCRIPTION_PREFIX + "\n" + event['description']
+        if name is not None and len(name) > self.MAX_NAME_LENGTH:
+          name = name[0:self.MAX_NAME_LENGTH] + "..."
 
     return name, description

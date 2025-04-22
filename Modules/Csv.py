@@ -2,14 +2,14 @@ import csv
 import re
 
 from Modules.Logger import Logger
-from Modules.dataClasses import EventDataList
+from Modules.dataClasses import EventDataObject
 
 
 class Csv():
   def __init__(self):
     pass
 
-  def parseData(self, eventData: EventDataList):
+  def parseData(self, eventData: EventDataObject):
     returnObject = []
     for day in eventData.list:
       date = day['date']
@@ -17,6 +17,7 @@ class Csv():
         data = returnCsvData(date=date)
         data.id = agenda['id']
         data.info = agenda['text']
+        data.type = 'agenda'
         pattern = re.compile(r"\d\d:\d\d\stot\s\d\d:\d\d", re.IGNORECASE)
         searchObject =  pattern.search( agenda['text'])
         if searchObject is not None:
@@ -30,6 +31,8 @@ class Csv():
         data.info = assignment['text']
         data.startTime = assignment['tijd'][0:5]
         data.stopTime = assignment['tijd'][8:13]
+        data.type = 'assignments'
+
         returnObject.append(data)
 
       for event in day['events']:
@@ -37,6 +40,8 @@ class Csv():
         data.id = event['id']
         data.name = event['text']
         data.info = event['description']
+        data.type = 'events'
+
         # data.startTime = event['tijd'][0:5]
         # data.stopTime = event['tijd'][8:13]
         returnObject.append(data)

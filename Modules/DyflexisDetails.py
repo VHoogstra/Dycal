@@ -5,18 +5,18 @@ from pprint import pprint
 import customtkinter as ctk
 
 from Modules.Constants import Constants
-from Modules.dataClasses import EventDataList
+from Modules.dataClasses import EventDataObject
 
 
 class DyflexisDetails(tk.Toplevel):
   eventData = None
-  def __init__(self, eventData:EventDataList):
+  def __init__(self, eventData:EventDataObject):
     tk.Toplevel.__init__(self)
     window_width = 500
     window_height = 400
 
     self.eventData = eventData
-
+    self.configure(background=Constants.primary_color)
     # get screen dimension
     screen_width = self.winfo_screenwidth()
     screen_height = self.winfo_screenheight()
@@ -30,11 +30,7 @@ class DyflexisDetails(tk.Toplevel):
 
     self.attributes("-topmost", False)
     self.title('Dyflexis Details')
-    self.master.configure(background=Constants.zaantheaterColor)
-    # self.resizable(False, False)
-    # frame = tk.Frame(self)
-    # frame.grid(column=0, row=0, sticky=tk.NSEW, padx=10, pady=10)
-    # frame.configure(background=Constants.zaantheaterColor)
+    self.master.configure(background=Constants.primary_color)
 
     self.rowconfigure(0,weight=1)
     self.columnconfigure(0,weight=1)

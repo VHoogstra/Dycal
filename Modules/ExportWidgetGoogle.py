@@ -31,10 +31,10 @@ class ExportWidgetGoogle(tk.Frame):
     icsInfo = tk.Message(self,
                          text=iscInfoText,
                          fg='white',
-                         bg=Constants.zaantheaterColor,
+                         bg=Constants.primary_color,
                          relief=tk.SUNKEN, anchor=tk.W,
                          width=360)
-    icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW, pady=5)
+    icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW)
 
     ctk.CTkButton(self, text='force login Google', command=self.forceLoginGoogle, cursor="hand2").grid(row=1, column=2,
                                                                                                        sticky=tk.NSEW,
@@ -56,10 +56,10 @@ class ExportWidgetGoogle(tk.Frame):
     self.feedbackMessageVar= tk.StringVar()
     self.feedbackMessage = tk.Label(self,
                                     textvariable=self.feedbackMessageVar,
-                         fg='white',
-                         bg=Constants.zaantheaterColor,
-                         relief=tk.SUNKEN, anchor=tk.W,justify="left"
-                        )
+                                    fg='white',
+                                    bg=Constants.primary_color,
+                                    relief=tk.SUNKEN, anchor=tk.W, justify="left"
+                                    )
     self.feedbackMessage.grid(row=5, column=0, columnspan=3, sticky=tk.NSEW)
 
     self.gui.update()

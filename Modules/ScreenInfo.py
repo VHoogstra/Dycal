@@ -35,7 +35,11 @@ class ScreenInfo(tk.Toplevel):
     frame.configure(background=self.background_color_primary)
 
     tk.Message(frame,
-               text="Deze applicatie is geschreven door Vincent Hoogstra in eigen tijd, Dyflexis zal altijd leidend blijven en het is mogelijk dat er bugs in de software staan.\n\nVragen, ideeen, inspiratie en bug meldingen kunnen naar me.vincentvandetechniek.nl\n\nBij bugs/problemen helpt het als het log bestand mee gestuurd word en de json files samen met een omschrijving van wat er word verwacht en wat er gebeurt. In de .json bestanden staat je werk agenda in data weggezet\n\nTips, features of suggesties? gooi het op de mail!",
+               text="Deze applicatie is geschreven door Vincent Hoogstra in eigen tijd, Dyflexis zal altijd leidend blijven."
+                    "Het is mogelijk dat er bugs in de software staan.\n\nVragen, ideeen, inspiratie en bug meldingen "
+                    "kunnen naar me.vincentvandetechniek.nl\n\nBij bugs/problemen helpt het als het log bestand mee gestuurd "
+                    "word en de json files samen met een omschrijving van wat er word verwacht en wat er gebeurt. In de .json "
+                    "bestanden staat je werk agenda in data weggezet\n\nTips, features of suggesties? gooi het op de mail!",
                fg='white', bg=self.background_color_secondary,
                justify=tk.LEFT,
                anchor=tk.W,
@@ -43,7 +47,7 @@ class ScreenInfo(tk.Toplevel):
                width=400,
                relief=tk.SUNKEN,
                ).grid(column=0, row=0, columnspan=3, sticky=tk.NSEW, padx=10, pady=10)
-    ctk.CTkButton(frame, text='Export Files', command=self.openFolder).grid(column=1, row=1)
+    ctk.CTkButton(frame, text='Open folder locatie', command=self.openFolder).grid(column=1, row=1)
 
     self.release = tk.Message(frame,
                               fg='white', bg=self.background_color_secondary,

@@ -22,10 +22,10 @@ class ExportWidgetCSV(tk.Frame):
     icsInfo = tk.Message(self,
                          text=iscInfoText,
                          fg='white',
-                         bg=Constants.zaantheaterColor,
+                         bg=Constants.primary_color,
                          relief=tk.SUNKEN, anchor=tk.W,
                          width=360)
-    icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW, pady=5)
+    icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW)
     ctk.CTkButton(self, text='ParseData', command=self.parseData).grid(row=1, column=0, sticky=tk.NSEW, pady=5, padx=10)
     ctk.CTkButton(self, text='export', command=self.storeData).grid(row=1, column=2, sticky=tk.NSEW, pady=5, padx=10)
 
@@ -38,7 +38,7 @@ class ExportWidgetCSV(tk.Frame):
   def parseData(self):
     try:
       self.returnData = Csv().parseData(self.gui.eventData)
-      self.feedback.configure(fg_color=Constants.zaantheaterColor, text_color='white', text="klaar met parsen van data",
+      self.feedback.configure(fg_color=Constants.primary_color, text_color='white', text="klaar met parsen van data",
                               padx=5, pady=5)
 
     except Exception as e:
@@ -54,7 +54,7 @@ class ExportWidgetCSV(tk.Frame):
       if csvLocation is None:  # asksaveasfile return `None` if dialog closed with "cancel".
         return
       Csv().exportToCsv(location=csvLocation, returnObject=self.returnData)
-      self.feedback.configure(fg_color=Constants.zaantheaterColor, text_color='white',
+      self.feedback.configure(fg_color=Constants.primary_color, text_color='white',
                               text='klaar met het genereren van de csv', padx=5, pady=5)
 
     except Exception as e:
