@@ -13,6 +13,7 @@ class ScreenPeriod(tk.Toplevel):
     window_width = 500
     window_height = 400
     self.periods = periods
+    self.configure(bg=Constants.background_color_primary)
 
     # get screen dimension
     screen_width = self.winfo_screenwidth()
@@ -27,11 +28,7 @@ class ScreenPeriod(tk.Toplevel):
 
     # self.attributes("-topmost", True)
     self.title('custom periode')
-    self.master.configure(background=Constants.zaantheaterColor)
-    # self.resizable(False, False)
-    # frame = tk.Frame(self)
-    # frame.grid(column=0, row=0, sticky=tk.NSEW, padx=10, pady=10)
-    # frame.configure(background=Constants.zaantheaterColor)
+    self.master.configure(background=Constants.primary_color)
     ctk.CTkLabel(self, text='van periode').grid(row=0, column=0, padx=5, pady=5)
     self.startPer = ctk.CTkEntry(self, placeholder_text="YYYY-MM")
     self.startPer.grid(row=1, column=0, padx=5, pady=5)
@@ -53,6 +50,7 @@ class ScreenPeriod(tk.Toplevel):
                   corner_radius=20, command=self.generatePeriodAfterLast).grid(row=4, column=2, padx=5,
                                                                             pady=5)
     self.frame = tk.Frame(self)
+    self.frame.configure(background=Constants.background_color_primary)
     self.frame.grid(row=5, column=0, columnspan=3, sticky=tk.NSEW, padx=5, pady=5)
     self.frame.columnconfigure(0, weight=1)
     self.frame.columnconfigure(1, weight=0)

@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
+import os
+import tkinter as tk
 
 from Modules.GUI import Gui
 from Modules.Logger import Logger
 from Modules.ScreenException import ScreenException
-
+import customtkinter as ctk
+from dotenv import load_dotenv
 
 def main():
+    load_dotenv()
+
     ######## Main #########
     Logger.getLogger(__name__).info(' ###\t\t\tapplication start\t\t\t###')
-
     try:
+        ctk.set_appearance_mode("dark")
         app = Gui()
         app.mainloop()
 

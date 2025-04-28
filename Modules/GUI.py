@@ -1,4 +1,5 @@
 import json
+import os
 import tkinter as tk
 import tkinter.ttk as ttk
 from pprint import pprint
@@ -14,7 +15,7 @@ from Modules.Logger import Logger
 from Modules.ScreenDebug import ScreenDebug
 from Modules.ScreenInfo import ScreenInfo
 from Modules.ScreenPeriod import ScreenPeriod
-from Modules.dataClasses import PeriodList, EventDataList
+from Modules.dataClasses import PeriodList, EventDataObject
 
 
 class Gui(tk.Frame):
@@ -58,8 +59,11 @@ class Gui(tk.Frame):
     self.master.rowconfigure(0,weight=1)
     self.master.columnconfigure(0,weight=1)
     titleString = '{}: {}'.format(Constants.appname, Constants.version)
-    if Constants.version != Constants.githubVersion():
-      titleString = titleString + "\t newer version available:{}".format(Constants.githubVersion())
+    try:
+      if Constants.version != Constants.githubVersion():
+        titleString = titleString + "\t newer version available:{}".format(Constants.githubVersion())
+    except:
+      pass
     self.master.title(titleString)
 
     # self.master.attributes("-topmost", True)
@@ -93,8 +97,6 @@ class Gui(tk.Frame):
     self.update()
     self.dyflexisMessage.config(wraplength=self.dyflexisFrame.winfo_width() - 35)
 
-    # self.openDebug('key')
-
   def closingInfoScreen(self):
     self.infoScreen.destroy()
     self.infoScreen = None
@@ -110,7 +112,7 @@ class Gui(tk.Frame):
     #todo hier moet een event listener op voor als we resizen
     self.mainFrame = ctk.CTkScrollableFrame(self, width=840, height=self.scrolWindowHeight)
     self.mainFrame.grid(column=0, row=0, sticky=tk.NSEW)
-    self.mainFrame.configure(fg_color=Constants.zaantheaterColor)
+    self.mainFrame.configure(fg_color=Constants.primary_color)
 
     self.mainFrame.columnconfigure([0, 1, 2], weight=1)
     self.mainFrame.rowconfigure(1, minsize=10)
@@ -124,8 +126,8 @@ class Gui(tk.Frame):
                                                       command=self.segmented_button_callback)
     self.segmentedButtonSave.grid(row=0, column=0, columnspan=5, sticky=tk.N + tk.W, padx=5, pady=5)
     # row 3
-    label = tk.Label(text='Dyflexis', fg="white", bg=Constants.zaantheaterColor, width=10, height=1, )
-    self.dyflexisFrame = tk.LabelFrame(self.mainFrame, labelwidget=label, bg=Constants.zaantheaterColor, padx=10,
+    label = tk.Label(text='Dyflexis', fg="white", bg=Constants.primary_color, width=10, height=1, )
+    self.dyflexisFrame = tk.LabelFrame(self.mainFrame, labelwidget=label, bg=Constants.primary_color, padx=10,
                                        pady=10)
     self.dyflexisFrame.grid(row=3, column=0, columnspan=3, sticky=tk.NSEW, padx=5, pady=5)
     self.dyflexisFrame.columnconfigure(0, weight=1)
@@ -168,12 +170,12 @@ class Gui(tk.Frame):
     self.dyflexisProgressFrame.grid(row=6, column=0, columnspan=3, sticky=tk.NSEW)
     self.dyflexisProgressFrame.columnconfigure(0, weight=0)
     self.dyflexisProgressFrame.columnconfigure(1, weight=1)
-    self.dyflexisProgressFrame.configure(bg=Constants.zaantheaterColor)
+    self.dyflexisProgressFrame.configure(bg=Constants.primary_color)
     self.dyflexisMessageVariable = tk.StringVar()
     self.dyflexisMessageVariable.set('Nog geen informatie bekend')
     self.dyflexisMessage = tk.Label(self.dyflexisFrame,
                                     textvariable=self.dyflexisMessageVariable,
-                                    fg='white', bg=Constants.zaantheaterColor,
+                                    fg='white', bg=Constants.primary_color,
                                     justify=tk.LEFT,
                                     anchor=tk.W,
                                     relief=tk.SUNKEN,
@@ -372,9 +374,9 @@ class Gui(tk.Frame):
 
   def loadFromBackup(self):
     Logger.getLogger(__name__).info('load from backup')
-    with open('logs/latestCalendarData.json', 'r+') as fp:
+    with open('latestCalendarData.json', 'r+') as fp:
       superValue = fp.read()
-      self.eventData = EventDataList()
+      self.eventData = EventDataObject()
       data = json.loads(superValue)
       self.eventData.assignments = data['assignments']
       self.eventData.agenda = data['agenda']

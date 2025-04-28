@@ -18,8 +18,11 @@ class ExportWidgetGoogle(tk.Frame):
   def __init__(self, parent=None, gui=None, **kwargs):
     tk.Frame.__init__(self, parent, **kwargs)
     self.gui = gui
+    self.configure(bg=Constants.background_color_primary)
+
     self.configLand = ConfigLand().getConfigLand()
     self.google = Google()
+
 
     iscInfoText = 'Deze google integratie zal na het drukken op \"sync Google\" inloggen bij google en alle evenemeten ' \
                   'in een eigen agenda wegschrijven.\nDe naam van deze agenda kan hernoemt worden zonder problemen. de software ' \
@@ -28,15 +31,16 @@ class ExportWidgetGoogle(tk.Frame):
     icsInfo = tk.Message(self,
                          text=iscInfoText,
                          fg='white',
-                         bg=Constants.zaantheaterColor,
+                         bg=Constants.primary_color,
                          relief=tk.SUNKEN, anchor=tk.W,
                          width=360)
-    icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW, pady=5)
+    icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW)
 
-    ctk.CTkButton(self, text='force login Google', command=self.forceLoginGoogle, cursor="hand2").grid(row=1, column=1,
+    ctk.CTkButton(self, text='force login Google', command=self.forceLoginGoogle, cursor="hand2").grid(row=1, column=2,
                                                                                                        sticky=tk.NSEW,
                                                                                                        pady=5)
     ctk.CTkButton(self, text='sync Google', command=self.syncGoogle, cursor="hand2").grid(row=3, column=0,
+                                                                                          columnspan=2,
                                                                                           sticky=tk.NSEW, pady=5)
 
     ctk.CTkLabel(self, text="Google calendarId").grid(row=4, column=0, sticky=tk.NSEW)
@@ -46,16 +50,16 @@ class ExportWidgetGoogle(tk.Frame):
 
     oepsieButton = ctk.CTkButton(self, text='oepsie doepsie de agenda is foetsie', command=self.clearcalenderId,
                                  cursor="hand2")
-    oepsieButton.grid(row=2, column=0, sticky=tk.NSEW, pady=5)
+    oepsieButton.grid(row=2, column=0,columnspan=2, sticky=tk.NSEW, pady=5)
     Hovertip(anchor_widget=oepsieButton, text='verwijder de huidige geregistreerde agenda voor als er afgemeld is ipv verwijderd', hover_delay=None)
 
     self.feedbackMessageVar= tk.StringVar()
     self.feedbackMessage = tk.Label(self,
                                     textvariable=self.feedbackMessageVar,
-                         fg='white',
-                         bg=Constants.zaantheaterColor,
-                         relief=tk.SUNKEN, anchor=tk.W,justify="left"
-                        )
+                                    fg='white',
+                                    bg=Constants.primary_color,
+                                    relief=tk.SUNKEN, anchor=tk.W, justify="left"
+                                    )
     self.feedbackMessage.grid(row=5, column=0, columnspan=3, sticky=tk.NSEW)
 
     self.gui.update()
@@ -72,8 +76,9 @@ class ExportWidgetGoogle(tk.Frame):
 
   def loadFromConfig(self):
     google = self.configLand.getKey('google')
-    self.googleId.delete(0, 500)
-    self.googleId.insert(0, google['calendarId'])
+    if google['calendarId'] is not None:
+      self.googleId.delete(0, 500)
+      self.googleId.insert(0, google['calendarId'])
 
   def clearcalenderId(self):
     response = messagebox.askyesnocancel("Agenda verwijderen", "Wilt u ook de agenda verwijderen uit google", parent=self)

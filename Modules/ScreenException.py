@@ -24,7 +24,7 @@ class ScreenException(tk.Frame):
 
     # self.attributes("-topmost", True)
     self.master.title('dyclol exception')
-    self.master.configure(background=Constants.zaantheaterColor)
+    self.master.configure(background=Constants.primary_color)
     # self.resizable(False, False)
     self.master.columnconfigure(0, weight=1)
     self.master.rowconfigure(0, weight=1)

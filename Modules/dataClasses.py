@@ -1,5 +1,6 @@
 import json
 import re
+from typing import List
 
 import arrow
 import tkinter as tk
@@ -30,19 +31,29 @@ class ExportReturnObject:
 
 
 class EventDataList:
-  assignments = 0
-  agenda = 0
-  events = 0
-  periods = []
-  list = []
-  shift=[]
-
   def __init__(self):
-    self.assignments = 0
-    self.agenda = 0
-    self.events = 0
-    self.periods = []
-    self.list = []
+    self.agenda = []
+    self.assignments = []
+    self.events = []
+    self.date: str = ""
+    self.text: str = ""
+
+class EventDataShift:
+  def __init__(self):
+    self.id: str = ""
+    self.date: str = ""
+    self.description: str = ""
+    self.end_date: str = ""
+    self.start_date: str = ""
+    self.title: str = ""
+
+class EventDataObject:
+  def __init__(self):
+    self.assignments: int = 0
+    self.agenda: int = 0
+    self.events: int = 0
+    self.periods: List[str] = []
+    self.list: List[EventDataList] = []
     self.shift = []
 
   def toJson(self):
@@ -68,9 +79,8 @@ class Period:
     Logger.getLogger(__name__).info('updating on value')
     self.on = self._checkbox.get()
 
-
-  def updateProgressBar(self,amount=None):
-    if amount is not  None:
+  def updateProgressBar(self, amount=None):
+    if amount is not None:
       self.progress = amount
     if self.progressBar is not None:
       self.progressBar['value'] = self.progress
@@ -102,7 +112,7 @@ class PeriodList:
     for handler in self._handler:
       handler()
 
-  def addPeriod(self, period:Period):
+  def addPeriod(self, period: Period):
     self.periods.append(period)
     self.periods.sort(key=self.returnKey)
     self.callHandler()
@@ -153,9 +163,23 @@ class PeriodList:
 
   def generatePeriodsInFuture(self, amount):
     today = arrow.get(tzinfo=Constants.timeZone)
-    end = arrow.get(tzinfo=Constants.timeZone).shift(months=amount-1)
+    end = arrow.get(tzinfo=Constants.timeZone).shift(months=amount - 1)
     self.generatePeriods(today.format('YYYY-MM'), end.format('YYYY-MM'))
 
   def clearPeriods(self):
     self.periods.clear()
     self.callHandler()
+
+
+class CustomTime:
+  def __init__(self, hour, minute):
+    self.hour = int(hour)
+    self.minute = int(minute)
+
+  @staticmethod
+  def stringToText(string):
+    #todo check if string is alright, regeq
+    if len(string) !=5:
+      raise Exception('string {} wrong length,should be 13'.format(len(string)))
+    start_time = string[0:5]
+    return CustomTime(start_time[0:2], start_time[3:5])

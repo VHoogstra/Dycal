@@ -18,6 +18,8 @@ class ExportWidgetICS(tk.Frame):
   def __init__(self, parent=None,gui=None, **kwargs):
     tk.Frame.__init__(self, parent, **kwargs)
     self.gui = gui
+    self.configure(bg=Constants.background_color_primary)
+
     self.configLand = ConfigLand.getConfigLand()
     self.configLand.addUpdateHandler(self.updateConfig)
     self.configLand.addLoadHandler(self.loadFromConfig)
@@ -27,17 +29,17 @@ class ExportWidgetICS(tk.Frame):
     icsInfo = tk.Message(self,
                          text=iscInfoText,
                          fg='white',
-                         bg=Constants.zaantheaterColor,
+                         bg=Constants.primary_color,
                          relief=tk.SUNKEN, anchor=tk.W,
                          width=360)
-    icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW, pady=5)
+    icsInfo.grid(row=0, column=0, columnspan=3, sticky=tk.NSEW)
     self.gui.createLabel(text="ics url",
-                     parent=self).grid(row=1, column=0, sticky=tk.NSEW)
+                     parent=self).grid(row=1, column=0, sticky=tk.NSEW,pady=5)
     self.icsUrl = self.gui.createEntry(parent=self)
     self.icsUrl.bind("<KeyPress>", self.updateConfig)
-    self.icsUrl.grid(row=1, column=1, columnspan=1, sticky=tk.NSEW, padx=10)
+    self.icsUrl.grid(row=1, column=1, columnspan=1, sticky=tk.NSEW, padx=10,pady=5)
     ctk.CTkButton(self, text='Laad ICS uit URL',
-                  command=self.loadICS).grid(row=1, column=2, columnspan=1, padx=10, pady=2)
+                  command=self.loadICS).grid(row=1, column=2, columnspan=1, padx=10, pady=5)
 
     ctk.CTkButton(self,
                   text='Open ICS bestand',
@@ -52,7 +54,7 @@ class ExportWidgetICS(tk.Frame):
 
     self.ICSMessage = tk.Message(self,
                                  text='nog geen informatie',
-                                 fg='white', bg=Constants.zaantheaterColor,
+                                 fg='white', bg=Constants.primary_color,
                                  anchor=tk.W,
                                  justify=tk.LEFT,
                                  relief=tk.SUNKEN,
@@ -79,7 +81,7 @@ class ExportWidgetICS(tk.Frame):
     self.icsUrl.insert(0, value)
 
   def uploadICS(self):
-    self.ICSMessage.config(bg=Constants.zaantheaterColor)
+    self.ICSMessage.config(bg=Constants.primary_color)
     if self.calendar is None:
       self.calendar = ICS()
     print('uploadIcs')
@@ -106,7 +108,7 @@ class ExportWidgetICS(tk.Frame):
     self.ICSMessage.config(text=f"{eventCount} agenda items gevonden via bestand")
 
   def loadICS(self):
-    self.ICSMessage.config(bg=Constants.zaantheaterColor)
+    self.ICSMessage.config(bg=Constants.primary_color)
     if self.calendar is None:
       self.calendar = ICS()
     if self.icsUrl.get() is not None:
@@ -130,7 +132,7 @@ class ExportWidgetICS(tk.Frame):
     self.ICSMessage.config(text=f"{eventCount} agenda items gevonden via de link")
 
   def generateICS(self):
-    self.ICSMessage.config(bg=Constants.zaantheaterColor)
+    self.ICSMessage.config(bg=Constants.primary_color)
     Logger.getLogger(__name__).info('generateICS')
     if self.calendar is None:
       self.calendar = ICS()

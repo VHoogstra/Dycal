@@ -1,1 +1,1 @@
-pyinstaller --onedir --windowed --specpath=build --name=Dycal-dir --noconfirm --icon=favicon.icns Main.py
+pyinstaller --onedir --windowed --specpath=build --name=Dycal-dir --noconfirm --icon=favicon.ico Main.py

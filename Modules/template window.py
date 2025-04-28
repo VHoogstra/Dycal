@@ -27,8 +27,8 @@ class template(tk.Toplevel):
 
     # self.attributes("-topmost", True)
     self.title('Dyflexis Details')
-    self.master.configure(background=Constants.zaantheaterColor)
+    self.master.configure(background=Constants.primary_color)
     # self.resizable(False, False)
     frame = tk.Frame(self)
     frame.grid(column=0, row=0, sticky=tk.NSEW, padx=10, pady=10)
-    frame.configure(background=Constants.zaantheaterColor)
+    frame.configure(background=Constants.primary_color)

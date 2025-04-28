@@ -16,7 +16,14 @@
 - evenementen te verwijderen?? kan niet via ics
 - dyflexis shift parsers verhuizen naar de scanner
 
+# test info
+dyflexis functie
+genereren van csv, ics en google van event data naar output
+
+
+
 # ter dev info
+
 
 https://pyinstaller.org/en/stable/
 pyinstaller --onefile --windowed --specpath=build --name=dycal-file --icon=favicon.icns Main.py

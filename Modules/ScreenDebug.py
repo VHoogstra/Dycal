@@ -1,8 +1,12 @@
 import tkinter as tk
+from pprint import pprint
+from venv import logger
 
 from customtkinter import CTkButton
 
 from Modules.Constants import Constants
+from Modules.Logger import Logger, TailLogger
+import customtkinter as ctk
 
 
 class ScreenDebug(tk.Toplevel):
@@ -10,10 +14,11 @@ class ScreenDebug(tk.Toplevel):
 
   def __init__(self,gui ):
     tk.Toplevel.__init__(self)
-    window_width = 500
+    Logger.getLogger(__name__).info("Initializing ScreenDebug")
+    window_width = 800
     window_height = 400
     self.gui = gui
-
+    self.configure(bg=Constants.background_color_primary)
     # get screen dimension
     screen_width = self.winfo_screenwidth()
     screen_height = self.winfo_screenheight()
@@ -26,20 +31,28 @@ class ScreenDebug(tk.Toplevel):
     self.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
     # self.attributes("-topmost", True)
-    self.title('Dyflexis Details')
-    self.master.configure(background=Constants.zaantheaterColor)
+    self.title('dycal debug')
     # self.resizable(False, False)
     self.rowconfigure(0, weight=1)
     self.columnconfigure(0, weight=1)
     self.columnconfigure(1, weight=0, minsize=100)
 
     self.messageVar = tk.StringVar()
-    self.messageVar.set('leeg')
-    self.message = tk.Message(self, textvariable=self.messageVar)
-    self.message.grid(column=0, row=0)
+    self.messageVar.set('')
+    self.scrollbar = ctk.CTkScrollableFrame(self,width = int(window_width/2), height=window_height)
+    self.scrollbar.grid(row=0, column=0, sticky='ns')
+    self.message = ctk.CTkLabel(self.scrollbar,
+                                textvariable=self.messageVar,
+                                anchor=tk.N,bg_color='black',justify='left',
+                                padx=5)
+    self.message.grid(column=0, row=0,sticky=tk.NSEW)
+    self.scrollbar.columnconfigure(0, weight=1)
+    self.scrollbar.rowconfigure(0, weight=1)
 
     frame = tk.Frame(self)
     frame.grid(column=1, row=0, sticky=tk.NSEW, padx=10, pady=10)
+    frame.configure(bg=Constants.background_color_primary)
+
 
     self.debugItems = [
       {
@@ -47,14 +60,14 @@ class ScreenDebug(tk.Toplevel):
         'txt': 'Dyflexis',
         'items': [
           {
-            'type': 'checkbox',
-            'txt': 'gebruik TestGenerator',
-            'variable': None
-          },
-          {
             'type': 'button',
             'txt': 'load test data',
             'command': self.gui.loadFromBackup
+          },
+          {
+            'type': 'button',
+            'txt': 'print log',
+            'command': self.test
           }
         ]
       },
@@ -62,27 +75,34 @@ class ScreenDebug(tk.Toplevel):
         'type': 'labelframe',
         'txt': 'Google',
         'items': [
-          {
-            'type': 'checkbox',
-            'txt': 'gebruik TestGenerator',
-            'variable': None
-          },
         ]
       },
       {
         'type': 'labelframe',
         'txt': 'csv',
         'items': [
-          {
-            'type': 'checkbox',
-            'txt': 'gebruik TestGenerator',
-            'variable': None
-          },
+
         ]
       },
     ]
-
+    self.update()
+    self.message.configure(wraplength=self.message.winfo_width() - 40)
+    self.writeConsole()
+    TailLogger.addHandler(self.writeConsole)
     self.debugGenerator(frame, self.debugItems, 0, 1)
+    self.bind("<Configure>", self._resize_grid)
+
+  def _resize_grid(self, event):
+
+    self.scrollbar.configure( width=event.width)
+
+
+  def test(self):
+    Logger.getLogger(__name__).info('test application')
+
+  def writeConsole(self):
+    test = Logger._tail.contents()
+    self.messageVar.set(test)
 
   def debugGenerator(self, master, items, rowCount, columnStart):
     for item in items:
@@ -112,7 +132,7 @@ class ScreenDebug(tk.Toplevel):
     return chkbtn
 
   def createLabelFrame(self, item, master, grid: (int, int)):
-    labelframe = tk.LabelFrame(master, text=item['txt'])
+    labelframe = tk.LabelFrame(master, text=item['txt'],fg='white',bg=Constants.background_color_primary)
     labelframe.grid(column=grid[1], row=grid[0], sticky=tk.NSEW, padx=10, pady=10)
     return labelframe
 

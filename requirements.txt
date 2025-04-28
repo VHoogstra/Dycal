@@ -11,3 +11,4 @@ arrow
 protobuf
 pyinstaller
 cryptography
+load_dotenv

@@ -8,7 +8,10 @@ class Constants():
   version = "v0.1.1 - Alpha"
   appname = "Dycal"
 
-  zaantheaterColor = "#7a4689"
+  primary_color = "#03969c"
+  background_color_primary = '#393534'
+  background_color_secondary = "#4a4747"
+
   dyflexisMessage = "test "
   logPrefix = "logs/"
   logFileName = "log_" + time.strftime("%Y-%m-%d", time.gmtime()) + '.txt'
@@ -17,7 +20,6 @@ class Constants():
   userStorageLocation = "dycal"
   githubVersionLink = "https://api.github.com/repos/VHoogstra/dyflexis-calendar-ics/releases"
   timeZone = "Europe/Amsterdam"
-  encryptionKey = b'Ngi3Iv2_rVNRuMXYhKHy1oVJvUCwm-xq_rTd7GmosXY='
   Dyflexis = {
     "routes": {
       "login": "https://app.planning.nu/{organisation}/login",
@@ -25,7 +27,6 @@ class Constants():
       "homepage": "https://app.planning.nu/{organisation}/{location}/"
     }
   }
-  # todo zaandam ook kiesbaar maken
   DESCRIPTION_PREFIX = "=== CODE GENERATED BELOW ==="
 
   @staticmethod
