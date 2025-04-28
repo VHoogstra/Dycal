@@ -141,7 +141,7 @@ class Gui(tk.Frame):
 
     self.createLabel(text="Wachtwoord", anchor=tk.E, parent=self.dyflexisFrame).grid(row=2, column=0, sticky=tk.E,
                                                                                      padx=5)
-    self.dyflexisPassword = self.createEntry(parent=self.dyflexisFrame)
+    self.dyflexisPassword = self.createEntry(parent=self.dyflexisFrame,show='*')
     self.dyflexisPassword.bind("<KeyPress>", self.updateDyflexis)
     self.dyflexisPassword.grid(row=2, column=1, columnspan=2, sticky=tk.NSEW, pady=2)
 
