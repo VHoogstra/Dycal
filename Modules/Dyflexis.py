@@ -1,5 +1,4 @@
 import re
-from os import times_result
 
 import arrow
 from selenium import webdriver
@@ -180,20 +179,22 @@ class Dyflexis:
         if len(eventDataList.assignments) > 0:
           for assignment in eventDataList.assignments:
             date = EventDataShift()
-            date.date =  arrow.get(eventDataList.date, tzinfo=Constants.timeZone).format('YYYY-MM-DD')
-            date.id =  assignment['id']
+            date.date = arrow.get(eventDataList.date, tzinfo=Constants.timeZone).format('YYYY-MM-DD')
+            date.id = assignment['id']
 
             date = arrow.get(eventDataList.date, tzinfo=Constants.timeZone)
             isBeforeToday = not date > arrow.now().replace(hour=0, minute=0).shift(days=-1)
-            if isBeforeToday or assignment['text']=="" :
+            if isBeforeToday or assignment['text'] == "":
               continue
 
             startTime = CustomTime.stringToText(assignment['tijd'][0:5])
-            startDate = arrow.get(eventDataList.date, tzinfo=Constants.timeZone).replace(hour=startTime.hour, minute=startTime.minute).format('YYYY-MM-DDTHH:mm:ss')
+            startDate = arrow.get(eventDataList.date, tzinfo=Constants.timeZone).replace(hour=startTime.hour,
+                                                                                         minute=startTime.minute).format(
+              'YYYY-MM-DDTHH:mm:ss')
             date.start_date = startDate
             stopTime = CustomTime.stringToText(assignment['tijd'][8:13])
             stopDateTime = arrow.get(eventDataList.date, tzinfo=Constants.timeZone).replace(hour=stopTime.hour,
-                                                                                         minute=stopTime.minute).format(
+                                                                                            minute=stopTime.minute).format(
               'YYYY-MM-DDTHH:mm:ss')
             name, description = self.eventnameParser(eventDataList.events, assignment)
             if name is None or description is None:
@@ -205,8 +206,8 @@ class Dyflexis:
               description = self.DESCRIPTION_PREFIX
 
             date.end_date = stopDateTime
-            date.title =  name
-            date.description =  description
+            date.title = name
+            date.description = description
 
         baseData.events = baseData.events + len(eventDataList.events)
         baseData.assignments = baseData.assignments + len(eventDataList.assignments)
@@ -272,10 +273,11 @@ class Dyflexis:
     return eventDataList
 
   def eventnameParser(self, events, assignment):
+    description = None
+    name = None
     for event in events:
       # ik moet aan de hand van ass beslissen of ik een naam maak of niet
-      description = None
-      name = None
+
       if "GEANNULEERD".upper() in event['text'].upper():
         return name, description
       # look in location names for the shift name
@@ -285,8 +287,13 @@ class Dyflexis:
       if len(tuplet) != 0 and tuplet[0][0].upper() in assignment['text'].upper():
         # pak de 2e waarde van de tuplet uit location names
         name = event['text']
-        description = self.DESCRIPTION_PREFIX + "\n" + event['description']
+
+        if description is not None:
+          description = event['description'] + "\n" + description
+        else:
+          description = event['description']
         if name is not None and len(name) > self.MAX_NAME_LENGTH:
           name = name[0:self.MAX_NAME_LENGTH] + "..."
 
+    description = self.DESCRIPTION_PREFIX + "\n" + description
     return name, description

@@ -1,8 +1,5 @@
 # todo's
 
-- als er 2 agenda-items zijn, check of deze in dezeflde shift vallen en zo ja, voeg ze in de juiste volgorde toe aan ge
-  agenda
-    - even een test case voor schrijven?
 - bestand opslaan als en openen doen aan de hand van de laatste keer dat je dat in de app deed
 - dyflexis shift vars in config weg stoppen
   - nog in het config scherm laten zien
@@ -15,15 +12,14 @@
   - kan deze lijst in real time geupdate worden...??
 - evenementen te verwijderen?? kan niet via ics
 - dyflexis shift parsers verhuizen naar de scanner
+- github api moet via eigenwebsite ivm rate limit
 
 # test info
 dyflexis functie
 genereren van csv, ics en google van event data naar output
 
 
-
 # ter dev info
-
 
 https://pyinstaller.org/en/stable/
 pyinstaller --onefile --windowed --specpath=build --name=dycal-file --icon=favicon.icns Main.py
