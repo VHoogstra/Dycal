@@ -5,7 +5,7 @@ import urllib
 
 
 class Constants():
-  version = "v0.1.1 - Alpha"
+  version = "v0.1.2 - Alpha"
   appname = "Dycal"
 
   primary_color = "#03969c"
@@ -18,7 +18,7 @@ class Constants():
   dyflexisJsonFilename = 'latestCalendarData.json'
   googleJsonFile = 'latestGoogleMergeData.json'
   userStorageLocation = "dycal"
-  githubVersionLink = "https://api.github.com/repos/VHoogstra/dyflexis-calendar-ics/releases"
+  githubVersionLink = "https://dycal.vincentvandetechniek.nl/githubtagversion"
   timeZone = "Europe/Amsterdam"
   Dyflexis = {
     "routes": {
@@ -59,4 +59,4 @@ class Constants():
     link = Constants.githubVersionLink
     f = urllib.request.urlopen(link)
     gitVersions = json.loads(f.read())
-    return gitVersions[0]['name']
+    return gitVersions['data']['name']
