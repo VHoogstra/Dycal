@@ -5,7 +5,7 @@ import urllib
 
 
 class Constants():
-  version = "v0.1.2 - Alpha"
+  version = "v0.1.2-Alpha"
   appname = "Dycal"
 
   primary_color = "#03969c"
