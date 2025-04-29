@@ -6,16 +6,18 @@ import arrow
 import customtkinter as ctk
 
 from Modules.Constants import Constants
+from Modules.Google import Google
+from Modules.Logger import Logger
 from Modules.dataClasses import ExportReturnObject
 
 
 class ScreenDataProcess(tk.Toplevel):
-  def __init__(self, exportData: ExportReturnObject, google):
+  def __init__(self, exportData: ExportReturnObject, continueButton):
     tk.Toplevel.__init__(self)
     window_width = 500
     window_height = 400
     self.exportData = exportData
-    self.google = google
+    self.continueButton = continueButton
 
     # get screen dimension
     screen_width = self.winfo_screenwidth()
@@ -26,7 +28,7 @@ class ScreenDataProcess(tk.Toplevel):
     center_y = int(screen_height / 2 - window_height / 2)
 
     # create the screen on window console
-    # self.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
+    self.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
 
     # self.attributes("-topmost", True)
     self.title('Dyflexis Export Data')
@@ -35,7 +37,8 @@ class ScreenDataProcess(tk.Toplevel):
 
     self.rowconfigure(0, weight=1)
     self.columnconfigure(0, weight=1)
-
+    if self.continueButton:
+      ctk.CTkButton(self,text='Data is correct, doorvoeren',command=self.uploadToGoogle).grid(row=1, column=0, sticky=tk.NSEW,padx=10,pady=10)
     tabview = ctk.CTkTabview(master=self, width=525)
     tabview.grid(row=0, column=0, sticky=tk.NSEW, padx=10, pady=10)
     tabs = ["Nieuwe data", "Agenda te updaten", "te verwijderen data"]
@@ -59,5 +62,20 @@ class ScreenDataProcess(tk.Toplevel):
           if 'etag' in item and 'dycolDate' not in item:
             item['dycolDate'] = arrow.get(item['start']['dateTime'],tzinfo=Constants.timeZone).format('YYYY-MM-DD HH:mm')
             item['dycolName'] = item['summary']
+          if 'dycolDate' in item:
+            item['dycolDate']= arrow.get(item['dycolDate'],tzinfo=Constants.timeZone).format('YYYY-MM-DD HH:mm')
           treeview.insert("", tk.END, values=(item['dycolDate'],item['dycolName']))
 
+  def uploadToGoogle(self):
+    try:
+
+      googleObject = Google.getGoogleObject()
+      googleObject.processData(googleObject.retrieveGoogleCalendar(),self.exportData)
+    except Exception as e:
+      Logger.getLogger(__name__).error('Er ging iets mis tijdens uploaden google', exc_info=True)
+      self.feedbackMessagebuilder("\ter ging wat met de upload\n")
+      message = Constants.Exception_to_message(e)
+      self.feedbackMessagebuilder(message)
+
+    self.google.feedbackMessagebuilder('\ngeupload naar google')
+    self.destroy()

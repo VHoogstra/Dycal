@@ -16,15 +16,21 @@ from Modules.dataClasses import ExportReturnObject
 
 
 class Google:
-  creds = None
   SCOPES: list[str] = ["https://www.googleapis.com/auth/calendar.app.created"]
-  calendar = None
-  event = None
-  config = None
+  __GoogleObject = None
+
+  @staticmethod
+  def getGoogleObject():
+    if Google.__GoogleObject is None:
+      Google.__GoogleObject = Google()
+    return Google.__GoogleObject
 
   def __init__(self):
     Logger.getLogger(__name__).info("Google init")
     self.config = ConfigLand.getConfigLand()
+    self.creds = None
+    self.calendar = None
+    self.event = None
 
   def get_credentials(self):
     if self.creds is None:
@@ -172,7 +178,7 @@ class Google:
         for period in periods:
           period_month = arrow.get(period, tzinfo=Constants.timeZone).month
           if (start == period_month or end.month == period_month) and today < end:
-              periodBreak = False
+            periodBreak = False
       if periodBreak:
         continue
 
@@ -182,8 +188,7 @@ class Google:
         continue
       ##todo compare newCalendar with googleEvent?
       ## waarom doe ik dit hier? ik doe bij het syncen al een check of hij in google is, zo niet maak ik hem aan.
-      if gEvent['id'] in [obj['id'] for obj in
-                                                                                           returnObject.updateCalendarItem]:
+      if gEvent['id'] in [obj['id'] for obj in returnObject.updateCalendarItem]:
         # if gEvent['id'] in [obj['id'] for obj in returnObject.newCalendarItem] or gEvent['id'] in [obj['id'] for obj in
         #                                                                                    returnObject.updateCalendarItem]:
         continue
@@ -191,31 +196,32 @@ class Google:
       returnObject.removeCalendarItem.append(gEvent)
     return returnObject
 
-  def manageCalendar(self, calendarId):
+  def retrieveGoogleCalendar(self, calendarId=None):
     """
          haal de huidige agenda op, als hij verwijderd is of onvindbaar, maak een nieuwe aan
          :return: het googleCal object
     """
     calendar = self.getCalendarService()
     googleConfig = self.getConfigService().getKey('google')
-    if calendarId is not None:
-      try:
-        googleCal = calendar.get(calendarId)
-      except HttpError as e:
-        Message = ('Google cal niet gevonden?: ')
-        if hasattr(e, 'message'):
-          Message = Message + e.message
-        else:
-          Message = Message + str(e)
-        Logger.getLogger(__name__).error('googlecalendar error', exc_info=True)
+    if calendarId is None:
+      calendarId = googleConfig['calendarId']
+    try:
+      googleCal = calendar.get(calendarId)
+    except HttpError as e:
+      Message = ('Google cal niet gevonden?: ')
+      if hasattr(e, 'message'):
+        Message = Message + e.message
+      else:
+        Message = Message + str(e)
+      Logger.getLogger(__name__).error('googlecalendar error', exc_info=True)
 
-        response = messagebox.askyesno(title='Google calendar error',
-                                       message="Google agenda niet gevonden, wile je dat wij een nieuwe aanmaken?")
-        if response is None or response == False:
-          raise Exception('geen geldig of bereikbaar agenda id gevonden')
-        if response is True:
-          googleCal = calendar.create(
-            Constants.appname + ": " + ConfigLand.getConfigLand().getKey('dyflexis')['organisation'])
+      response = messagebox.askyesno(title='Google calendar error',
+                                     message="Google agenda niet gevonden, wile je dat wij een nieuwe aanmaken?")
+      if response is None or response == False:
+        raise Exception('geen geldig of bereikbaar agenda id gevonden')
+      if response is True:
+        googleCal = calendar.create(
+          Constants.appname + ": " + ConfigLand.getConfigLand().getKey('dyflexis')['organisation'])
 
     googleConfig['calendarId'] = googleCal['id']
     self.getConfigService().setKey('google', googleConfig)

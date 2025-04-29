@@ -301,5 +301,5 @@ class Dyflexis:
           name = name[0:self.MAX_NAME_LENGTH] + "..."
 
     if description is not None:
-      description = self.DESCRIPTION_PREFIX + "\n" + description
+      description = "\n"+self.DESCRIPTION_PREFIX + "\n" + description
     return name, description

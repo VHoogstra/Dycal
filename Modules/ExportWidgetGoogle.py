@@ -22,7 +22,7 @@ class ExportWidgetGoogle(tk.Frame):
     self.configure(bg=Constants.background_color_primary)
 
     self.configLand = ConfigLand().getConfigLand()
-    self.google = Google()
+    self.google = Google.getGoogleObject()
 
 
     iscInfoText = 'Deze google integratie zal na het drukken op \"sync Google\" inloggen bij google en alle evenemeten ' \
@@ -120,7 +120,7 @@ class ExportWidgetGoogle(tk.Frame):
       Logger.getLogger(__name__).info('user logged in')
       self.feedbackMessagebuilder("\tLogin goed\n" + "Agenda opvragen:")
 
-      googleCal = self.google.manageCalendar(self.googleId.get())
+      googleCal = self.google.retrieveGoogleCalendar(self.googleId.get())
       self.feedbackMessagebuilder("\tGoogle agenda goed opgehaald\n")
 
       msg = "Succesvol de agenda geupdate"
@@ -130,8 +130,7 @@ class ExportWidgetGoogle(tk.Frame):
         if self.configLand.getKey('persistentStorageAllowed'):
           Logger.toFile(location=Constants.logPrefix + Constants.googleJsonFile, variable=returnObject.toJson(),isJson=True)
 
-        screenDataProcess = ScreenDataProcess(returnObject,self)
-        # self.google.processData(googleCal,returnObject)
+        ScreenDataProcess(returnObject,True)
       else:
         msg = "Er is nog geen evenementen data om te synchroniseren"
       self.feedbackMessagebuilder(msg)
@@ -144,7 +143,7 @@ class ExportWidgetGoogle(tk.Frame):
       message = Constants.Exception_to_message(e)
       self.feedbackMessagebuilder(message)
       raise e
-    print('end of syncgoogle')
+    Logger.getLogger(__name__).info('end of syncgoogle')
 
     # self.feedbackMessage.configure(text=msg)
 
