@@ -76,7 +76,7 @@ class DyflexisTest(unittest.TestCase):
     # de derde is voor extra
     # de vierde test ik wat er gebeurt als een waarde van de tuplet in de naam zit
     expectedResults = ["AH Simon Keizer - Ruimte",
-                       Dyflexis.DESCRIPTION_PREFIX+"\n"+events[2]['description']+"\n"+events[1]['description']]
+                       Dyflexis.DESCRIPTION_PREFIX + "\n" + events[2]['description'] + "\n" + events[1]['description']]
 
     assignments = {
       "id": "assignment://21094",
@@ -86,6 +86,42 @@ class DyflexisTest(unittest.TestCase):
     response = self.dyflexis.eventnameParser(events, assignments)
     self.assertEqual(response[0], expectedResults[0])
     self.assertEqual(response[1], expectedResults[1])
+
+  def test_case_wrong(self):
+      self.setup()
+
+      events = [
+        {
+          "description": "",
+          "id": "event://1865",
+          "text": "GEANNULEERD - Kz Laat me leven - Theater Rast"
+        },
+        {
+          "description": "",
+          "id": "event://1866",
+          "text": "AH Rob & Emiel - Best of..."
+        },
+        {
+          "description": "",
+          "id": "event://1867",
+          "text": "ZTR Diner in ZaanTheaterrestaurant"
+        }
+      ]
+      # eerste twee testen op de tuplet code
+      # de derde is voor extra
+      # de vierde test ik wat er gebeurt als een waarde van de tuplet in de naam zit
+      expectedResults = ["AH Rob & Emiel - Best of...",
+                         Dyflexis.DESCRIPTION_PREFIX + "\n" + events[1]['description']]
+
+      assignments = {
+        "id": "assignment://21635",
+        "text": "Zaandam > 60 Technische Dienst > Grote zaal",
+        "tijd": "13:00 - 23:00"
+      }
+      response = self.dyflexis.eventnameParser(events, assignments)
+      self.assertEqual(response[0], expectedResults[0])
+      self.assertEqual(response[1], expectedResults[1])
+
 
 if __name__ == '__main__':
   unittest.main()

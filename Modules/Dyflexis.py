@@ -165,22 +165,22 @@ class Dyflexis:
             '\t\t\t\t skipped: verkeerde periode. periode:{}, eventData: {}'.format(period.period,
                                                                                     column.get_attribute('title')))
           continue
+        ################ find assignments, aka diensten ################
+        # dit moet na events omdat we meteen de shifts genereren
+        eventDataList = self.create_assignment_list(column.find_elements(by=By.CLASS_NAME, value='ass'),
+                                                    eventDataList)
 
         ################ find events aka shows in the day ################
         eventDataList = self.create_events_list(column.find_elements(by=By.CLASS_NAME, value='evt'), eventDataList)
-
-        ################ find assignments, aka diensten ################
-        # dit moet na events omdat we meteen de shifts genereren
-        eventDataList = self.create_assignment_list(column.find_elements(by=By.CLASS_NAME, value='ass'), eventDataList)
 
         ################ find agenda aka gewerkte uren ################
         eventDataList = self.create_agenda_list(column.find_elements(by=By.CLASS_NAME, value='agen'), eventDataList)
 
         if len(eventDataList.assignments) > 0:
           for assignment in eventDataList.assignments:
-            date = EventDataShift()
-            date.date = arrow.get(eventDataList.date, tzinfo=Constants.timeZone).format('YYYY-MM-DD')
-            date.id = assignment['id']
+            eventDataShift = EventDataShift()
+            eventDataShift.date = arrow.get(eventDataList.date, tzinfo=Constants.timeZone).format('YYYY-MM-DD')
+            eventDataShift.id = assignment['id']
 
             date = arrow.get(eventDataList.date, tzinfo=Constants.timeZone)
             isBeforeToday = not date > arrow.now().replace(hour=0, minute=0).shift(days=-1)
@@ -191,7 +191,7 @@ class Dyflexis:
             startDate = arrow.get(eventDataList.date, tzinfo=Constants.timeZone).replace(hour=startTime.hour,
                                                                                          minute=startTime.minute).format(
               'YYYY-MM-DDTHH:mm:ss')
-            date.start_date = startDate
+            eventDataShift.start_date = startDate
             stopTime = CustomTime.stringToText(assignment['tijd'][8:13])
             stopDateTime = arrow.get(eventDataList.date, tzinfo=Constants.timeZone).replace(hour=stopTime.hour,
                                                                                             minute=stopTime.minute).format(
@@ -205,9 +205,12 @@ class Dyflexis:
               name = assignment['text'][indexIs:].lstrip()
               description = self.DESCRIPTION_PREFIX
 
-            date.end_date = stopDateTime
-            date.title = name
-            date.description = description
+            eventDataShift.end_date = stopDateTime
+            eventDataShift.title = name
+            eventDataShift.description = description
+            baseData.shift.append(eventDataShift)
+
+        baseData.list.append(eventDataList)
 
         baseData.events = baseData.events + len(eventDataList.events)
         baseData.assignments = baseData.assignments + len(eventDataList.assignments)
@@ -225,6 +228,15 @@ class Dyflexis:
         eventDataList.agenda.append({"id": agenda.get_attribute('uo'), "text": agenda.text})
     return eventDataList
 
+  def checkLocationNames(self,assignment,event):
+    tuplet = [item for item in self.LOCATION_NAMES if
+              item[1].upper() in event[0:len(item[1]) + 2].upper()]
+    ### look in the event for the event search
+    if len(tuplet) != 0 and tuplet[0][0].upper() in assignment.upper():
+      return True
+    return False
+
+
   def create_events_list(self, eventsDyflexis, eventDataList: EventDataList):
     if len(eventsDyflexis) != 0:
       for event in eventsDyflexis:
@@ -232,10 +244,8 @@ class Dyflexis:
         # alleen als het event een assignment heeft klikken we er op, anders is de omschrijving niet boeiend
         description = ""
         for assignement in eventDataList.assignments:
-          tuplet = [item for item in self.LOCATION_NAMES if
-                    item[0].upper() in assignement['text'].upper()]
-          if len(tuplet) != 0:
-            if tuplet[0][1].upper() in event.text.upper():
+          #check if ass matches search query, if yes, click the event. else move along
+            if self.checkLocationNames(assignement['text'],event.text):
               # click event to open info
               event.click()
               WebDriverWait(self.driver, 20).until(
@@ -275,16 +285,11 @@ class Dyflexis:
   def eventnameParser(self, events, assignment):
     description = None
     name = None
-    for event in events:
-      # ik moet aan de hand van ass beslissen of ik een naam maak of niet
 
-      if "GEANNULEERD".upper() in event['text'].upper():
-        return name, description
+    for event in events:
       # look in location names for the shift name
-      tuplet = [item for item in self.LOCATION_NAMES if
-                item[1].upper() in event['text'][0:5].upper()]
       ### look in the event for the event search
-      if len(tuplet) != 0 and tuplet[0][0].upper() in assignment['text'].upper():
+      if self.checkLocationNames(assignment['text'],event['text']):
         # pak de 2e waarde van de tuplet uit location names
         name = event['text']
 
@@ -295,5 +300,6 @@ class Dyflexis:
         if name is not None and len(name) > self.MAX_NAME_LENGTH:
           name = name[0:self.MAX_NAME_LENGTH] + "..."
 
-    description = self.DESCRIPTION_PREFIX + "\n" + description
+    if description is not None:
+      description = self.DESCRIPTION_PREFIX + "\n" + description
     return name, description

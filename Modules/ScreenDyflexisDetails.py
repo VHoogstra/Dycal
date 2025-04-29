@@ -8,7 +8,7 @@ from Modules.Constants import Constants
 from Modules.dataClasses import EventDataObject
 
 
-class DyflexisDetails(tk.Toplevel):
+class ScreenDyflexisDetails(tk.Toplevel):
   eventData = None
   def __init__(self, eventData:EventDataObject):
     tk.Toplevel.__init__(self)
@@ -71,7 +71,7 @@ class DyflexisDetails(tk.Toplevel):
     self.treeview.heading('date', text='date')
     self.treeview.heading('title', text='title')
     self.treeview.heading('id', text='id')
-    self.treeview.column('0', width=70, anchor=tk.W)
+    self.treeview.column('0', width=90, anchor=tk.W)
     self.treeview.column('1', width=300, anchor=tk.W)
     self.treeview.column('2', width=120, anchor=tk.W)
 
@@ -80,7 +80,7 @@ class DyflexisDetails(tk.Toplevel):
         self.treeview.insert(
           '',
           tk.END,
-          values=(shift['date'], shift['title'], shift['id']
+          values=(shift.date, shift.title, shift.id
                   )
         )
 
@@ -99,7 +99,7 @@ class DyflexisDetails(tk.Toplevel):
     self.dyflexisTree.heading('date', text='date')
     self.dyflexisTree.heading('title', text='title')
     self.dyflexisTree.heading('id', text='id')
-    self.dyflexisTree.column('0',width=70,anchor=tk.W)
+    self.dyflexisTree.column('0',width=90,anchor=tk.W)
     self.dyflexisTree.column('1',width=300,anchor=tk.W)
     self.dyflexisTree.column('2',width=120,anchor=tk.W)
 
@@ -108,21 +108,21 @@ class DyflexisDetails(tk.Toplevel):
         parent =self.dyflexisTree.insert(
           '',
           tk.END,
-          values=(list['date'],len(list['events'])+len(list['assignments'])+len(list['agenda']))
+          values=(list.date,len(list.events)+len(list.assignments)+len(list.agenda))
         )
-        for event in list['events']:
+        for event in list.events:
           self.dyflexisTree.insert(
             parent,
             tk.END,
             values=(' ' , event['text'], event['id'])
           )
-        for event in list['assignments']:
+        for event in list.assignments:
           self.dyflexisTree.insert(
             parent,
             tk.END,
             values=(' ' , event['text'], event['id'])
           )
-        for event in list['agenda']:
+        for event in list.agenda:
           self.dyflexisTree.insert(
             parent,
             tk.END,

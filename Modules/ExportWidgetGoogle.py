@@ -9,6 +9,7 @@ from Modules.ConfigLand import ConfigLand
 from Modules.Constants import Constants
 from Modules.Google import Google
 from Modules.Logger import Logger
+from Modules.ScreenDataProcess import ScreenDataProcess
 
 
 class ExportWidgetGoogle(tk.Frame):
@@ -128,7 +129,9 @@ class ExportWidgetGoogle(tk.Frame):
         returnObject = self.google.parseEventsToGoogle(googleCal, self.gui.eventData.shift, periods=self.gui.eventData.periods)
         if self.configLand.getKey('persistentStorageAllowed'):
           Logger.toFile(location=Constants.logPrefix + Constants.googleJsonFile, variable=returnObject.toJson(),isJson=True)
-        self.google.processData(googleCal,returnObject)
+
+        screenDataProcess = ScreenDataProcess(returnObject,self)
+        # self.google.processData(googleCal,returnObject)
       else:
         msg = "Er is nog geen evenementen data om te synchroniseren"
       self.feedbackMessagebuilder(msg)

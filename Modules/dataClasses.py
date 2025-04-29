@@ -1,12 +1,9 @@
 import json
 import re
+import tkinter as tk
 from typing import List
 
 import arrow
-import tkinter as tk
-import tkinter.ttk as ttk
-
-from tatsu.util import format_if
 
 from Modules.Constants import Constants
 from Modules.Logger import Logger
@@ -38,6 +35,20 @@ class EventDataList:
     self.date: str = ""
     self.text: str = ""
 
+  @staticmethod
+  def fromJson(json):
+    returnArray = []
+    for list in json:
+      eventDataList = EventDataList()
+      eventDataList.agenda = list['agenda']
+      eventDataList.assignments = list['assignments']
+      eventDataList.events = list['events']
+      eventDataList.date = list['date']
+      eventDataList.text = list['text']
+      returnArray.append(eventDataList)
+    return returnArray
+
+
 class EventDataShift:
   def __init__(self):
     self.id: str = ""
@@ -47,6 +58,21 @@ class EventDataShift:
     self.start_date: str = ""
     self.title: str = ""
 
+  @staticmethod
+  def fromJson(json):
+    returnArray = []
+    for list in json:
+      eventDataList = EventDataList()
+      eventDataList.id = list['id']
+      eventDataList.date = list['date']
+      eventDataList.description = list['description']
+      eventDataList.end_date = list['end_date']
+      eventDataList.start_date = list['start_date']
+      eventDataList.title = list['title']
+      returnArray.append(eventDataList)
+    return returnArray
+
+
 class EventDataObject:
   def __init__(self):
     self.assignments: int = 0
@@ -54,7 +80,7 @@ class EventDataObject:
     self.events: int = 0
     self.periods: List[str] = []
     self.list: List[EventDataList] = []
-    self.shift = []
+    self.shift: List[EventDataShift] = []
 
   def toJson(self):
     return json.dumps(
@@ -178,8 +204,8 @@ class CustomTime:
 
   @staticmethod
   def stringToText(string):
-    #todo check if string is alright, regeq
-    if len(string) !=5:
+    # todo check if string is alright, regeq
+    if len(string) != 5:
       raise Exception('string {} wrong length,should be 13'.format(len(string)))
     start_time = string[0:5]
     return CustomTime(start_time[0:2], start_time[3:5])
