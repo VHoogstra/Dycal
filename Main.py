@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import tkinter as tk
+from os import path
 
 from Modules.GUI import Gui
 from Modules.Logger import Logger

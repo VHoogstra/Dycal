@@ -1,2 +1,2 @@
 #!/bin/sh
-pyinstaller --onedir --windowed --specpath=build --name=Dycal --noconfirm --icon=favicon.icns Main.py
+pyinstaller --onedir --windowed --specpath=build --name=Dycal --add-data ../Modules/credentials.json:Modules/. --noconfirm --icon=favicon.icns Main.py

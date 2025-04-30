@@ -1,6 +1,10 @@
 # todo's
 - dyflexis shift vars in config weg stoppen
   - nog in het config scherm laten zien
+  - ook de optie wegschrijven voor uitlezen events, uitlezen collega's
+  - optie voor * aan de naam toevoegen
+  - optie voor tijden aanmerking als event inhoud niet overeenkomt met event tijden
+  - 
 - evenementen te verwijderen?? kan niet via ics
 - github api moet via eigenwebsite ivm rate limit
 

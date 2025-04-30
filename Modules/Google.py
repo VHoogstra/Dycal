@@ -1,4 +1,5 @@
 import json
+from os import path
 from tkinter import messagebox
 
 import arrow
@@ -59,7 +60,7 @@ class Google:
       else:
         Logger.getLogger(__name__).info('asking for new user approval')
         flow = InstalledAppFlow.from_client_secrets_file(
-          "credentials.json", self.SCOPES
+          path.join(path.abspath(path.dirname(__file__)), 'credentials.json'), self.SCOPES
         )
         self.creds = flow.run_local_server(port=0)
         googleConfig['credentials'] = json.loads(self.creds.to_json())
@@ -69,7 +70,7 @@ class Google:
 
   def forceLogin(self):
     flow = InstalledAppFlow.from_client_secrets_file(
-      "credentials.json", self.SCOPES
+      path.join(path.abspath(path.dirname(__file__)), 'credentials.json'), self.SCOPES
     )
     self.creds = flow.run_local_server(port=0)
     googleConfig = self.getConfigService().getKey('google')

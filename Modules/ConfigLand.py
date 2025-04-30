@@ -61,20 +61,15 @@ class ConfigObject:
       fp.write(encryptedData)
       fp.close()
     return self
-  @staticmethod
-  def getKey():
-    #todo bij deploy hier de key plaatsen
-    # return
-    return os.environ.get('ENCRYPTION_TOKEN')
 
   @staticmethod
   def encrypt(content):
-    f = Fernet(ConfigObject.getKey())
+    f = Fernet(Constants.getEncryptionKey())
     return f.encrypt(content)
 
   @staticmethod
   def decrypt(content):
-    f = Fernet(ConfigObject.getKey())
+    f = Fernet(Constants.getEncryptionKey())
     return f.decrypt(content)
 
   @staticmethod

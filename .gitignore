@@ -4,7 +4,7 @@ config.json
 dist
 build
 logs/*
-credentials.json
+Modules/credentials.json
 !build/favicon.icns
 !build/favicon.ico
 .env
