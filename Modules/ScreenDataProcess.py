@@ -1,3 +1,4 @@
+import time
 import tkinter as tk
 from datetime import tzinfo
 from tkinter import ttk
@@ -12,12 +13,13 @@ from Modules.dataClasses import ExportReturnObject
 
 
 class ScreenDataProcess(tk.Toplevel):
-  def __init__(self, exportData: ExportReturnObject, continueButton):
+  def __init__(self, exportData: ExportReturnObject, continueButton,feedbackMessageBuilder = None):
     tk.Toplevel.__init__(self)
     window_width = 500
     window_height = 400
     self.exportData = exportData
     self.continueButton = continueButton
+    self.feedbackMessageBuilder = feedbackMessageBuilder
 
     # get screen dimension
     screen_width = self.winfo_screenwidth()
@@ -67,15 +69,24 @@ class ScreenDataProcess(tk.Toplevel):
           treeview.insert("", tk.END, values=(item['dycolDate'],item['dycolName']))
 
   def uploadToGoogle(self):
+    self.loader = ctk.CTkProgressBar(self, mode='determinate', width=50)
+    self.loader.grid(row=2, column=0, sticky=tk.NSEW, padx=10, pady=10)
+    self.loader.set(value=0)
     try:
-
       googleObject = Google.getGoogleObject()
-      googleObject.processData(googleObject.retrieveGoogleCalendar(),self.exportData)
+      googleObject.processData(googleObject.retrieveGoogleCalendar(),self.exportData,loaderUpdate=self.updateLoader)
+      time.sleep(5)
     except Exception as e:
       Logger.getLogger(__name__).error('Er ging iets mis tijdens uploaden google', exc_info=True)
-      self.feedbackMessagebuilder("\ter ging wat met de upload\n")
-      message = Constants.Exception_to_message(e)
-      self.feedbackMessagebuilder(message)
+      if self.feedbackMessageBuilder is not None:
+        self.feedbackMessageBuilder("\ter ging wat met de upload\n")
+        message = Constants.Exception_to_message(e)
+        self.feedbackMessageBuilder(message)
+    if self.feedbackMessageBuilder is not None:
+      self.feedbackMessageBuilder('\ngeupload naar google')
+    # self.destroy()
 
-    self.google.feedbackMessagebuilder('\ngeupload naar google')
-    self.destroy()
+  def updateLoader(self,amount):
+    self.loader.set(amount)
+    self.loader.update()
+

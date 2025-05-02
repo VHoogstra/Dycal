@@ -130,7 +130,7 @@ class ExportWidgetGoogle(tk.Frame):
         if self.configLand.getKey('persistentStorageAllowed'):
           Logger.toFile(location=Constants.logPrefix + Constants.googleJsonFile, variable=returnObject.toJson(),isJson=True)
 
-        ScreenDataProcess(returnObject,True)
+        ScreenDataProcess(returnObject,True,feedbackMessageBuilder = self.feedbackMessagebuilder)
       else:
         msg = "Er is nog geen evenementen data om te synchroniseren"
       self.feedbackMessagebuilder(msg)
