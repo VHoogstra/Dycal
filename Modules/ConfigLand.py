@@ -1,5 +1,4 @@
 import json
-import logging
 import os.path
 from tkinter import filedialog, messagebox
 from typing import Any
@@ -27,6 +26,8 @@ class ConfigObject:
     # todo persistentStorageAllowed config een checkbox geven in gui
     self.persistentStorageAllowed = None
     self.debug = {}
+    self.github_version = {"name": None, 'date': None}
+
     self.askStorageQuestion()
 
   def askStorageQuestion(self):
@@ -81,10 +82,11 @@ class ConfigObject:
           superValue = fp.read()
           configObject = ConfigObject.fromJson(ConfigObject.decrypt(superValue))
           fp.close()
-          configObject.__version__ = Constants.version
-          return configObject
-      except:
-        Logger.getLogger(__name__).info('config.json is niet json, overschrijf')
+        configObject.__version__ = Constants.version
+        return configObject
+      except Exception as e:
+        Logger.getLogger(__name__).error('error bij laden', exc_info=True)
+
         return ConfigObject()
     else:
       return ConfigObject()
@@ -105,7 +107,7 @@ class ConfigObject:
     for key in config:
       configObject.__setattr__(key, config[key])
     configObject.__version__ = Constants.version
-    configObject.save()
+    # configObject.save()
     return configObject
 
 
@@ -120,12 +122,18 @@ class ConfigLand:
 
   def __init__(self):
     self.__config = ConfigObject.loadFromFile()
+    self.checkGithub()
     self.__updateHandlers = []
     self.__loadHandlers = []
 
   def save(self):
     self.handleUpdateHandlers()
     self.__config.save()
+
+  def checkGithub(self):
+    version = Constants.githubVersion()
+    self.__config.github_version['name'] = version['name']
+    self.__config.github_version['date'] = version['github_published_at']
 
   def addUpdateHandler(self, handler):
     """

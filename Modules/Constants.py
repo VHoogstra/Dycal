@@ -5,7 +5,7 @@ import urllib
 
 
 class Constants():
-  version = "v0.1.2-Alpha"
+  version = {"name":"v0.1.2-Alpha","date":"2025-04-01"}
   appname = "Dycal"
 
   primary_color = "#03969c"
@@ -59,4 +59,10 @@ class Constants():
     link = Constants.githubVersionLink
     f = urllib.request.urlopen(link)
     gitVersions = json.loads(f.read())
-    return gitVersions['data']['name']
+    return gitVersions['data']
+
+  @staticmethod
+  def getEncryptionKey(  ):
+    #todo bij deploy hier de key plaatsen
+    # return
+    return os.environ.get('ENCRYPTION_TOKEN')

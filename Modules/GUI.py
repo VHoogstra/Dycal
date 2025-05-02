@@ -3,6 +3,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from pprint import pprint
 
+import arrow
 import customtkinter as ctk
 
 from Modules.ConfigLand import ConfigLand
@@ -57,13 +58,6 @@ class Gui(tk.Frame):
     self.grid(column=0, row=0, sticky=tk.NSEW)
     self.master.rowconfigure(0, weight=1)
     self.master.columnconfigure(0, weight=1)
-    titleString = '{}: {}'.format(Constants.appname, Constants.version)
-    try:
-      if Constants.version != Constants.githubVersion():
-        titleString = titleString + "\t newer version available:{}".format(Constants.githubVersion())
-    except:
-      pass
-    self.master.title(titleString)
 
     # self.master.attributes("-topmost", True)
     w = 860  # width for the Tk root
@@ -82,6 +76,20 @@ class Gui(tk.Frame):
     self.configLand = ConfigLand.getConfigLand()
     self.createWidgets()
     self.loadConfig()
+
+    titleString = '{}: {}'.format(Constants.appname, Constants.version['name'])
+    version = self.configLand.getKey('github_version')
+    try:
+      hVersie = arrow.get(Constants.version['date'],tzinfo=Constants.timeZone)
+      gitVersie = arrow.get(version['date'],tzinfo=Constants.timeZone)
+      comparison = hVersie < gitVersie
+      if  comparison:
+        titleString = titleString + "\t newer version available:{}".format(version['name'])
+    except:
+      Logger.getLogger(__name__).error('bij ophalen github versie', exc_info=True)
+
+      pass
+    self.master.title(titleString)
 
     self.updatePeriodLoaders()
 
