@@ -6,9 +6,6 @@
   - optie voor tijden aanmerking als event inhoud niet overeenkomt met event tijden
   - 
 - evenementen te verwijderen?? kan niet via ics
-- screenDataProcess een loader geven
-- beter checken op wat te updaten moet worden
-- github api moet via eigenwebsite ivm rate limit
 
 # test info
 dyflexis functie

@@ -1,6 +1,5 @@
 import time
 import tkinter as tk
-from datetime import tzinfo
 from tkinter import ttk
 
 import arrow
@@ -41,9 +40,12 @@ class ScreenDataProcess(tk.Toplevel):
     self.columnconfigure(0, weight=1)
     if self.continueButton:
       ctk.CTkButton(self,text='Data is correct, doorvoeren',command=self.uploadToGoogle).grid(row=1, column=0, sticky=tk.NSEW,padx=10,pady=10)
+
     tabview = ctk.CTkTabview(master=self, width=525)
     tabview.grid(row=0, column=0, sticky=tk.NSEW, padx=10, pady=10)
-    tabs = ["Nieuwe data", "Agenda te updaten", "te verwijderen data"]
+    tabs = ["Nieuwe data: " + str(len(self.exportData.newCalendarItem)),
+            "Agenda te updaten: " + str(len(self.exportData.updateCalendarItem)),
+            "te verwijderen data: " + str(len(self.exportData.removeCalendarItem))]
     data = [self.exportData.newCalendarItem,self.exportData.updateCalendarItem,self.exportData.removeCalendarItem]
     for index,tab in enumerate(tabs):
       tabview.add(tab)
@@ -84,7 +86,7 @@ class ScreenDataProcess(tk.Toplevel):
         self.feedbackMessageBuilder(message)
     if self.feedbackMessageBuilder is not None:
       self.feedbackMessageBuilder('\ngeupload naar google')
-    # self.destroy()
+    self.destroy()
 
   def updateLoader(self,amount):
     self.loader.set(amount)

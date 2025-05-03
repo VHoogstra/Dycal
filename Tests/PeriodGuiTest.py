@@ -30,11 +30,11 @@ class period_tester(unittest.TestCase):
       periodList.generatePeriods('2025-1', '2024-01')
 
     periodList.generatePeriods('2024-01', '2025-01')
-    self.assertEqual(12,len(periodList.getPeriods()))
+    self.assertEqual(13, len(periodList.getPeriods()))
     periodList.clearPeriods()
     self.assertEqual(0,len(periodList.getPeriods()))
     periodList.generatePeriods('2024-01', '2025-06')
-    self.assertEqual(17,len(periodList.getPeriods()))
+    self.assertEqual(18, len(periodList.getPeriods()))
 
   def testPeriodHandler(self):
     periodList = PeriodList()
