@@ -18,6 +18,7 @@ class ExportReturnObject:
     self.newCalendarItem = []
     self.updateCalendarItem = []
     self.removeCalendarItem = []
+    self.noUpdateRequiredItem = []
 
   def toJson(self):
     return json.dumps(

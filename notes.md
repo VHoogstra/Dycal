@@ -7,6 +7,9 @@
   - 
 - evenementen te verwijderen?? kan niet via ics
 
+een test voor wanneer ik wel items heb in gevent maar niet in het returnobject. dit zou ontstaan doordat er geen update
+van het event nodig is. heb er nu eenlosse array voor toegevoegd.
+
 # test info
 dyflexis functie
 genereren van csv, ics en google van event data naar output

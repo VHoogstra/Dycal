@@ -179,7 +179,7 @@ class Google:
           compare = self.compare_google_event_to_dyflexis(shift, gEvent)
           if compare:
             Logger.getLogger(__name__).info('\t found but no change, no update')
-
+            returnObject.noUpdateRequiredItem.append(gEvent)
           else:
             Logger.getLogger(__name__).info('\t found!! updating')
             gEvent = self.updateEventData(gEvent, shift)
@@ -233,6 +233,10 @@ class Google:
       if gEvent['id'] in [obj['id'] for obj in returnObject.updateCalendarItem]:
         # if gEvent['id'] in [obj['id'] for obj in returnObject.newCalendarItem] or gEvent['id'] in [obj['id'] for obj in
         #                                                                                    returnObject.updateCalendarItem]:
+        continue
+      if gEvent['id'] in [obj['id'] for obj in returnObject.noUpdateRequiredItem]:
+        # if gEvent['id'] in [obj['id'] for obj in returnObject.newCalendarItem] or gEvent['id'] in [obj['id'] for obj in
+        #                                                                                   returnObject.updateCalendarItem]:
         continue
 
       returnObject.removeCalendarItem.append(gEvent)

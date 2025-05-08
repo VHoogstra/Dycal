@@ -44,9 +44,9 @@ class ExportWidgetGoogle(tk.Frame):
                                                                                           columnspan=2,
                                                                                           sticky=tk.NSEW, pady=5)
 
-    ctk.CTkLabel(self, text="Google calendarId").grid(row=4, column=0, sticky=tk.NSEW)
+    ctk.CTkLabel(self, text="Google agenda id").grid(row=4, column=0, sticky=tk.NSEW)
 
-    self.googleId = ctk.CTkEntry(self, placeholder_text="googleCalenderID", )
+    self.googleId = ctk.CTkEntry(self, placeholder_text="google agenda id", )
     self.googleId.grid(row=4, column=1, columnspan=2, sticky=tk.NSEW)
 
     oepsieButton = ctk.CTkButton(self, text='oepsie doepsie de agenda is foetsie', command=self.clearcalenderId,

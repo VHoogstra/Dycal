@@ -69,7 +69,7 @@ class ScreenInfo(tk.Toplevel):
 
   def getVersion(self):
     versie = Constants.githubVersion()
-    text = f"De meest recente versie is {versie}\nDe huidige versie is {Constants.version}"
+    text = f"De meest recente versie is {versie['name']}\nDe huidige versie is {Constants.version['name']}"
     self.release.config(text=text)
   def up(self):
     self.lift()
